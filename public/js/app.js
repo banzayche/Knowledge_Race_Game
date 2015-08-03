@@ -36,12 +36,12 @@ $(document).ready(function(){
 				id: 5,
 				type: "bad",
 				x: 280,
-				y: -450
+				y: -440
 			}, {
 				id: 6,
 				type: "bad",
 				x: 0,
-				y: -450
+				y: -460
 			}
 		], [
 			{
@@ -309,21 +309,17 @@ $(document).ready(function(){
 
 				// rules for boxes--------------
 				drawArray.forEach(function( obj, i ) {
-
-					// stopping the AnimationFrame
-					getFrame("stop");
 					if(i === 0){
-
+						return;
 					} else{
 						if(obj.y >= 570){
-							obj.y = variantsPosition[0][i-1].y;
-							obj.x = variantsPosition.x;
+							obj.y = -10;
+							obj.x = variantsPosition[0][i-1].x;
+							// obj.y = 1;
+							// obj.x = 1;
 						}
 					}
-					// starting the AnimationFrame
-					getFrame("start");
-
-					});
+				});
 				// -----------------------------
 			};
 		// -------------------------------------------------------------
