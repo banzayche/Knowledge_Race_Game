@@ -1,146 +1,6 @@
 'use strict'
 
 $(document).ready(function(){
-
-	var variantsPosition = [
-		[
-			{
-				id: 0,
-				type: "good",
-				x: 140,
-				y: -355,
-				value: "have to"
-			}, {
-				id: 1,
-				type: "good",
-				x: 50,
-				y: -70,
-				value: "You"
-			}, {
-				id: 2,
-				type: "bad",
-				x: 150,
-				y: -30
-			}, {
-				id: 3,
-				type: "bad",
-				x: 360,
-				y: -165
-
-			}, {
-				id: 4,
-				type: "bad",
-				x: 140,
-				y: -260
-			}, {
-				id: 5,
-				type: "bad",
-				x: 280,
-				y: -440
-			}, {
-				id: 6,
-				type: "bad",
-				x: 0,
-				y: -460
-			}
-		], [
-			{
-				x:40,
-			}, {
-				x:210,
-			}, {
-				x:280,
-			}, {
-				x:0,
-			}, {
-				x:100
-			}, {
-				x:0
-			}, {
-				x:360
-			}
-		], [
-			{
-				id: 0,
-				type: "good",
-				x: 140,
-				y: -355,
-				value: "You"
-			}, {
-				id: 1,
-				type: "good",
-				x: 50,
-				y: -70,
-				value: "have to"
-			}, {
-				id: 6,
-				type: "bad",
-				x: 0,
-				y: -450
-			}, {
-				id: 3,
-				type: "bad",
-				x: 280,
-				y: -450
-			}, {
-				id: 4,
-				type: "bad",
-				x: 140,
-				y: -260
-			}, {
-				id: 5,
-				type: "bad",
-				x: 360,
-				y: -165
-			}, {
-				id: 5,
-				type: "bad",
-				x: 150,
-				y: -30
-			}
-		], [
-			{
-				id: 0,
-				type: "good",
-				x: 140,
-				y: -355,
-				value: "You"
-			}, {
-				id: 1,
-				type: "good",
-				x: 50,
-				y: -70,
-				value: "have to"
-			}, {
-				id: 2,
-				type: "bad",
-				x: 150,
-				y: -30
-			}, {
-				id: 3,
-				type: "bad",
-				x: 360,
-				y: -165
-
-			}, {
-				id: 4,
-				type: "bad",
-				x: 140,
-				y: -260
-			}, {
-				id: 5,
-				type: "bad",
-				x: 280,
-				y: -450
-			}, {
-				id: 6,
-				type: "bad",
-				x: 0,
-				y: -450
-			}
-		]
-	];
-
 	function GameProcess(){
 		var canvas = document.getElementById('myCanvas'),
 		context = canvas.getContext('2d'),
@@ -150,15 +10,15 @@ $(document).ready(function(){
 		// gameStation = "running" --> gaming process
 		// gameStation = "game_over" --> end of the game
 		gameStation = "starting",
-
-		flagGood = false,
+		points = 0,
+		pointsFlag = true,
 		positionVariation = 1,
 		whoBehidLine = 0,
 		// for arrow keys
 		keyState = {},
 		// -------------
 		points = 0,
-		car = new Game.gameObjConstructor.car(185, 520, 22,35, "car"),
+		car = new Game.gameObjConstructor.car(185, 480, 22,35, "car"),
 
 		// CAR
 		carImageObj = new Image(),
@@ -166,7 +26,7 @@ $(document).ready(function(){
 		carImageObj.onload = function() {
 			canDrawCar = true;
 		};
-		carImageObj.src = '/images/car3.jpg';
+		carImageObj.src = '/images/car3.png';
 		// --------------------------------------------
 		// BAD
 		var badImageObj = new Image();
@@ -184,27 +44,7 @@ $(document).ready(function(){
 		};
 		starImageObj.src = '/images/star.png';
 		// --------------------------------------
-		// ASFALT
-		// var asfaltBG = new Game.gameObjConstructor.box(0, 0, canvas.width, canvas.height, 'asfalt')
-		// var asfaltImageObj = new Image();
-		// var canDrawAsfalt = false;
-		// carImageObj.onload = function() {
-		// 	canDrawAsfalt = true;
-		// };
-		// asfaltImageObj.src = '/images/asfalt.jpg';
-		// ---------------------------------------
 		var drawArray,
-		// var successBoxes = [
-		// 	new Game.gameObjConstructor.box(140, -355, 40, 30, "good", 5, "Hey"),
-		// 	new Game.gameObjConstructor.box(50, -70, 40, 30, "good", 6, "You"),
-		// ],
-		// errorBoxes = [
-		// 	new Game.gameObjConstructor.box(0, -450, 60, 50, "bad", 0),
-		// 	new Game.gameObjConstructor.box(280, -450, 60, 50, "bad", 1),
-		// 	new Game.gameObjConstructor.box(140, -260, 60, 50, "bad", 2),
-		// 	new Game.gameObjConstructor.box(360, -165, 60, 50, "bad", 3),
-		// 	new Game.gameObjConstructor.box(150, -30, 60, 50, "bad", 4),
-		// ],
 		succesLearning = 3,
 		currentLearning = 0,
 		question = "",
@@ -248,37 +88,14 @@ $(document).ready(function(){
 					getFrame("stop")
 				}
 			});
-		// cancelAnimationFrame(globalID);
-
-
-
-		// --------DEFAULT VALUE--------------------------------------
-			function setDeffValue(){
-				car = new Game.gameObjConstructor.car(185, 520, 25, 40, "car"),
-				successBoxes = [
-					new Game.gameObjConstructor.box(140, -355, 40, 30, "good", 5, "Hey"),
-					new Game.gameObjConstructor.box(50, -70, 40, 30, "good", 6, "You"),
-				],
-				errorBoxes = [
-					new Game.gameObjConstructor.box(0, -450, 60, 50, "bad", 0),
-					new Game.gameObjConstructor.box(280, -450, 60, 50, "bad", 1),
-					new Game.gameObjConstructor.box(140, -260, 60, 50, "bad", 2),
-					new Game.gameObjConstructor.box(360, -165, 60, 50, "bad", 3),
-					new Game.gameObjConstructor.box(150, -30, 60, 50, "bad", 4),
-				],
-				drawArray = [car, successBoxes[0], successBoxes[1], errorBoxes[0], errorBoxes[1], errorBoxes[2], errorBoxes[3], errorBoxes[4]];
-			}
-		// ---------------------------------------------------------
-
-
-
-
 
 		// ----CONTROLLERS-----------------------------
 			function Correction(){
 				// adding new value of y position-
-				for (var i = 1; i<drawArray.length; i++) {
-					drawArray[i].y +=4;
+				if(gameStation === "running"){
+					for (var i = 1; i<drawArray.length; i++) {
+						drawArray[i].y +=6;
+					}
 				}
 				// -------------------------------
 
@@ -311,10 +128,25 @@ $(document).ready(function(){
 							    	console.log("Win")
 							    	console.log(obj.value)
 							    	// obj.type = "noneGod";
-							    	drawArray.splice(i,1);
+							    	// drawArray.splice(i,1);
+							    	if(pointsFlag === true){
+							    		points ++;
+							    		pointsFlag = false;
+							    	}
+							    	// Window wich show to us the star
+							    	var width = 30,
+							    		height = 40;
+							    	function drawStar(){
+							    			width +=2;
+							    			height +=2;
+							    		context = canvas.getContext('2d');
+						        		context.drawImage(starImageObj, obj.x, obj.y-20, width, height);
+						        		winningWindow = requestAnimationFrame(drawStar);
+							    	}
+						        	var winningWindow = requestAnimationFrame(drawStar);
+									setTimeout(function(){cancelAnimationFrame(winningWindow); pointsFlag = true;}, 200);
+									// ----------------------------------------------------------------
 
-							    	context = canvas.getContext('2d');
-						        	context.drawImage(starImageObj, drawArray[0].x+30, drawArray[0].y-50, 30, 40);
 							    // fatalHit - столкновение с нежелательным обьектом, которое влечет перезагрузку уровня
 							    }
 							    if (distance <= drawArray[0].get_box_radius()+obj.get_box_radius() && obj.type === "bad"){
@@ -327,7 +159,7 @@ $(document).ready(function(){
 						if(obj.y >= 570){
 							whoBehidLine++;
 					    	if(positionVariation === 1){
-					    		obj.y = -10;
+					    		obj.y = -50;
 								obj.x = variantsPosition[0][i-1].x;
 								console.log("positionVariation 1")
 								if(whoBehidLine >= drawArray.length){
@@ -335,7 +167,7 @@ $(document).ready(function(){
 						    		positionVariation++;
 						    	}
 					    	} else if(positionVariation === 2){
-					    		obj.y = -10;
+					    		obj.y = -50;
 								obj.x = variantsPosition[1][i-1].x;
 								console.log("positionVariation 2")
 								if(whoBehidLine >= drawArray.length){
@@ -375,6 +207,7 @@ $(document).ready(function(){
 			function drawGameOver(){
 				context = canvas.getContext('2d');
 			    context.beginPath();
+
 				context.rect(0, 0, canvas.width, canvas.height);
 				context.fillStyle = 'rgba(4,4,4,0.5)';
 				context.fill();
@@ -383,14 +216,19 @@ $(document).ready(function(){
 				context.fillStyle = 'red';
 				context.fillText('Game Over!', 120, 280);
 
+				context = canvas.getContext('2d');
+				context.font = 'bold 40pt Calibri';
+				context.fillStyle = 'white';
+				context.fillText("Your's points: "+points, 30, 550);
 				// stopping of AnimationFrame
 				getFrame("stop")
 
 				setTimeout(function(){
 			    		gameStation = "starting";
+			    		points = 0;
 			    		drawArray=[car];
 			    		createDrawArray(drawArray, variantsPosition[0])
-			    		getFrame("start");
+			    		getFrame("start")
 			    }, 2000);
 			};
 			function drawStart(){
@@ -456,7 +294,9 @@ $(document).ready(function(){
 			    	drawGameOver();
 		        }
 
-
+		        context.font = 'bold 40pt Calibri';
+				context.fillStyle = 'green';
+				context.fillText(points, 350, 80);
 			}
 		// ------------------------------------------------------------------------
 
@@ -472,10 +312,10 @@ $(document).ready(function(){
 
 			function gameLoop() {
 			    if (keyState[37] || keyState[65]){
-			        drawArray[0].x -= 8;
+			        drawArray[0].x -= 5;
 			    }
 			    if (keyState[39] || keyState[68]){
-			        drawArray[0].x += 8;
+			        drawArray[0].x += 5;
 			    }
 
 			    // redraw/reposition your object here
