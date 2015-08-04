@@ -65,20 +65,24 @@ $(document).ready(function(){
 
 
 		// --------------FOR ANIMATION FRAME------------------------
-			var globalID,
-				stopID;
+			var runAnimation,
+				stopRuning;
 				getFrame("start");
 			// function which calls requestAnimationFrame
 			function getFrame(value){
 				if(value === "start"){
-					globalID = requestAnimationFrame(drawCanvas);
+					runAnimation = requestAnimationFrame(drawCanvas);
+					stopRuning = false;
 				} else{
-					stopID = cancelAnimationFrame(globalID);
+					cancelAnimationFrame(runAnimation);
+					stopRuning = true;
 				}
 			}
 			$("body").keyup(function(e){
-				if(e.keyCode === 13){
+				if(e.keyCode === 13 && stopRuning === true){
 					getFrame("start");
+				} else if(e.keyCode === 13 && stopRuning === false){
+					getFrame("stop");
 				}
 			});
 			$("body").click(function(e){
@@ -125,8 +129,6 @@ $(document).ready(function(){
 
 								// GoodHit - столкновение с положительным обьектом
 								if (distance <= drawArray[0].get_box_radius()+obj.get_box_radius() && obj.type === "good"){
-							    	console.log("Win")
-							    	console.log(obj.value)
 							    	// obj.type = "noneGod";
 							    	// drawArray.splice(i,1);
 							    	if(pointsFlag === true){
@@ -139,8 +141,10 @@ $(document).ready(function(){
 							    	function drawStar(){
 							    			width +=2;
 							    			height +=2;
-							    		context = canvas.getContext('2d');
-						        		context.drawImage(starImageObj, obj.x, obj.y-20, width, height);
+							    		context.beginPath();
+						        		context.drawImage(starImageObj, obj.x, obj.y-60, width, height);
+						        		context.closePath();
+
 						        		winningWindow = requestAnimationFrame(drawStar);
 							    	}
 						        	var winningWindow = requestAnimationFrame(drawStar);
@@ -150,7 +154,6 @@ $(document).ready(function(){
 							    // fatalHit - столкновение с нежелательным обьектом, которое влечет перезагрузку уровня
 							    }
 							    if (distance <= drawArray[0].get_box_radius()+obj.get_box_radius() && obj.type === "bad"){
-							    	console.log("Looser")
 							    	gameStation = "game_over";
 							    }
 							})()
@@ -159,17 +162,15 @@ $(document).ready(function(){
 						if(obj.y >= 570){
 							whoBehidLine++;
 					    	if(positionVariation === 1){
-					    		obj.y = -50;
+					    		obj.y = 0;
 								obj.x = variantsPosition[0][i-1].x;
-								console.log("positionVariation 1")
 								if(whoBehidLine >= drawArray.length){
 						    		whoBehidLine = 0;
 						    		positionVariation++;
 						    	}
 					    	} else if(positionVariation === 2){
-					    		obj.y = -50;
+					    		obj.y = 0;
 								obj.x = variantsPosition[1][i-1].x;
-								console.log("positionVariation 2")
 								if(whoBehidLine >= drawArray.length){
 						    		whoBehidLine = 0;
 						    		positionVariation--;
@@ -189,27 +190,31 @@ $(document).ready(function(){
 		// -------------------VIEWS-------------------------------------------------------------------
 			function drawBoxes(index){
 				if(drawArray[index].type === 'good'){
+					context.beginPath();
 					context.font = 'bold 25pt Calibri';
 					context.fillStyle = 'red';
+					context.shadowColor = 'grey';
 					context.fillText(drawArray[index].value, drawArray[index].x, drawArray[index].y);
+					context.closePath();
 				} else{
-				   	context = canvas.getContext('2d');
 				   	context.beginPath();
 				   	context.drawImage(badImageObj, drawArray[index].x, drawArray[index].y, drawArray[index].width, drawArray[index].height);
+				   	context.closePath();
 				}
 			};
 			function drawCar(){
-				context = canvas.getContext('2d');
 				context.beginPath();
+				context.shadowColor = 'transparent';
 				context.rect(0, 0, canvas.width, canvas.height);
 				context.drawImage(carImageObj, drawArray[0].x, drawArray[0].y, drawArray[0].width, drawArray[0].height);
+				context.closePath();
 			};
 			function drawGameOver(){
-				context = canvas.getContext('2d');
+				context.clearRect(0, 0, canvas.width, canvas.height);
 			    context.beginPath();
-
 				context.rect(0, 0, canvas.width, canvas.height);
-				context.fillStyle = 'rgba(4,4,4,0.5)';
+
+				context.fillStyle = 'rgba(4,4,4,0.8)';
 				context.fill();
 
 				context.font = 'bold 25pt Calibri';
@@ -220,6 +225,8 @@ $(document).ready(function(){
 				context.font = 'bold 40pt Calibri';
 				context.fillStyle = 'white';
 				context.fillText("Your's points: "+points, 30, 550);
+
+				context.closePath();
 				// stopping of AnimationFrame
 				getFrame("stop")
 
@@ -232,18 +239,23 @@ $(document).ready(function(){
 			    }, 2000);
 			};
 			function drawStart(){
-				context = canvas.getContext('2d');
 				context.clearRect(0, 0, canvas.width, canvas.height);
+				context.beginPath();
 
-				context = canvas.getContext('2d');
-			    context.beginPath();
 				context.rect(0, 0, canvas.width, canvas.height);
-				context.fillStyle = 'rgba(4,4,4,0.5)';
-				context.fill();
+				context.fillStyle = 'rgba(4,4,4,0.9)';
+				context.shadowColor = 'black';
+			    context.shadowBlur = 20;
+			    context.shadowOffsetX = 10;
+			    context.shadowOffsetY = 10;
 
 				context.font = 'bold 25pt Calibri';
-				context.fillStyle = 'red';
+				context.fillStyle = 'green';
 				context.fillText('Press Enter!', 120, 280);
+				context.shadowColor = 'black';
+				context.shadowColor = 'black';
+
+				context.closePath();
 
 				// stopping of AnimationFrame
 				getFrame("stop");
@@ -262,7 +274,7 @@ $(document).ready(function(){
 		// ----------------------DRAWING of CANVAS------------------------------------------------
 			function drawCanvas(){
 				// getting car position
-				// (when we call this function we also do closure of "globalID = requestAnimationFrame(drawCanvas);" that's why we have a looping drawing)
+				// (when we call this function we also do closure of "runAnimation = requestAnimationFrame(drawCanvas);" that's why we have a looping drawing)
 				gameLoop();
 				//
 
@@ -294,9 +306,12 @@ $(document).ready(function(){
 			    	drawGameOver();
 		        }
 
+		        context.beginPath();
 		        context.font = 'bold 40pt Calibri';
 				context.fillStyle = 'green';
 				context.fillText(points, 350, 80);
+				context.fill();
+				context.closePath();
 			}
 		// ------------------------------------------------------------------------
 
@@ -320,7 +335,7 @@ $(document).ready(function(){
 
 			    // redraw/reposition your object here
 			    // also redraw/animate any objects not controlled by the user
-			    globalID = requestAnimationFrame(drawCanvas);
+			    runAnimation = requestAnimationFrame(drawCanvas);
 			}
 		// ------------------------------------------------------------------------------------------
 

@@ -2,16 +2,23 @@
 
 $(document).ready(function(){
 	function GameProcess(){
-		var canvas,context,
+		var canvas = document.getElementById('myCanvas'),
+		context = canvas.getContext('2d'),
 		succesLearning = 1,
 		currentLearning,
-		fatalHit,
+		// gameStation = "starting" --> start of the game
+		// gameStation = "running" --> gaming process
+		// gameStation = "game_over" --> end of the game
+		gameStation = "starting",
+		points = 0,
+		pointsFlag = true,
 		positionVariation = 1,
 		whoBehidLine = 0,
-		gameTimer,
+		// for arrow keys
 		keyState = {},
+		// -------------
 		points = 0,
-		car = new Game.gameObjConstructor.car(185, 520, 25, 40, "car"),
+		car = new Game.gameObjConstructor.car(185, 480, 22,35, "car"),
 
 		// CAR
 		carImageObj = new Image(),
@@ -19,7 +26,7 @@ $(document).ready(function(){
 		carImageObj.onload = function() {
 			canDrawCar = true;
 		};
-		carImageObj.src = '/images/car3.jpg';
+		carImageObj.src = '/images/car3.png';
 		// --------------------------------------------
 		// BAD
 		var badImageObj = new Image();
@@ -37,78 +44,62 @@ $(document).ready(function(){
 		};
 		starImageObj.src = '/images/star.png';
 		// --------------------------------------
-		var successBoxes = successBoxes = [
-			new Game.gameObjConstructor.box(140, -355, 40, 30, "good", 5, "Hey"),
-			new Game.gameObjConstructor.box(50, -70, 40, 30, "good", 6, "You"),
-		],
-		errorBoxes = [
-			new Game.gameObjConstructor.box(0, -450, 60, 50, "bad", 0),
-			new Game.gameObjConstructor.box(280, -450, 60, 50, "bad", 1),
-			new Game.gameObjConstructor.box(140, -260, 60, 50, "bad", 2),
-			new Game.gameObjConstructor.box(360, -165, 60, 50, "bad", 3),
-			new Game.gameObjConstructor.box(150, -30, 60, 50, "bad", 4),
-		],
+		var drawArray,
 		succesLearning = 3,
 		currentLearning = 0,
 		question = "",
 		answers = [],
-		trueAnsverIndex = 2,
-		drawArray = [car, successBoxes[0], successBoxes[1], errorBoxes[0], errorBoxes[1], errorBoxes[2], errorBoxes[3], errorBoxes[4]];
+		trueAnsverIndex = 2;
+
+		// -------------CREATING_OF_DRAW-ARRAY--------------------------------------
+		drawArray = [car];
+		function createDrawArray(arr, obj){
+			var width = 60,
+				height = 50;
+			obj.map(function( obj, index ) {
+				arr.push(new Game.gameObjConstructor.box(obj.x, obj.y, width, height, obj.type, index, obj.value));
+			});
+		};
+		createDrawArray(drawArray, variantsPosition[0])
+		// -----------------------------------------------------------------------------
 
 
-
-
-		var globalID,
-			stopID;
-		function getFrame(value){
-			if(value === "start"){
-				globalID = requestAnimationFrame(gameLoop);
-			} else{
-				stopID = cancelAnimationFrame(globalID);
-			}
-		}
-		$("body").click(function(e){
-			if(e.target.id == "start"){
-				getFrame("start")
-			} else if(e.target.id == "stop"){
-				getFrame("stop")
-			}
-		});
-		// cancelAnimationFrame(globalID);
-
-
-
-		// --------DEFAULT VALUE--------------------------------------
-			function setDeffValue(){
-				car = new Game.gameObjConstructor.car(185, 520, 25, 40, "car"),
-				successBoxes = [
-					new Game.gameObjConstructor.box(140, -355, 40, 30, "good", 5, "Hey"),
-					new Game.gameObjConstructor.box(50, -70, 40, 30, "good", 6, "You"),
-				],
-				errorBoxes = [
-					new Game.gameObjConstructor.box(0, -450, 60, 50, "bad", 0),
-					new Game.gameObjConstructor.box(280, -450, 60, 50, "bad", 1),
-					new Game.gameObjConstructor.box(140, -260, 60, 50, "bad", 2),
-					new Game.gameObjConstructor.box(360, -165, 60, 50, "bad", 3),
-					new Game.gameObjConstructor.box(150, -30, 60, 50, "bad", 4),
-				],
-				drawArray = [car, successBoxes[0], successBoxes[1], errorBoxes[0], errorBoxes[1], errorBoxes[2], errorBoxes[3], errorBoxes[4]];
-			}
-		// ---------------------------------------------------------
-
-
-
-
-
-		// ----CORECTION -----------------------------
-			function correction(){
-				// adding new value of y position
-				for (var i = 1; i<drawArray.length; i++) {
-					drawArray[i].y +=5;
+		// --------------FOR ANIMATION FRAME------------------------
+			var globalID,
+				stopID;
+				getFrame("start");
+			// function which calls requestAnimationFrame
+			function getFrame(value){
+				if(value === "start"){
+					globalID = requestAnimationFrame(drawCanvas);
+				} else{
+					stopID = cancelAnimationFrame(globalID);
 				}
-				// -------------------------------------------------------------------------------------------------
+			}
+			$("body").keyup(function(e){
+				if(e.keyCode === 13){
+					getFrame("start");
+				}
+			});
+			$("body").click(function(e){
+				if(e.target.id == "start"){
+					getFrame("start")
+				} else if(e.target.id == "stop"){
+					getFrame("stop")
+				}
+			});
 
-				// rules for Car motion
+		// ----CONTROLLERS-----------------------------
+			function Correction(){
+				// adding new value of y position-
+				if(gameStation === "running"){
+					for (var i = 1; i<drawArray.length; i++) {
+						drawArray[i].y +=6;
+					}
+				}
+				// -------------------------------
+
+				// rules for Car motion----
 				var maxX = 395,
 					minX = 2
 				if(drawArray[0].x <= minX) {
@@ -116,118 +107,196 @@ $(document).ready(function(){
 				} else if (drawArray[0].x >= maxX){
 					drawArray[0].x = maxX;
 				}
+				//---------------------------
 
-				// --------------------------------------------------------------------------------------------------
-				// rules for Boxes
-				var carCenter = drawArray[0].get_box_center(),
-					successBoxesCenter,
-					distance;
-				for (var i = 1; i<drawArray.length; i++) {
-					successBoxesCenter = drawArray[i].get_box_center(),
-					distance = drawArray[i].get_distance(successBoxesCenter, carCenter);
+				// rules for boxes--------------
+				drawArray.forEach(function( obj, i ) {
+					if(i === 0){
+						return;
+					} else{
+						// get current distance-----------
+							(function(){
+								var carCenter = drawArray[0].get_box_center(),
+								successBoxesCenter,
+								distance;
 
-					// GoodHit - столкновение с положительным обьектом
-					if (distance <= drawArray[0].get_box_radius()+drawArray[i].get_box_radius() && drawArray[i].type === "good"){
-				    	console.log("Win")
-				    	console.log(drawArray[i].value)
+								successBoxesCenter = obj.get_box_center(),
+								distance = obj.get_distance(successBoxesCenter, carCenter);
 
-				    	context = canvas.getContext('2d');
-			        	context.drawImage(starImageObj, drawArray[0].x+30, drawArray[0].y-50, 30, 40);
-			        	cancelAnimationFrame(globalID);
+								// GoodHit - столкновение с положительным обьектом
+								if (distance <= drawArray[0].get_box_radius()+obj.get_box_radius() && obj.type === "good"){
+							    	console.log("Win")
+							    	console.log(obj.value)
+							    	// obj.type = "noneGod";
+							    	// drawArray.splice(i,1);
+							    	if(pointsFlag === true){
+							    		points ++;
+							    		pointsFlag = false;
+							    	}
+							    	// Window wich show to us the star
+							    	var width = 30,
+							    		height = 40;
+							    	function drawStar(){
+							    			width +=2;
+							    			height +=2;
+							    		context = canvas.getContext('2d');
+						        		context.drawImage(starImageObj, obj.x, obj.y-20, width, height);
+						        		winningWindow = requestAnimationFrame(drawStar);
+							    	}
+						        	var winningWindow = requestAnimationFrame(drawStar);
+									setTimeout(function(){cancelAnimationFrame(winningWindow); pointsFlag = true;}, 200);
+									// ----------------------------------------------------------------
 
-				    // fatalHit - столкновение с нежелательным обьектом, которое влечет перезагрузку уровня
-				    } else if (distance <= drawArray[0].get_box_radius()+drawArray[i].get_box_radius() && drawArray[i].type === "bad"){
-				    	console.log("Looser")
-				    	setDeffValue();
-				    	fatalHit = true;
-				    	break;
-				    }
+							    // fatalHit - столкновение с нежелательным обьектом, которое влечет перезагрузку уровня
+							    }
+							    if (distance <= drawArray[0].get_box_radius()+obj.get_box_radius() && obj.type === "bad"){
+							    	console.log("Looser")
+							    	gameStation = "game_over";
+							    }
+							})()
+						// --------------------------------
 
-				    // currentBox за пределами камеры
-				    if(drawArray[i].y >= 880){
-				    	whoBehidLine++;
-
-				    	if(whoBehidLine === 4){
-				    		positionVariation++;
-				    		if( positionVariation === 8 ){
-				    			positionVariation = 1;
-				    		}
-				    		whoBehidLine = 0;
-				    	}
-
-				    	if(positionVariation === 1){
-				    		drawArray[i].x = 50*i;
-				    		drawArray[i].y = 0;
-				    	}	else if(positionVariation === 2){
-				    		drawArray[i].x = 40*i;
-				    		drawArray[i].y = 0;
-				    	}  	else if(positionVariation === 3){
-				    		drawArray[i].x = 200/i;
-				    		drawArray[i].y = 0;
-				    	}	else if(positionVariation === 4){
-				    		drawArray[i].x = (40*i)+20;
-				    		drawArray[i].y = 0;
-				    	}  	else if(positionVariation === 5){
-				    		drawArray[i].x = (300/i)+30;
-				    		drawArray[i].y = 0;
-				    	}	else if(positionVariation === 6){
-				    		drawArray[i].x = 30*i;
-				    		drawArray[i].y = 0;
-				    	}  	else if(positionVariation === 7){
-				    		drawArray[i].x = 100/i;
-				    		drawArray[i].y = 0;
-				    	}
-				    }
-				};
-				// drawCanvas();
+						if(obj.y >= 570){
+							whoBehidLine++;
+					    	if(positionVariation === 1){
+					    		obj.y = -50;
+								obj.x = variantsPosition[0][i-1].x;
+								console.log("positionVariation 1")
+								if(whoBehidLine >= drawArray.length){
+						    		whoBehidLine = 0;
+						    		positionVariation++;
+						    	}
+					    	} else if(positionVariation === 2){
+					    		obj.y = -50;
+								obj.x = variantsPosition[1][i-1].x;
+								console.log("positionVariation 2")
+								if(whoBehidLine >= drawArray.length){
+						    		whoBehidLine = 0;
+						    		positionVariation--;
+						    	}
+					    	}
+						}
+					}
+				});
+				// -----------------------------
 			};
-		// -----------------------------------------------------------------------------------------------------------------------------
+		// -------------------------------------------------------------
+
+
+
+
+
+		// -------------------VIEWS-------------------------------------------------------------------
+			function drawBoxes(index){
+				if(drawArray[index].type === 'good'){
+					context.font = 'bold 25pt Calibri';
+					context.fillStyle = 'red';
+					context.fillText(drawArray[index].value, drawArray[index].x, drawArray[index].y);
+				} else{
+				   	context = canvas.getContext('2d');
+				   	context.beginPath();
+				   	context.drawImage(badImageObj, drawArray[index].x, drawArray[index].y, drawArray[index].width, drawArray[index].height);
+				}
+			};
+			function drawCar(){
+				context = canvas.getContext('2d');
+				context.beginPath();
+				context.rect(0, 0, canvas.width, canvas.height);
+				context.drawImage(carImageObj, drawArray[0].x, drawArray[0].y, drawArray[0].width, drawArray[0].height);
+			};
+			function drawGameOver(){
+				context = canvas.getContext('2d');
+			    context.beginPath();
+
+				context.rect(0, 0, canvas.width, canvas.height);
+				context.fillStyle = 'rgba(4,4,4,0.8)';
+				context.fill();
+
+				context.font = 'bold 25pt Calibri';
+				context.fillStyle = 'red';
+				context.fillText('Game Over!', 120, 280);
+
+				context = canvas.getContext('2d');
+				context.font = 'bold 40pt Calibri';
+				context.fillStyle = 'white';
+				context.fillText("Your's points: "+points, 30, 550);
+				// stopping of AnimationFrame
+				getFrame("stop")
+
+				setTimeout(function(){
+			    		gameStation = "starting";
+			    		points = 0;
+			    		drawArray=[car];
+			    		createDrawArray(drawArray, variantsPosition[0])
+			    		getFrame("start")
+			    }, 2000);
+			};
+			function drawStart(){
+				context = canvas.getContext('2d');
+				context.clearRect(0, 0, canvas.width, canvas.height);
+
+				context = canvas.getContext('2d');
+			    context.beginPath();
+				context.rect(0, 0, canvas.width, canvas.height);
+				context.fillStyle = 'rgba(4,4,4,0.5)';
+				context.fill();
+
+				context.font = 'bold 25pt Calibri';
+				context.fillStyle = 'red';
+				context.fillText('Press Enter!', 120, 280);
+
+				// stopping of AnimationFrame
+				getFrame("stop");
+
+				// next gameStation
+				gameStation = "running";
+			};
+		// -------------------------------------------------------------------------------------------
+
+
+
+
+
 
 
 		// ----------------------DRAWING of CANVAS------------------------------------------------
 			function drawCanvas(){
-				canvas = document.getElementById('myCanvas');
-				context = canvas.getContext('2d');
+				// getting car position
+				// (when we call this function we also do closure of "globalID = requestAnimationFrame(drawCanvas);" that's why we have a looping drawing)
+				gameLoop();
+				//
+
 				context.clearRect(0, 0, canvas.width, canvas.height);
+				// when the game is starting
+			    if(gameStation === "starting"){
+			    	drawStart();
+			    	// stopping running this function
+			    	// we don't need drawing of boxes or car
+			    	return;
+		        }
 
 				// отрисовка игрового процесса сама гонка
 			    for(var i = 0; i<drawArray.length; i++){
+			    	// первый элемент - АВТО
 			    	if(i === 0){
-			    		context = canvas.getContext('2d');
-			        	context.beginPath();
-				    	context.rect(0, 0, canvas.width, canvas.height);
-				    	context.drawImage(carImageObj, drawArray[i].x, drawArray[i].y, drawArray[i].width, drawArray[i].height);
+			 			drawCar();
+			 		// остальные это ЯЩИКИ и СЛОВА
 			    	} else{
-					    if(drawArray[i].type === 'good'){
-					    	context.font = 'bold 25pt Calibri';
-							context.fillStyle = 'red';
-							context.fillText(drawArray[i].value, drawArray[i].x, drawArray[i].y);
-					    } else{
-					    	context = canvas.getContext('2d');
-				        	context.beginPath();
-					    	context.rect(0, 0, canvas.width, canvas.height);
-					    	context.drawImage(badImageObj, drawArray[i].x, drawArray[i].y, drawArray[i].width, drawArray[i].height);
-					    }
+						drawBoxes(i);
 			    	}
 			    }
-			    // проверка соответствия игры правилам
-			    correction();
-			    // проверка условий завершонности или
-			    if(fatalHit === true){
-			        	context = canvas.getContext('2d');
-			        	context.beginPath();
-				    	context.rect(0, 0, canvas.width, canvas.height);
-				    	context.fillStyle = 'rgba(4,4,4,0.5)';
-				    	context.fill();
 
-					    context.font = 'bold 25pt Calibri';
-					    context.fillStyle = 'red';
-					    context.fillText('Game Over!', 80, 280);
+			    // control of game rules
+			    Correction();
 
-					    getFrame("stop")
-			        }
+			    // when you hit "Bad" box
+			    if(gameStation === "game_over"){
+			    	drawGameOver();
+		        }
 
-
+		        context.font = 'bold 40pt Calibri';
+				context.fillStyle = 'green';
+				context.fillText(points, 350, 80);
 			}
 		// ------------------------------------------------------------------------
 
@@ -243,19 +312,17 @@ $(document).ready(function(){
 
 			function gameLoop() {
 			    if (keyState[37] || keyState[65]){
-			        drawArray[0].x -= 8;
+			        drawArray[0].x -= 5;
 			    }
 			    if (keyState[39] || keyState[68]){
-			        drawArray[0].x += 8;
+			        drawArray[0].x += 5;
 			    }
 
 			    // redraw/reposition your object here
 			    // also redraw/animate any objects not controlled by the user
-			    drawCanvas();
-			    globalID = requestAnimationFrame(gameLoop);
+			    globalID = requestAnimationFrame(drawCanvas);
 			}
 		// ------------------------------------------------------------------------------------------
 
-	}GameProcess()
-
+	}GameProcess();
 });
