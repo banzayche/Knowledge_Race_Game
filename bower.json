@@ -2,6 +2,7 @@
   "name": "myProject",
   "version": "1.0.0",
   "dependencies": {
-    "bootstrap": "~3.3.5"
+    "bootstrap": "~3.3.5",
+    "underscore": "~1.8.3"
   }
 }

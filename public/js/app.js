@@ -9,13 +9,13 @@ $(document).ready(function(){
 				type: "good",
 				x: 140,
 				y: -355,
-				value: "You"
+				value: "have to"
 			}, {
 				id: 1,
 				type: "good",
 				x: 50,
 				y: -70,
-				value: "have to"
+				value: "You"
 			}, {
 				id: 2,
 				type: "bad",
@@ -45,43 +45,19 @@ $(document).ready(function(){
 			}
 		], [
 			{
-				id: 0,
-				type: "good",
-				x:12,
-				y: -355,
-				value: "You"
+				x:40,
 			}, {
-				id: 1,
-				type: "good",
-				x:12,
-				y: -70,
-				value: "have to"
+				x:210,
 			}, {
-				id: 2,
-				type: "bad",
-				x:12,
-				y: -30
+				x:280,
 			}, {
-				id: 3,
-				type: "bad",
-				x:12,
-				y: -165
-
+				x:0,
 			}, {
-				id: 4,
-				type: "bad",
-				x:12,
-				y: -260
+				x:100
 			}, {
-				id: 5,
-				type: "bad",
-				x:12,
-				y: -450
+				x:0
 			}, {
-				id: 6,
-				type: "bad",
-				x:12,
-				y: -450
+				x:360
 			}
 		], [
 			{
@@ -166,7 +142,8 @@ $(document).ready(function(){
 	];
 
 	function GameProcess(){
-		var canvas,context,
+		var canvas = document.getElementById('myCanvas'),
+		context = canvas.getContext('2d'),
 		succesLearning = 1,
 		currentLearning,
 		// gameStation = "starting" --> start of the game
@@ -174,7 +151,8 @@ $(document).ready(function(){
 		// gameStation = "game_over" --> end of the game
 		gameStation = "starting",
 
-		positionVariation = 0,
+		flagGood = false,
+		positionVariation = 1,
 		whoBehidLine = 0,
 		// for arrow keys
 		keyState = {},
@@ -206,6 +184,15 @@ $(document).ready(function(){
 		};
 		starImageObj.src = '/images/star.png';
 		// --------------------------------------
+		// ASFALT
+		// var asfaltBG = new Game.gameObjConstructor.box(0, 0, canvas.width, canvas.height, 'asfalt')
+		// var asfaltImageObj = new Image();
+		// var canDrawAsfalt = false;
+		// carImageObj.onload = function() {
+		// 	canDrawAsfalt = true;
+		// };
+		// asfaltImageObj.src = '/images/asfalt.jpg';
+		// ---------------------------------------
 		var drawArray,
 		// var successBoxes = [
 		// 	new Game.gameObjConstructor.box(140, -355, 40, 30, "good", 5, "Hey"),
@@ -235,9 +222,7 @@ $(document).ready(function(){
 		};
 		createDrawArray(drawArray, variantsPosition[0])
 		// -----------------------------------------------------------------------------
-		var drawArray2 = [car];
-		createDrawArray(drawArray2, variantsPosition[1])
-		console.log(drawArray2)
+
 
 		// --------------FOR ANIMATION FRAME------------------------
 			var globalID,
@@ -293,7 +278,7 @@ $(document).ready(function(){
 			function Correction(){
 				// adding new value of y position-
 				for (var i = 1; i<drawArray.length; i++) {
-					drawArray[i].y +=5;
+					drawArray[i].y +=4;
 				}
 				// -------------------------------
 
@@ -312,11 +297,52 @@ $(document).ready(function(){
 					if(i === 0){
 						return;
 					} else{
+						// get current distance-----------
+							(function(){
+								var carCenter = drawArray[0].get_box_center(),
+								successBoxesCenter,
+								distance;
+
+								successBoxesCenter = obj.get_box_center(),
+								distance = obj.get_distance(successBoxesCenter, carCenter);
+
+								// GoodHit - столкновение с положительным обьектом
+								if (distance <= drawArray[0].get_box_radius()+obj.get_box_radius() && obj.type === "good"){
+							    	console.log("Win")
+							    	console.log(obj.value)
+							    	// obj.type = "noneGod";
+							    	drawArray.splice(i,1);
+
+							    	context = canvas.getContext('2d');
+						        	context.drawImage(starImageObj, drawArray[0].x+30, drawArray[0].y-50, 30, 40);
+							    // fatalHit - столкновение с нежелательным обьектом, которое влечет перезагрузку уровня
+							    }
+							    if (distance <= drawArray[0].get_box_radius()+obj.get_box_radius() && obj.type === "bad"){
+							    	console.log("Looser")
+							    	gameStation = "game_over";
+							    }
+							})()
+						// --------------------------------
+
 						if(obj.y >= 570){
-							obj.y = -10;
-							obj.x = variantsPosition[0][i-1].x;
-							// obj.y = 1;
-							// obj.x = 1;
+							whoBehidLine++;
+					    	if(positionVariation === 1){
+					    		obj.y = -10;
+								obj.x = variantsPosition[0][i-1].x;
+								console.log("positionVariation 1")
+								if(whoBehidLine >= drawArray.length){
+						    		whoBehidLine = 0;
+						    		positionVariation++;
+						    	}
+					    	} else if(positionVariation === 2){
+					    		obj.y = -10;
+								obj.x = variantsPosition[1][i-1].x;
+								console.log("positionVariation 2")
+								if(whoBehidLine >= drawArray.length){
+						    		whoBehidLine = 0;
+						    		positionVariation--;
+						    	}
+					    	}
 						}
 					}
 				});
@@ -359,6 +385,13 @@ $(document).ready(function(){
 
 				// stopping of AnimationFrame
 				getFrame("stop")
+
+				setTimeout(function(){
+			    		gameStation = "starting";
+			    		drawArray=[car];
+			    		createDrawArray(drawArray, variantsPosition[0])
+			    		getFrame("start");
+			    }, 2000);
 			};
 			function drawStart(){
 				context = canvas.getContext('2d');
@@ -395,10 +428,7 @@ $(document).ready(function(){
 				gameLoop();
 				//
 
-				canvas = document.getElementById('myCanvas');
-				context = canvas.getContext('2d');
 				context.clearRect(0, 0, canvas.width, canvas.height);
-
 				// when the game is starting
 			    if(gameStation === "starting"){
 			    	drawStart();
