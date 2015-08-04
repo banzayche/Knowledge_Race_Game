@@ -135,22 +135,7 @@ $(document).ready(function(){
 							    		points ++;
 							    		pointsFlag = false;
 							    	}
-							    	// Window wich show to us the star
-							    	var width = 30,
-							    		height = 40;
-							    	function drawStar(){
-							    			width +=2;
-							    			height +=2;
-							    		context.beginPath();
-						        		context.drawImage(starImageObj, obj.x, obj.y-60, width, height);
-						        		context.closePath();
-
-						        		winningWindow = requestAnimationFrame(drawStar);
-							    	}
-						        	var winningWindow = requestAnimationFrame(drawStar);
-									setTimeout(function(){cancelAnimationFrame(winningWindow); pointsFlag = true;}, 200);
-									// ----------------------------------------------------------------
-
+							    	starDrawing(obj);
 							    // fatalHit - столкновение с нежелательным обьектом, которое влечет перезагрузку уровня
 							    }
 							    if (distance <= drawArray[0].get_box_radius()+obj.get_box_radius() && obj.type === "bad"){
@@ -188,6 +173,22 @@ $(document).ready(function(){
 
 
 		// -------------------VIEWS-------------------------------------------------------------------
+			function starDrawing(obj){
+				// Window wich show to us the star
+					var width = 30,
+						height = 40;
+					function drawStar(){
+						width +=2;
+						height +=2;
+						context.beginPath();
+						context.drawImage(starImageObj, obj.x, obj.y-60, width, height);
+						context.closePath();
+						winningWindow = requestAnimationFrame(drawStar);
+					}
+					var winningWindow = requestAnimationFrame(drawStar);
+					setTimeout(function(){cancelAnimationFrame(winningWindow); pointsFlag = true;}, 200);
+				// ----------------------------------------------------------------
+			}
 			function drawBoxes(index){
 				if(drawArray[index].type === 'good'){
 					context.beginPath();
@@ -307,9 +308,13 @@ $(document).ready(function(){
 		        }
 
 		        context.beginPath();
-		        context.font = 'bold 40pt Calibri';
-				context.fillStyle = 'green';
-				context.fillText(points, 350, 80);
+		        context.font = 'bold 30pt Calibri';
+				context.fillStyle = 'yellow';
+				context.fillText("Total points: "+points, 80, 80);
+				context.lineWidth = 1;
+			      // stroke color
+			      context.strokeStyle = 'orange';
+			      context.strokeText("Total points: "+points, 80, 80);
 				context.fill();
 				context.closePath();
 			}
