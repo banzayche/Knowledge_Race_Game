@@ -1,3 +1,34 @@
+// creating of words array--------------------------------------------------------------
+		var sentenseString = "You have to lock your PC, when you step away. It's very important for security policy!",
+			wordsArr = sentenseString.split(' ');;
+		function detect_words(arr){
+		    var lengthArr = arr.length;
+		    if(lengthArr%2 === 0){
+		        return arr;
+		    } else{
+		        return searchMin(arr);
+		    }
+		    function searchMin(arr){
+		        var minEl = arr[0],
+		            minElIndex = 0;
+		        arr.forEach(function(el, index){
+		            if(el.length <= minEl.length){
+		                minEl = arr[index];
+		                minElIndex = index;
+		            }
+		        });
+		        if(arr[minElIndex-1].length <= arr[minElIndex+1].length && minElIndex-1 !== -1){
+		            arr[minElIndex-1] = arr[minElIndex-1]+' '+minEl;
+		            arr.splice(minElIndex, 1);
+		        } else if(minElIndex+1 !== arr.length){
+		            arr[minElIndex+1] = minEl+' '+arr[minElIndex+1];
+		            arr.splice(minElIndex, 1);
+		        }
+		        return arr;
+		    }
+		}
+		detect_words(wordsArr);
+// -----------------------------------------------------------------------------------------------
 // -------------------POSITIONS #1-------------------------------------
 var variantsPosition = [
 		[
@@ -6,13 +37,15 @@ var variantsPosition = [
 				type: "good",
 				x: 140,
 				y: -355,
-				value: "have to"
+				indexValue: 1,
+				value: wordsArr[1],
 			}, {
 				id: 1,
 				type: "good",
 				x: 50,
 				y: -70,
-				value: "You"
+				indexValue: 0,
+				value: wordsArr[0],
 			}, {
 				id: 2,
 				type: "bad",

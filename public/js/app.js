@@ -6,6 +6,8 @@ $(document).ready(function(){
 		context = canvas.getContext('2d'),
 		succesLearning = 1,
 		currentLearning,
+
+
 		// gameStation = "starting" --> start of the game
 		// gameStation = "running" --> gaming process
 		// gameStation = "game_over" --> end of the game
@@ -57,7 +59,7 @@ $(document).ready(function(){
 			var width = 60,
 				height = 50;
 			obj.map(function( obj, index ) {
-				arr.push(new Game.gameObjConstructor.box(obj.x, obj.y, width, height, obj.type, index, obj.value));
+				arr.push(new Game.gameObjConstructor.box(obj.x, obj.y, width, height, obj.type, index, obj.value, obj.indexValue));
 			});
 		};
 		createDrawArray(drawArray, variantsPosition[0])
@@ -119,32 +121,47 @@ $(document).ready(function(){
 						return;
 					} else{
 						// get current distance-----------
-							(function(){
-								var carCenter = drawArray[0].get_box_center(),
-								successBoxesCenter,
-								distance;
+							var carCenter = drawArray[0].get_box_center(),
+							successBoxesCenter,
+							distance;
 
-								successBoxesCenter = obj.get_box_center(),
-								distance = obj.get_distance(successBoxesCenter, carCenter);
+							successBoxesCenter = obj.get_box_center(),
+							distance = obj.get_distance(successBoxesCenter, carCenter);
 
-								// GoodHit - столкновение с положительным обьектом
-								if (distance <= drawArray[0].get_box_radius()+obj.get_box_radius() && obj.type === "good"){
-							    	// obj.type = "noneGod";
-							    	// drawArray.splice(i,1);
-							    	if(pointsFlag === true){
-							    		points ++;
-							    		pointsFlag = false;
-							    	}
-							    	starDrawing(obj);
-							    // fatalHit - столкновение с нежелательным обьектом, которое влечет перезагрузку уровня
+							// GoodHit - столкновение с положительным обьектом
+							if (distance <= drawArray[0].get_box_radius()+obj.get_box_radius() && obj.type === "good" && obj.hit === true){
+							    if(pointsFlag === true){
+							    	points ++;
+							    	pointsFlag = false;
 							    }
-							    if (distance <= drawArray[0].get_box_radius()+obj.get_box_radius() && obj.type === "bad"){
+							    starDrawing(obj);
+							   // fatalHit - столкновение с нежелательным обьектом, которое влечет перезагрузку уровня
+							   obj.hit = false;
+							}
+							if (distance <= drawArray[0].get_box_radius()+obj.get_box_radius() && obj.type === "bad"){
 							    	gameStation = "game_over";
-							    }
-							})()
+							}
 						// --------------------------------
 
 						if(obj.y >= 570){
+							if(obj.hit === false) {
+								obj.hit = true;
+							}
+							// changing values of good boxes after his hidding
+							if(obj.type === "good"){
+								if(obj.indexValue+2 < wordsArr.length ){
+									obj.indexValue = obj.indexValue+2;
+									obj.value = wordsArr[obj.indexValue];
+								} else if(obj.indexValue+2 === wordsArr.length){
+									obj.indexValue = 0;
+									obj.value = wordsArr[obj.indexValue];
+								} else if(obj.indexValue+2 === wordsArr.length+1) {
+									obj.indexValue = 1;
+									obj.value = wordsArr[obj.indexValue];
+								}
+							}
+
+
 							whoBehidLine++;
 					    	if(positionVariation === 1){
 					    		obj.y = 0;
@@ -176,18 +193,21 @@ $(document).ready(function(){
 			function starDrawing(obj){
 				// Window wich show to us the star
 					var width = 30,
-						height = 40;
+						height = 40,
+                        y = obj.y-60,
+                        x = obj.x;
 					function drawStar(){
-						width +=2;
-						height +=2;
+                        width +=5;
+                        height +=5;
+                        y -= 20;
+                        x += 10;
 						context.beginPath();
-						context.drawImage(starImageObj, obj.x, obj.y-60, width, height);
+						context.drawImage(starImageObj, x, y, width, height);
 						context.closePath();
 						winningWindow = requestAnimationFrame(drawStar);
 					}
 					var winningWindow = requestAnimationFrame(drawStar);
-					setTimeout(function(){cancelAnimationFrame(winningWindow); pointsFlag = true;}, 200);
-				// ----------------------------------------------------------------
+					setTimeout(function(){cancelAnimationFrame(winningWindow); pointsFlag = true;}, 400);
 			}
 			function drawBoxes(index){
 				if(drawArray[index].type === 'good'){

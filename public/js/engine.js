@@ -27,7 +27,7 @@ var Game = {
 			};
 		},
 		// for runing boxes
-		box: function(x, y, width, height, type, id, value, points){
+		box: function(x, y, width, height, type, id, value, indexValue){
 			this.x = x;
 			this.y = y;
 			this.width = width;
@@ -35,8 +35,13 @@ var Game = {
 			this.type = type;
 			this.id = id;
 			this.distance = undefined;
-			this.value = value;
 			this.points = 0;
+
+			if(this.type === "good"){
+				this.hit = true;
+				this.indexValue= indexValue;
+				this.value = value;
+			}
 
 			// for getting center of box
 			this.get_box_center = function(){
