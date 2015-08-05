@@ -47,4 +47,13 @@
       -ms-transform: rotateX(7deg) rotateY(0deg) rotateZ(0deg);
       transform: rotateX(7deg) rotateY(0deg) rotateZ(0deg);
 }
-
+.quiz-container{
+      width: 700px;
+      height: 300px;
+      background-color: red;
+      position: absolute;
+      margin: 100px auto;
+      top:0;
+      left: 0;
+      right: 0;
+}

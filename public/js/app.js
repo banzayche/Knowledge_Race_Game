@@ -12,14 +12,15 @@ $(document).ready(function(){
 		// gameStation = "running" --> gaming process
 		// gameStation = "game_over" --> end of the game
 		gameStation = "starting",
-		points = 0,
+
 		pointsFlag = true,
 		positionVariation = 1,
 		whoBehidLine = 0,
+		starFrame,
 		// for arrow keys
 		keyState = {},
 		// -------------
-		points = 0,
+		points = 47,
 		car = new Game.gameObjConstructor.car(185, 480, 22,35, "car"),
 
 		// CAR
@@ -81,9 +82,9 @@ $(document).ready(function(){
 				}
 			}
 			$("body").keyup(function(e){
-				if(e.keyCode === 13 && stopRuning === true){
+				if(e.keyCode === 13 && stopRuning === true && gameStation === "running"){
 					getFrame("start");
-				} else if(e.keyCode === 13 && stopRuning === false){
+				} else if(e.keyCode === 13 && stopRuning === false && gameStation === "running"){
 					getFrame("stop");
 				}
 			});
@@ -130,13 +131,15 @@ $(document).ready(function(){
 
 							// GoodHit - столкновение с положительным обьектом
 							if (distance <= drawArray[0].get_box_radius()+obj.get_box_radius() && obj.type === "good" && obj.hit === true){
-							    if(pointsFlag === true){
-							    	points ++;
-							    	pointsFlag = false;
-							    }
-							    starDrawing(obj);
+							    points ++;
+
+							   starDrawing(obj);
 							   // fatalHit - столкновение с нежелательным обьектом, которое влечет перезагрузку уровня
 							   obj.hit = false;
+
+							   if(points === gameRulesObject.pointsAtAll){
+							   		gameStation = "quiz";
+							   }
 							}
 							if (distance <= drawArray[0].get_box_radius()+obj.get_box_radius() && obj.type === "bad"){
 							    	gameStation = "game_over";
@@ -149,15 +152,15 @@ $(document).ready(function(){
 							}
 							// changing values of good boxes after his hidding
 							if(obj.type === "good"){
-								if(obj.indexValue+2 < wordsArr.length ){
+								if(obj.indexValue+2 < gameRulesObject.arr.length ){
 									obj.indexValue = obj.indexValue+2;
-									obj.value = wordsArr[obj.indexValue];
-								} else if(obj.indexValue+2 === wordsArr.length){
+									obj.value = gameRulesObject.arr[obj.indexValue];
+								} else if(obj.indexValue+2 === gameRulesObject.arr.length){
 									obj.indexValue = 0;
-									obj.value = wordsArr[obj.indexValue];
-								} else if(obj.indexValue+2 === wordsArr.length+1) {
+									obj.value = gameRulesObject.arr[obj.indexValue];
+								} else if(obj.indexValue+2 === gameRulesObject.arr.length+1) {
 									obj.indexValue = 1;
-									obj.value = wordsArr[obj.indexValue];
+									obj.value = gameRulesObject.arr[obj.indexValue];
 								}
 							}
 
@@ -197,17 +200,14 @@ $(document).ready(function(){
                         y = obj.y-60,
                         x = obj.x;
 					function drawStar(){
-                        width +=5;
-                        height +=5;
+                        width +=15;
+                        height +=15;
                         y -= 20;
-                        x += 10;
-						context.beginPath();
 						context.drawImage(starImageObj, x, y, width, height);
-						context.closePath();
-						winningWindow = requestAnimationFrame(drawStar);
+						starFrame = requestAnimationFrame(drawStar);
 					}
-					var winningWindow = requestAnimationFrame(drawStar);
-					setTimeout(function(){cancelAnimationFrame(winningWindow); pointsFlag = true;}, 400);
+					starFrame = requestAnimationFrame(drawStar);
+					setTimeout(function(){cancelAnimationFrame(starFrame); pointsFlag = true;}, 1000);
 			}
 			function drawBoxes(index){
 				if(drawArray[index].type === 'good'){
@@ -251,13 +251,7 @@ $(document).ready(function(){
 				// stopping of AnimationFrame
 				getFrame("stop")
 
-				setTimeout(function(){
-			    		gameStation = "starting";
-			    		points = 0;
-			    		drawArray=[car];
-			    		createDrawArray(drawArray, variantsPosition[0])
-			    		getFrame("start")
-			    }, 2000);
+				setTimeout(getStartAttrs, 2000);
 			};
 			function drawStart(){
 				context.clearRect(0, 0, canvas.width, canvas.height);
@@ -284,6 +278,59 @@ $(document).ready(function(){
 				// next gameStation
 				gameStation = "running";
 			};
+			function getStartAttrs(){
+				gameStation = "starting";
+			    points = 0;
+			    drawArray=[car];
+			    createDrawArray(drawArray, variantsPosition[0])
+			    getFrame("start")
+			}
+			function showTheQuiz(quizObj){
+				// canceling drawing of star
+				cancelAnimationFrame(starFrame);
+				// canceling drawing of all game
+				getFrame("stop");
+				// clearing of quiz element
+
+
+				gameRulesObject.answersVariant.map(function(ans, index){
+					var answer = document.createElement('a');
+					answer.setAttribute("class", "list-group-item answers");
+					answer.setAttribute("index", index);
+					answer.innerHTML = ans;
+					$("#quizAnswers").append(answer);
+				});
+				$('#myModal').modal('show');
+
+				// checking the answer
+				$("#quizAnswers>a").click(function(e){
+					// result of clicked answer
+					var result = $(e.target).html();
+
+					if(result === gameRulesObject.answersVariant[gameRulesObject.rightIndex]){
+						console.log('Nice Work')
+						setTimeout(function(){
+							gameStation = "starting";
+							$('#myCanvas').show();
+							$('h1').css('visibility', 'hidden');
+							getStartAttrs();
+							$('#myModal').modal('hide')
+							$("#quizAnswers").html('')
+						}, 4000)
+					} else{
+						console.log('Nice try')
+					setTimeout(function(){
+						gameStation = "starting";
+						$('#myCanvas').show();
+						$('h1').css('visibility', 'hidden');
+						getStartAttrs();
+						$('#myModal').modal('hide')
+						$("#quizAnswers").html('')
+					}, 4000)
+					}
+
+				});
+			}
 		// -------------------------------------------------------------------------------------------
 
 
@@ -319,9 +366,14 @@ $(document).ready(function(){
 			    	}
 			    }
 
+
 			    // control of game rules
 			    Correction();
 
+			    if(gameStation === "quiz"){
+			    	showTheQuiz();
+			    	return;
+		        }
 			    // when you hit "Bad" box
 			    if(gameStation === "game_over"){
 			    	drawGameOver();

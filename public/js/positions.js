@@ -1,6 +1,7 @@
 // creating of words array--------------------------------------------------------------
+		var gameRulesObject = new Object();
 		var sentenseString = "You have to lock your PC, when you step away. It's very important for security policy!",
-			wordsArr = sentenseString.split(' ');;
+			wordsArr = sentenseString.split(' ');
 		function detect_words(arr){
 		    var lengthArr = arr.length;
 		    if(lengthArr%2 === 0){
@@ -27,7 +28,13 @@
 		        return arr;
 		    }
 		}
-		detect_words(wordsArr);
+		gameRulesObject.arr = detect_words(wordsArr);
+
+		gameRulesObject.pointsAtAll = gameRulesObject.arr.length*3;
+
+		gameRulesObject.question = "What do you need to do when you step away from your workplace?";
+		gameRulesObject.answersVariant = ["You have to lock your PC, when you step away.", "You have to call your mom.", "You have to play on your phone"];
+		gameRulesObject.rightIndex = 0;
 // -----------------------------------------------------------------------------------------------
 // -------------------POSITIONS #1-------------------------------------
 var variantsPosition = [
