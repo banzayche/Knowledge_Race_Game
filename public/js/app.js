@@ -298,10 +298,12 @@ $(document).ready(function(){
 				var answer = document.createElement('a');
 				answer.setAttribute("class", "list-group-item answers");
 				answer.setAttribute("index", index);
+				answer.setAttribute("href", "#");
 				answer.innerHTML = ans;
 				$("#quizAnswers").append(answer);
 			});
 			$('#myModal').modal('show');
+			$("#quizAnswers").find("a[index="+gameRulesObject.rightIndex+"]").focus()
 			var canAnsew = true;
 			// checking the answer
 			$("#quizAnswers>a").click(function(e){
@@ -326,6 +328,17 @@ $(document).ready(function(){
 						canAnsew = false;
 						setTimeout(function(){
 							$("body").removeClass("bodyGood").removeClass("bodyBad")
+							// Creatin of new Level----------------------------------------------------
+							if(gameRulesObject.currentLevel < enteredDATA.length-1){
+								console.log(gameRulesObject.currentLevel)
+								addDataLevel(gameRulesObject.currentLevel+1);
+								creatingVarianPosition();
+							} else{
+								addDataLevel(0);
+								creatingVarianPosition();
+								console.log("The End")
+							}
+							//--------------------------------------------------------------------
 							gameStation = "starting";
 							$('#myCanvas').show();
 							$('h1').css('visibility', 'hidden');
@@ -405,9 +418,14 @@ $(document).ready(function(){
 				context.fillStyle = 'yellow';
 				context.fillText("Total points: "+points, 80, 80);
 				context.lineWidth = 1;
-			      // stroke color
-			      context.strokeStyle = 'orange';
-			      context.strokeText("Total points: "+points, 80, 80);
+			    // stroke color
+			    context.strokeStyle = 'orange';
+
+			    context.fillStyle = 'green';
+			    context.fillText("Level #: "+ (gameRulesObject.currentLevel+1), 80, 130);
+
+
+
 				context.fill();
 				context.closePath();
 			}

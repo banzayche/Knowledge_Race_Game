@@ -110,7 +110,8 @@
 }
 @media (min-width: 768px){
     .modal-sm {
-          width: 440px;
+          width: 480px;
+          margin: 170px auto;
       }
 }
 
