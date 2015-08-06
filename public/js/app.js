@@ -29,7 +29,7 @@ $(document).ready(function(){
 		carImageObj.onload = function() {
 			canDrawCar = true;
 		};
-		carImageObj.src = '/images/car3.png';
+		carImageObj.src = './images/car3.png';
 		// --------------------------------------------
 		// BAD
 		var badImageObj = new Image();
@@ -37,7 +37,7 @@ $(document).ready(function(){
 		carImageObj.onload = function() {
 			canDrawBad = true;
 		};
-		badImageObj.src = '/images/bad.png';
+		badImageObj.src = './images/bad.png';
 		// ----------------------------------------------
 		// STAR
 		var starImageObj = new Image();
@@ -45,7 +45,7 @@ $(document).ready(function(){
 		carImageObj.onload = function() {
 			canDrawStar = true;
 		};
-		starImageObj.src = '/images/star.png';
+		starImageObj.src = './images/star.png';
 		// --------------------------------------
 		var drawArray,
 		succesLearning = 3,
@@ -305,6 +305,17 @@ $(document).ready(function(){
 			$('#myModal').modal('show');
 			$("#quizAnswers").find("a[index="+gameRulesObject.rightIndex+"]").focus()
 			var canAnsew = true;
+
+
+
+
+
+
+
+
+
+
+
 			// checking the answer
 			$("#quizAnswers>a").click(function(e){
 				// user can unswer only one time
@@ -365,6 +376,7 @@ $(document).ready(function(){
 					}
 					}
 				});
+				// =======================================CLICK=====================================
 			}
 		// ------------------------------------------------------------------------------------------
 
