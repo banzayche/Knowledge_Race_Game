@@ -20,7 +20,7 @@ $(document).ready(function(){
 		// for arrow keys
 		keyState = {},
 		// -------------
-		points = 47,
+		points = 0,
 		car = new Game.gameObjConstructor.car(185, 480, 22,35, "car"),
 
 		// CAR
