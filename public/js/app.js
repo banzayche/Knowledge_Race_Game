@@ -88,14 +88,6 @@ $(document).ready(function(){
 					getFrame("stop");
 				}
 			});
-			$("body").click(function(e){
-				if(e.target.id == "start"){
-					getFrame("start")
-				} else if(e.target.id == "stop"){
-					getFrame("stop")
-				}
-			});
-
 		// ----CONTROLLERS-----------------------------
 			function Correction(){
 				// adding new value of y position-
@@ -200,8 +192,8 @@ $(document).ready(function(){
                         y = obj.y-60,
                         x = obj.x;
 					function drawStar(){
-                        width +=15;
-                        height +=15;
+                        width +=5;
+                        height +=5;
                         y -= 20;
 						context.drawImage(starImageObj, x, y, width, height);
 						starFrame = requestAnimationFrame(drawStar);
@@ -303,7 +295,7 @@ $(document).ready(function(){
 				$("#quizAnswers").append(answer);
 			});
 			$('#myModal').modal('show');
-			$("#quizAnswers").find("a[index="+gameRulesObject.rightIndex+"]").focus()
+			$("#quizAnswers").find("a[index=0]").focus()
 			var canAnsew = true;
 
 
@@ -315,11 +307,20 @@ $(document).ready(function(){
 
 
 
-
+			$("#quizAnswers>a").keyup(function(e){
+				if(e.keyCode === 13 && canAnsew == true){
+					checkingAncwer(e)
+				}
+			});
 			// checking the answer
 			$("#quizAnswers>a").click(function(e){
 				// user can unswer only one time
 				if(canAnsew == true){
+					checkingAncwer(e)
+				}
+				});
+				// =======================================CLICK=====================================
+				function checkingAncwer(e){
 					// result of clicked answer
 					var result = $(e.target).html();
 						// animation of pressed answer
@@ -356,7 +357,7 @@ $(document).ready(function(){
 							getStartAttrs();
 							$('#myModal').modal('hide')
 							$("#quizAnswers").html('')
-						}, 10000)
+						}, 5000)
 					// if answer false
 					} else{
 						console.log('Nice try');
@@ -372,11 +373,9 @@ $(document).ready(function(){
 							getStartAttrs();
 							$('#myModal').modal('hide')
 							$("#quizAnswers").html('')
-						}, 10000)
+						}, 5000)
 					}
-					}
-				});
-				// =======================================CLICK=====================================
+				}
 			}
 		// ------------------------------------------------------------------------------------------
 
