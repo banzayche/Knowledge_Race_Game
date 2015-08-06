@@ -4,10 +4,6 @@ $(document).ready(function(){
 	function GameProcess(){
 		var canvas = document.getElementById('myCanvas'),
 		context = canvas.getContext('2d'),
-		succesLearning = 1,
-		currentLearning,
-
-
 		// gameStation = "starting" --> start of the game
 		// gameStation = "running" --> gaming process
 		// gameStation = "game_over" --> end of the game
@@ -20,47 +16,14 @@ $(document).ready(function(){
 		// for arrow keys
 		keyState = {},
 		// -------------
-		points = 0,
-		car = new Game.gameObjConstructor.car(185, 480, 22,35, "car"),
-
-		// CAR
-		carImageObj = new Image(),
-		canDrawCar = false;
-		carImageObj.onload = function() {
-			canDrawCar = true;
-		};
-		carImageObj.src = './images/car3.png';
-		// --------------------------------------------
-		// BAD
-		var badImageObj = new Image();
-		var canDrawBad = false;
-		carImageObj.onload = function() {
-			canDrawBad = true;
-		};
-		badImageObj.src = './images/bad.png';
-		// ----------------------------------------------
-		// STAR
-		var starImageObj = new Image();
-		var canDrawStar = false;
-		carImageObj.onload = function() {
-			canDrawStar = true;
-		};
-		starImageObj.src = './images/star.png';
-		// --------------------------------------
-		var drawArray,
-		succesLearning = 3,
-		currentLearning = 0,
-		question = "",
-		answers = [],
-		trueAnsverIndex = 2;
+		points = 47,
+		car = new Game.gameObjConstructor.car(gameRulesObject.car.carX, gameRulesObject.car.carY, gameRulesObject.car.carWidth, gameRulesObject.car.carHeight, "car");
 
 		// -------------CREATING_OF_DRAW-ARRAY--------------------------------------
-		drawArray = [car];
+		var drawArray = [car];
 		function createDrawArray(arr, obj){
-			var width = 60,
-				height = 50;
 			obj.map(function( obj, index ) {
-				arr.push(new Game.gameObjConstructor.box(obj.x, obj.y, width, height, obj.type, index, obj.value, obj.indexValue));
+				arr.push(new Game.gameObjConstructor.box(obj.x, obj.y, gameRulesObject.boxes.boxWidth, gameRulesObject.boxes.boxHeight, obj.type, index, obj.value, obj.indexValue));
 			});
 		};
 		createDrawArray(drawArray, variantsPosition[0])
@@ -93,7 +56,7 @@ $(document).ready(function(){
 				// adding new value of y position-
 				if(gameStation === "running"){
 					for (var i = 1; i<drawArray.length; i++) {
-						drawArray[i].y +=6;
+						drawArray[i].y += gameRulesObject.gameSpeed;
 					}
 				}
 				// -------------------------------
@@ -295,87 +258,103 @@ $(document).ready(function(){
 				$("#quizAnswers").append(answer);
 			});
 			$('#myModal').modal('show');
-			$("#quizAnswers").find("a[index=0]").focus()
-			var canAnsew = true;
 
+			workingWithAnswers();
+		}
 
-
-
-
-
-
-
-
-
-			$("#quizAnswers>a").keyup(function(e){
-				if(e.keyCode === 13 && canAnsew == true){
-					checkingAncwer(e)
+		function workingWithAnswers(){
+				var canAnsew = true,
+					valueOnFocus;
+				function focusAnswer(index){
+					$("#quizAnswers").find("a[index="+index+"]").focus()
+					valueOnFocus = index;
 				}
-			});
-			// checking the answer
-			$("#quizAnswers>a").click(function(e){
-				// user can unswer only one time
-				if(canAnsew == true){
-					checkingAncwer(e)
-				}
-				});
-				// =======================================CLICK=====================================
-				function checkingAncwer(e){
-					// result of clicked answer
-					var result = $(e.target).html();
-						// animation of pressed answer
-					$(e.target).addClass("pressedAnswer");
-					// marking of answers
-					setTimeout(function(){
-						$("#quizAnswers>a").removeClass("pressedAnswer");
-						$("#quizAnswers>a").addClass("wrongAnswers");
-						$("#quizAnswers").find("a[index="+gameRulesObject.rightIndex+"]").removeClass("wrongAnswers").addClass("trueAnswers");
-					},2000);
-						// if answer right
-					if(result === gameRulesObject.answersVariant[gameRulesObject.rightIndex]){
-						console.log('Nice Work');
-						setTimeout(function(){
-							$("body").addClass("bodyGood");
-						},2000);
-						canAnsew = false;
-						setTimeout(function(){
-							$("body").removeClass("bodyGood").removeClass("bodyBad")
-							// Creatin of new Level----------------------------------------------------
-							if(gameRulesObject.currentLevel < enteredDATA.length-1){
-								console.log(gameRulesObject.currentLevel)
-								addDataLevel(gameRulesObject.currentLevel+1);
-								creatingVarianPosition();
-							} else{
-								addDataLevel(0);
-								creatingVarianPosition();
-								console.log("The End")
-							}
-							//--------------------------------------------------------------------
-							gameStation = "starting";
-							$('#myCanvas').show();
-							$('h1').css('visibility', 'hidden');
-							getStartAttrs();
-							$('#myModal').modal('hide')
-							$("#quizAnswers").html('')
-						}, 5000)
-					// if answer false
-					} else{
-						console.log('Nice try');
-						setTimeout(function(){
-							$("body").addClass("bodyBad");
-						},2000);
-						canAnsew = false;
-						setTimeout(function(){
-							$("body").removeClass("bodyGood").removeClass("bodyBad")
-							gameStation = "starting";
-							$('#myCanvas').show();
-							$('h1').css('visibility', 'hidden');
-							getStartAttrs();
-							$('#myModal').modal('hide')
-							$("#quizAnswers").html('')
-						}, 5000)
+				focusAnswer(0);
+				$("#quizAnswers>a").keyup(function(e){
+					if(e.keyCode === 38){
+						if(valueOnFocus > 0){
+							focusAnswer(valueOnFocus-1);
+						} else{
+							focusAnswer(gameRulesObject.answersVariant.length-1);
+						}
 					}
-				}
+					if(e.keyCode === 40){
+						if(valueOnFocus < gameRulesObject.answersVariant.length-1){
+							focusAnswer(valueOnFocus+1);
+						} else{
+							focusAnswer(0);
+						}
+					}
+				});
+				$("#quizAnswers>a").keyup(function(e){
+					if(e.keyCode === 13 && canAnsew == true){
+						checkingAncwer(e)
+					}
+				});
+				// checking the answer
+				$("#quizAnswers>a").click(function(e){
+					// user can unswer only one time
+					if(canAnsew == true){
+						checkingAncwer(e)
+					}
+					});
+					// =======================================CLICK=====================================
+					function checkingAncwer(e){
+						// result of clicked answer
+						var result = $(e.target).html();
+							// animation of pressed answer
+						$(e.target).addClass("pressedAnswer");
+						// marking of answers
+						setTimeout(function(){
+							$("#quizAnswers>a").removeClass("pressedAnswer");
+							$("#quizAnswers>a").addClass("wrongAnswers");
+							$("#quizAnswers").find("a[index="+gameRulesObject.rightIndex+"]").removeClass("wrongAnswers").addClass("trueAnswers");
+						},2000);
+							// if answer right
+						if(result === gameRulesObject.answersVariant[gameRulesObject.rightIndex]){
+							console.log('Nice Work');
+							setTimeout(function(){
+								$("body").addClass("bodyGood");
+							},2000);
+							canAnsew = false;
+							setTimeout(function(){
+								$("body").removeClass("bodyGood").removeClass("bodyBad")
+								// Creatin of new Level----------------------------------------------------
+								if(gameRulesObject.currentLevel < enteredDATA.length-1){
+									console.log(gameRulesObject.currentLevel)
+									addDataLevel(gameRulesObject.currentLevel+1);
+									creatingVarianPosition();
+								} else{
+									addDataLevel(0);
+									creatingVarianPosition();
+									console.log("The End")
+								}
+								//--------------------------------------------------------------------
+								gameStation = "starting";
+								$('#myCanvas').show();
+								$('h1').css('visibility', 'hidden');
+								getStartAttrs();
+								$('#myModal').modal('hide')
+								$("#quizAnswers").html('')
+							}, 5000)
+						// if answer false
+						} else{
+							console.log('Nice try');
+							setTimeout(function(){
+								$("body").addClass("bodyBad");
+							},2000);
+							canAnsew = false;
+							setTimeout(function(){
+								$("body").removeClass("bodyGood").removeClass("bodyBad")
+								gameStation = "starting";
+								$('#myCanvas').show();
+								$('h1').css('visibility', 'hidden');
+								getStartAttrs();
+								$('#myModal').modal('hide')
+								$("#quizAnswers").html('')
+							}, 5000)
+						}
+					}
 			}
 		// ------------------------------------------------------------------------------------------
 
@@ -454,10 +433,10 @@ $(document).ready(function(){
 
 			function gameLoop() {
 			    if (keyState[37] || keyState[65]){
-			        drawArray[0].x -= 5;
+			        drawArray[0].x -= gameRulesObject.car.turnSpeed;
 			    }
 			    if (keyState[39] || keyState[68]){
-			        drawArray[0].x += 5;
+			        drawArray[0].x += gameRulesObject.car.turnSpeed;
 			    }
 
 			    // redraw/reposition your object here

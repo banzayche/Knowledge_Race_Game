@@ -47,10 +47,12 @@
       -ms-transform: rotateX(7deg) rotateY(0deg) rotateZ(0deg);
       transform: rotateX(7deg) rotateY(0deg) rotateZ(0deg);
 }
+
+/*QUIZ*/
 #quizAnswers{
       cursor: pointer;
 }
-/* The animation code */
+
 @keyframes pressedAnswer {
     0%  {background-color: white;}
     10% {background-color: rgba(4,4,4,.2);}
@@ -62,8 +64,8 @@
     90% {background-color: rgba(4,4,4,.2);}
 }
 
-/* The element to apply the animation to */
 .pressedAnswer {
+    background-color: transparent !important;
     animation-name: pressedAnswer;
     animation-duration: 2s;
 }
@@ -121,9 +123,9 @@
       text-shadow: 1px 1px 1px black;
       font-weight: bold;
 }
-/*#myModal .modal-header{
-      background-image: url('../images/atention.png');
-}*/
+
 #myModal .modal-footer{
       background-image: url('../images/atention.png');
 }
+
+#myModal a:focus {outline:none;background-color: rgba(4,4,4,.1)}

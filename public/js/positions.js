@@ -1,7 +1,46 @@
 // creating of words array--------------------------------------------------------------
+// CAR
+var carImageObj = new Image(),
+canDrawCar = false;
+carImageObj.onload = function() {
+	canDrawCar = true;
+};
+carImageObj.src = './images/car3.png';
+// --------------------------------------------
+// BAD
+var badImageObj = new Image();
+var canDrawBad = false;
+carImageObj.onload = function() {
+	canDrawBad = true;
+};
+badImageObj.src = './images/bad.png';
+// ----------------------------------------------
+// STAR
+var starImageObj = new Image();
+var canDrawStar = false;
+carImageObj.onload = function() {
+	canDrawStar = true;
+};
+starImageObj.src = './images/star.png';
+// --------------------------------------
+
 // current Level object
-var gameRulesObject = new Object();
+var gameRulesObject = {
+	boxes: {
+		boxHeight: 40,
+		boxWidth: 40,
+	},
+	car: {
+		carHeight: 35,
+		carWidth: 22,
+		carX: 185,
+		carY: 480,
+		turnSpeed: 5,
+	},
+	gameSpeed: 5,
+};
 //
+
 // entered DATA
 var enteredDATA = [
 	{
@@ -27,6 +66,7 @@ var enteredDATA = [
 	}
 ];
 //
+
 // Function of adding data
 function addDataLevel(numberLevel){
 	gameRulesObject.currentLevel = numberLevel;
@@ -120,7 +160,7 @@ function creatingVarianPosition(){
 				y: -460
 			}
 		],
-		[{x:40}, {x:210}, {x:280}, {x:0}, {x:100}, {x:0}, {x:360}]
+		[{x:40}, {x:210}, {x:280}, {x:0}, {x:100}, {x:0}, {x:360}],
 	];
 }
 creatingVarianPosition();
