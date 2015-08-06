@@ -1,0 +1,129 @@
+/*#myCanvas{
+	border: 2px solid grey;
+	display: block;
+	margin: 0 auto;
+}*/
+
+#frame {
+      width: 425px;
+      height: 800px;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      margin: auto;
+      -webkit-perspective: 100px;
+      -moz-perspective: 100px;
+      -o-perspective: 100px;
+      -ms-perspective: 100px;
+      perspective: 100px;
+      -webkit-perspective-origin: 100%, 100%;
+      -moz-perspective-origin: 100%, 100%;
+      -o-perspective-origin: 100%, 100%;
+      -ms-perspective-origin: 100%, 100%;
+      perspective-origin: 100%, 100%;
+      -webkit-transform: rotateX(7deg) rotateY(0deg) rotateZ(0deg);
+      -moz-transform: rotateX(7deg) rotateY(0deg) rotateZ(0deg);
+      -o-transform: rotateX(7deg) rotateY(0deg) rotateZ(0deg);
+      -ms-transform: rotateX(7deg) rotateY(0deg) rotateZ(0deg);
+      transform: rotateX(7deg) rotateY(0deg) rotateZ(0deg);
+}
+
+#myCanvas {
+      border: 3px solid #dedede;
+      -webkit-perspective: 100px;
+      -moz-perspective: 100px;
+      -o-perspective: 100px;
+      -ms-perspective: 100px;
+      perspective: 100px;
+      -webkit-perspective-origin: 100%, 100%;
+      -moz-perspective-origin: 100%, 100%;
+      -o-perspective-origin: 100%, 100%;
+      -ms-perspective-origin: 100%, 100%;
+      perspective-origin: 100%, 100%;
+      -webkit-transform: rotateX(7deg) rotateY(0deg) rotateZ(0deg);
+      -moz-transform: rotateX(7deg) rotateY(0deg) rotateZ(0deg);
+      -o-transform: rotateX(7deg) rotateY(0deg) rotateZ(0deg);
+      -ms-transform: rotateX(7deg) rotateY(0deg) rotateZ(0deg);
+      transform: rotateX(7deg) rotateY(0deg) rotateZ(0deg);
+}
+#quizAnswers{
+      cursor: pointer;
+}
+/* The animation code */
+@keyframes pressedAnswer {
+    0%  {background-color: white;}
+    10% {background-color: rgba(4,4,4,.2);}
+    20% {background-color: white;}
+    30% {background-color: rgba(4,4,4,.2);}
+    40% {background-color: white;}
+    50% {background-color: rgba(4,4,4,.2);}
+    70% {background-color: white;}
+    90% {background-color: rgba(4,4,4,.2);}
+}
+
+/* The element to apply the animation to */
+.pressedAnswer {
+    animation-name: pressedAnswer;
+    animation-duration: 2s;
+}
+.wrongAnswers{
+      transition: background-color 1s;
+      background-color: #F56464 !important;
+}
+.trueAnswers{
+      transition: background-color 1s;
+      background-color: #8BE093 !important;
+}
+
+@keyframes bodyGood {
+    0%  {background-color: white;}
+    10% {background-color: #8BE093;}
+    20% {background-color: white;}
+    30% {background-color: #8BE093;}
+    40% {background-color: white;}
+    50% {background-color: #8BE093;}
+    70% {background-color: white;}
+    90% {background-color: #8BE093;}
+}
+.bodyGood{
+    animation-name: bodyGood;
+    animation-duration: 2s;
+}
+@keyframes bodyBad {
+    0%  {background-color: white;}
+    10% {background-color: #F56464;}
+    20% {background-color: white;}
+    30% {background-color: #F56464;}
+    40% {background-color: white;}
+    50% {background-color: #F56464;}
+    70% {background-color: white;}
+    90% {background-color: #F56464;}
+}
+.bodyBad{
+    animation-name: bodyBad;
+    animation-duration: 2s;
+}
+
+.modal-backdrop{
+      opacity: 0 !important;
+}
+@media (min-width: 768px){
+    .modal-sm {
+          width: 480px;
+          margin: 170px auto;
+      }
+}
+
+/*modal*/
+#myModal .modal-header h3{
+      color: grey;
+      text-shadow: 1px 1px 1px black;
+      font-weight: bold;
+}
+/*#myModal .modal-header{
+      background-image: url('../images/atention.png');
+}*/
+#myModal .modal-footer{
+      background-image: url('../images/atention.png');
+}
