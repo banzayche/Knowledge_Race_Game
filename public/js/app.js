@@ -278,61 +278,82 @@ $(document).ready(function(){
 				// next gameStation
 				gameStation = "running";
 			};
-			function getStartAttrs(){
+		// -------------------------------------------------------------------------------------------
+		// Functions---------------------------------------------------------------------------------
+		function getStartAttrs(){
 				gameStation = "starting";
 			    points = 0;
 			    drawArray=[car];
 			    createDrawArray(drawArray, variantsPosition[0])
 			    getFrame("start")
 			}
-			function showTheQuiz(quizObj){
-				// canceling drawing of star
-				cancelAnimationFrame(starFrame);
-				// canceling drawing of all game
-				getFrame("stop");
-				// clearing of quiz element
+		function showTheQuiz(quizObj){
+			// canceling drawing of star
+			cancelAnimationFrame(starFrame);
+			// canceling drawing of all game
+			getFrame("stop");
+			// clearing of quiz element
 
-
-				gameRulesObject.answersVariant.map(function(ans, index){
-					var answer = document.createElement('a');
-					answer.setAttribute("class", "list-group-item answers");
-					answer.setAttribute("index", index);
-					answer.innerHTML = ans;
-					$("#quizAnswers").append(answer);
-				});
-				$('#myModal').modal('show');
-
-				// checking the answer
-				$("#quizAnswers>a").click(function(e){
+			gameRulesObject.answersVariant.map(function(ans, index){
+				var answer = document.createElement('a');
+				answer.setAttribute("class", "list-group-item answers");
+				answer.setAttribute("index", index);
+				answer.innerHTML = ans;
+				$("#quizAnswers").append(answer);
+			});
+			$('#myModal').modal('show');
+			var canAnsew = true;
+			// checking the answer
+			$("#quizAnswers>a").click(function(e){
+				// user can unswer only one time
+				if(canAnsew == true){
 					// result of clicked answer
 					var result = $(e.target).html();
-
+						// animation of pressed answer
+					$(e.target).addClass("pressedAnswer");
+					// marking of answers
+					setTimeout(function(){
+						$("#quizAnswers>a").removeClass("pressedAnswer");
+						$("#quizAnswers>a").addClass("wrongAnswers");
+						$("#quizAnswers").find("a[index="+gameRulesObject.rightIndex+"]").removeClass("wrongAnswers").addClass("trueAnswers");
+					},2000);
+						// if answer right
 					if(result === gameRulesObject.answersVariant[gameRulesObject.rightIndex]){
-						console.log('Nice Work')
+						console.log('Nice Work');
 						setTimeout(function(){
+							$("body").addClass("bodyGood");
+						},2000);
+						canAnsew = false;
+						setTimeout(function(){
+							$("body").removeClass("bodyGood").removeClass("bodyBad")
 							gameStation = "starting";
 							$('#myCanvas').show();
 							$('h1').css('visibility', 'hidden');
 							getStartAttrs();
 							$('#myModal').modal('hide')
 							$("#quizAnswers").html('')
-						}, 4000)
+						}, 10000)
+					// if answer false
 					} else{
-						console.log('Nice try')
-					setTimeout(function(){
-						gameStation = "starting";
-						$('#myCanvas').show();
-						$('h1').css('visibility', 'hidden');
-						getStartAttrs();
-						$('#myModal').modal('hide')
-						$("#quizAnswers").html('')
-					}, 4000)
+						console.log('Nice try');
+						setTimeout(function(){
+							$("body").addClass("bodyBad");
+						},2000);
+						canAnsew = false;
+						setTimeout(function(){
+							$("body").removeClass("bodyGood").removeClass("bodyBad")
+							gameStation = "starting";
+							$('#myCanvas').show();
+							$('h1').css('visibility', 'hidden');
+							getStartAttrs();
+							$('#myModal').modal('hide')
+							$("#quizAnswers").html('')
+						}, 10000)
 					}
-
+					}
 				});
 			}
-		// -------------------------------------------------------------------------------------------
-
+		// ------------------------------------------------------------------------------------------
 
 
 
