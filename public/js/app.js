@@ -16,7 +16,7 @@ $(document).ready(function(){
 		// for arrow keys
 		keyState = {},
 		// -------------
-		points = 0,
+		points = 47,
 		car = new Game.gameObjConstructor.car(gameRulesObject.car.x, gameRulesObject.car.y, gameRulesObject.car.width, gameRulesObject.car.height, "car");
 
 		// -------------CREATING_OF_DRAW-ARRAY--------------------------------------
@@ -47,8 +47,10 @@ $(document).ready(function(){
 			$("body").keyup(function(e){
 				if(e.keyCode === 13 && stopRuning === true && gameStation === "running"){
 					getFrame("start");
+					$(document).trigger("BgMusic:play");
 				} else if(e.keyCode === 13 && stopRuning === false && gameStation === "running"){
 					getFrame("stop");
+					$(document).trigger("BgMusic:stop");
 				}
 			});
 		// ----CONTROLLERS-----------------------------
@@ -89,15 +91,18 @@ $(document).ready(function(){
 							    points ++;
 
 							   starDrawing(obj);
-							   // fatalHit - столкновение с нежелательным обьектом, которое влечет перезагрузку уровня
+
 							   obj.hit = false;
 
 							   if(points === gameRulesObject.pointsAtAll){
 							   		gameStation = "quiz";
 							   }
+
+							   $(document).trigger("hitWordMusic:play");
 							}
 							if (distance <= drawArray[0].get_box_radius()+obj.get_box_radius() && obj.type === "bad"){
 							    	gameStation = "game_over";
+							    	$(document).trigger("badHitMusic:play");
 							}
 						// --------------------------------
 
@@ -206,6 +211,8 @@ $(document).ready(function(){
 				// stopping of AnimationFrame
 				getFrame("stop")
 
+				$(document).trigger("BgMusic:stop");
+				$(document).trigger("gameOverMusic:play");
 				setTimeout(getStartAttrs, 2000);
 			};
 			function drawStart(){
@@ -267,7 +274,6 @@ $(document).ready(function(){
 				$("body").keyup(function(e){
 					if(e.keyCode === 13 && readingOfRules === true){
 						readingOfRules = false
-						console.log(readingOfRules)
 					}
 				});
 			}
@@ -281,6 +287,8 @@ $(document).ready(function(){
 			    getFrame("start")
 			}
 		function showTheQuiz(quizObj){
+			$(document).trigger("quizBgMusic:play");
+
 			// canceling drawing of star
 			cancelAnimationFrame(starFrame);
 			// canceling drawing of all game
@@ -337,6 +345,9 @@ $(document).ready(function(){
 					});
 					// =======================================CLICK=====================================
 					function checkingAncwer(e){
+						$(document).trigger("quizBgMusic:stop");
+						$(document).trigger("quizClickingAnswerMusic:play");
+
 						// result of clicked answer
 						var result = $(e.target).html();
 							// animation of pressed answer
@@ -349,22 +360,23 @@ $(document).ready(function(){
 						},2000);
 							// if answer right
 						if(result === gameRulesObject.answersVariant[gameRulesObject.rightIndex]){
-							console.log('Nice Work');
 							setTimeout(function(){
 								$("body").addClass("bodyGood");
+								$(document).trigger("quizGoodResultMusic:play");
 							},2000);
 							canAnsew = false;
 							setTimeout(function(){
 								$("body").removeClass("bodyGood").removeClass("bodyBad")
 								// Creatin of new Level----------------------------------------------------
 								if(gameRulesObject.currentLevel < enteredDATA.length-1){
-									console.log(gameRulesObject.currentLevel)
+									console.log("Current level -  "+(gameRulesObject.currentLevel+1));
 									addDataLevel(gameRulesObject.currentLevel+1);
+									console.log("Next level -  "+(gameRulesObject.currentLevel+1));
 									creatingVarianPosition();
 								} else{
 									addDataLevel(0);
 									creatingVarianPosition();
-									console.log("The End")
+									console.log("The End of Game")
 								}
 								//--------------------------------------------------------------------
 								gameStation = "starting";
@@ -376,9 +388,9 @@ $(document).ready(function(){
 							}, 5000)
 						// if answer false
 						} else{
-							console.log('Nice try');
 							setTimeout(function(){
 								$("body").addClass("bodyBad");
+								$(document).trigger("quizBadResultMusic:play");
 							},2000);
 							canAnsew = false;
 							setTimeout(function(){
