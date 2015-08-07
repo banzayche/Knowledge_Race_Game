@@ -2,8 +2,7 @@
 
 $(document).ready(function(){
 	function GameProcess(){
-		var canvas = document.getElementById('myCanvas'),
-		context = canvas.getContext('2d'),
+		var context = canvas.getContext('2d'),
 		// gameStation = "starting" --> start of the game
 		// gameStation = "running" --> gaming process
 		// gameStation = "game_over" --> end of the game
@@ -16,14 +15,14 @@ $(document).ready(function(){
 		// for arrow keys
 		keyState = {},
 		// -------------
-		points = 47,
-		car = new Game.gameObjConstructor.car(gameRulesObject.car.carX, gameRulesObject.car.carY, gameRulesObject.car.carWidth, gameRulesObject.car.carHeight, "car");
+		points = 0,
+		car = new Game.gameObjConstructor.car(gameRulesObject.car.x, gameRulesObject.car.y, gameRulesObject.car.width, gameRulesObject.car.height, "car");
 
 		// -------------CREATING_OF_DRAW-ARRAY--------------------------------------
 		var drawArray = [car];
 		function createDrawArray(arr, obj){
 			obj.map(function( obj, index ) {
-				arr.push(new Game.gameObjConstructor.box(obj.x, obj.y, gameRulesObject.boxes.boxWidth, gameRulesObject.boxes.boxHeight, obj.type, index, obj.value, obj.indexValue));
+				arr.push(new Game.gameObjConstructor.box(obj.x, obj.y, gameRulesObject.boxes.width, gameRulesObject.boxes.height, obj.type, index, obj.value, obj.indexValue));
 			});
 		};
 		createDrawArray(drawArray, variantsPosition[0])
@@ -150,14 +149,14 @@ $(document).ready(function(){
 		// -------------------VIEWS-------------------------------------------------------------------
 			function starDrawing(obj){
 				// Window wich show to us the star
-					var width = 30,
-						height = 40,
-                        y = obj.y-60,
+					var width = gameRulesObject.star.width,
+						height = gameRulesObject.star.height,
+                        y = obj.y-obj.height,
                         x = obj.x;
 					function drawStar(){
-                        width +=5;
-                        height +=5;
-                        y -= 20;
+                        width += gameRulesObject.star.addWidth;
+                        height += gameRulesObject.star.addHeight;
+                        y -= gameRulesObject.star.addY;
 						context.drawImage(starImageObj, x, y, width, height);
 						starFrame = requestAnimationFrame(drawStar);
 					}
@@ -247,8 +246,7 @@ $(document).ready(function(){
 			cancelAnimationFrame(starFrame);
 			// canceling drawing of all game
 			getFrame("stop");
-			// clearing of quiz element
-
+			$("#quizQuestion").html(gameRulesObject.question);
 			gameRulesObject.answersVariant.map(function(ans, index){
 				var answer = document.createElement('a');
 				answer.setAttribute("class", "list-group-item answers");

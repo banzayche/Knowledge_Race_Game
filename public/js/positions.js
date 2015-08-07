@@ -1,4 +1,5 @@
-// creating of words array--------------------------------------------------------------
+'use strict'
+
 // CAR
 var carImageObj = new Image(),
 canDrawCar = false;
@@ -24,49 +25,71 @@ carImageObj.onload = function() {
 starImageObj.src = './images/star.png';
 // --------------------------------------
 
-// current Level object
-var gameRulesObject = {
-	boxes: {
-		boxHeight: 40,
-		boxWidth: 40,
-	},
-	car: {
-		carHeight: 35,
-		carWidth: 22,
-		carX: 185,
-		carY: 480,
-		turnSpeed: 5,
-	},
-	gameSpeed: 5,
-};
+// All variables of this part
+var canvas,
+	gameRulesObject,
+	enteredDATA,
+	variantsPosition
 //
 
-// entered DATA
-var enteredDATA = [
-	{
-		sentenseString: "I have to lock your PC, when you step away. It's very important for security policy!",
-		repeat: 3,
-		question: "What do I need to do when you step away from your workplace?",
-		answersVariant : ["I have to lock your PC, when you step away.", "I have to call your mom.", "I have to play on your phone"],
-		rightIndex : 0,
-	},
-	{
-		sentenseString: "Music is your chance to have some rest!",
-		repeat: 3,
-		question: "What do I need to do when the sky is over?",
-		answersVariant : ["I have to lock your PC, when you step away.", "I have to listen music (Serj Tankain - Sky is over).", "I have to play on your phone"],
-		rightIndex : 1,
-	},
-	{
-		sentenseString: "After work day I have to go home.",
-		repeat: 3,
-		question: "What do I need to do when you work day is over?",
-		answersVariant : ["I have to lock your PC, when you step away.", "I have to listen music (Serj Tankain - Sky is over).", "I have go to home."],
-		rightIndex : 2,
-	}
-];
-//
+$(document).ready(function(){
+	canvas = document.getElementById('myCanvas');
+	// current Level object
+	gameRulesObject = {
+		boxes: {
+			height: canvas.height/15,
+			width: canvas.width/10,
+		},
+		car: {
+			height: canvas.height/15,
+			width: canvas.width/15,
+			x: (canvas.width/3)*1.35,
+			y: (canvas.width/6)*7,
+			turnSpeed: 5,
+		},
+		star: {
+			height: canvas.height/15,
+			width: canvas.width/15,
+			addHeight: 5,
+			addWidth: 5,
+			addY: 20,
+		},
+		gameSpeed: 5,
+	};
+	//
 
+	// entered DATA
+	enteredDATA = [
+		{
+			sentenseString: "I have to lock your PC, when you step away. It's very important for security policy!",
+			repeat: 3,
+			question: "What do I need to do when you step away from your workplace?",
+			answersVariant : ["I have to lock your PC, when you step away.", "I have to call your mom.", "I have to play on your phone"],
+			rightIndex : 0,
+		},
+		{
+			sentenseString: "Music is your chance to have some rest!",
+			repeat: 3,
+			question: "What do I need to do when the sky is over?",
+			answersVariant : ["I have to lock your PC, when you step away.", "I have to listen music (Serj Tankain - Sky is over).", "I have to play on your phone"],
+			rightIndex : 1,
+		},
+		{
+			sentenseString: "After work day I have to go home.",
+			repeat: 3,
+			question: "What do I need to do when you work day is over?",
+			answersVariant : ["I have to lock your PC, when you step away.", "I have to listen music (Serj Tankain - Sky is over).", "I have go to home."],
+			rightIndex : 2,
+		}
+	];
+	//
+	addDataLevel(0);
+	//
+	creatingVarianPosition();
+	//
+});
+
+// All functions of this part
 // Function of adding data
 function addDataLevel(numberLevel){
 	gameRulesObject.currentLevel = numberLevel;
@@ -107,13 +130,7 @@ function addDataLevel(numberLevel){
 	gameRulesObject.answersVariant = gameRules.answersVariant;
 	gameRulesObject.rightIndex = gameRules.rightIndex;
 }
-addDataLevel(0);
-//
 
-
-// -----------------------------------------------------------------------------------------------
-// -------------------POSITIONS #1-------------------------------------
-var variantsPosition = new Array();
 // Creating varian position
 function creatingVarianPosition(){
 	variantsPosition = [
@@ -163,5 +180,4 @@ function creatingVarianPosition(){
 		[{x:40}, {x:210}, {x:280}, {x:0}, {x:100}, {x:0}, {x:360}],
 	];
 }
-creatingVarianPosition();
 //
