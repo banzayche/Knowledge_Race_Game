@@ -6,6 +6,7 @@ $(document).ready(function(){
 		// gameStation = "starting" --> start of the game
 		// gameStation = "running" --> gaming process
 		// gameStation = "game_over" --> end of the game
+		readingOfRules = true,
 		gameStation = "starting",
 
 		pointsFlag = true,
@@ -208,30 +209,68 @@ $(document).ready(function(){
 				setTimeout(getStartAttrs, 2000);
 			};
 			function drawStart(){
+				if(readingOfRules === true){
+					drawRules()
+				} else if(readingOfRules === false){
+					context.clearRect(0, 0, canvas.width, canvas.height);
+					context.beginPath();
+
+					context.rect(0, 0, canvas.width, canvas.height);
+					context.fillStyle = 'rgba(4,4,4,0.9)';
+					context.shadowColor = 'black';
+				    context.shadowBlur = 20;
+				    context.shadowOffsetX = 10;
+				    context.shadowOffsetY = 10;
+
+					context.font = 'bold 25pt Calibri';
+					context.fillStyle = 'green';
+					context.fillText('Press Enter!', 120, 280);
+					context.shadowColor = 'black';
+					context.shadowColor = 'black';
+
+					context.closePath();
+
+					// stopping of AnimationFrame
+					getFrame("stop");
+
+					// next gameStation
+					gameStation = "running";
+				}
+			};
+			function drawRules(){
 				context.clearRect(0, 0, canvas.width, canvas.height);
 				context.beginPath();
 
 				context.rect(0, 0, canvas.width, canvas.height);
 				context.fillStyle = 'rgba(4,4,4,0.9)';
-				context.shadowColor = 'black';
-			    context.shadowBlur = 20;
-			    context.shadowOffsetX = 10;
-			    context.shadowOffsetY = 10;
-
 				context.font = 'bold 25pt Calibri';
-				context.fillStyle = 'green';
-				context.fillText('Press Enter!', 120, 280);
-				context.shadowColor = 'black';
-				context.shadowColor = 'black';
+				context.fillText('You have to read the rules!', 20, 280);
+				context.shadowColor = 'transparent';
+
+				context.fillStyle = 'red';
+				context.font = 'bold 15pt Calibri';
+				context.fillText('You have to hit the words and in the end of', 30, 340);
+				context.fillText('the level answer on some question.', 30, 360);
+
+
+				context.fillStyle = 'rgba(4,4,4,0.9)';
+				context.fillText('Control options:', 30, 390);
+				context.fillText('<--- Press Left Arrow - if you want turn left', 30, 410);
+				context.fillText('---> Press Right Arrow - if you want turn right', 30, 440);
+				context.fillText('Press ENTER - if you want Stop/Play the game', 30, 470);
+
+				context.fillStyle = 'red';
+				context.fillText('Press ENTER - if you understand all this things', 20, 550);
 
 				context.closePath();
 
-				// stopping of AnimationFrame
-				getFrame("stop");
-
-				// next gameStation
-				gameStation = "running";
-			};
+				$("body").keyup(function(e){
+					if(e.keyCode === 13 && readingOfRules === true){
+						readingOfRules = false
+						console.log(readingOfRules)
+					}
+				});
+			}
 		// -------------------------------------------------------------------------------------------
 		// Functions---------------------------------------------------------------------------------
 		function getStartAttrs(){

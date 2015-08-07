@@ -82,11 +82,5 @@ var Game = {
 		quiz_start : "../music",
 		right_answer : "../music",
 		wrong_answer : "../music"
-	},
-	getImagesSrc : {
-		road : "../images",
-		car : "../images",
-		bad_box_1 : "../images",
-		bad_box_2 : "../images",
 	}
 };
