@@ -19,6 +19,8 @@ $(document).ready(function(){
 		points = 47,
 		car = new Game.gameObjConstructor.car(gameRulesObject.car.x, gameRulesObject.car.y, gameRulesObject.car.width, gameRulesObject.car.height, "car");
 
+		$(document).trigger("startMusic:play");
+
 		// -------------CREATING_OF_DRAW-ARRAY--------------------------------------
 		var drawArray = [car];
 		function createDrawArray(arr, obj){
@@ -51,6 +53,7 @@ $(document).ready(function(){
 				} else if(e.keyCode === 13 && stopRuning === false && gameStation === "running"){
 					getFrame("stop");
 					$(document).trigger("BgMusic:stop");
+					$(document).trigger("startMusic:play");
 				}
 			});
 		// ----CONTROLLERS-----------------------------
@@ -219,6 +222,9 @@ $(document).ready(function(){
 				if(readingOfRules === true){
 					drawRules()
 				} else if(readingOfRules === false){
+
+					$(document).trigger("startMusic:play");
+
 					context.clearRect(0, 0, canvas.width, canvas.height);
 					context.beginPath();
 
@@ -245,6 +251,7 @@ $(document).ready(function(){
 				}
 			};
 			function drawRules(){
+
 				context.clearRect(0, 0, canvas.width, canvas.height);
 				context.beginPath();
 
@@ -279,6 +286,22 @@ $(document).ready(function(){
 			}
 		// -------------------------------------------------------------------------------------------
 		// Functions---------------------------------------------------------------------------------
+		// volume Events
+		$("#volume").click(function(){
+			if($('#volume').attr("class") === 'volume-on'){
+				$(document).trigger("volume:off");
+				$('#volume').removeClass("volume-on");
+				$('#volume').html('<span class="glyphicon glyphicon-volume-off"></span>');
+				$(document).focus();
+			} else{
+				$(document).trigger("volume:on");
+				$('#volume').addClass("volume-on");
+				$('#volume').html('<span class="glyphicon glyphicon-volume-up"></span>');
+				$(document).focus();
+			}
+		});
+		// =============
+
 		function getStartAttrs(){
 				gameStation = "starting";
 			    points = 0;
@@ -287,7 +310,8 @@ $(document).ready(function(){
 			    getFrame("start")
 			}
 		function showTheQuiz(quizObj){
-			$(document).trigger("quizBgMusic:play");
+			$(document).trigger("BgMusic:stop");
+			$(document).trigger("quizStartMusic:play");
 
 			// canceling drawing of star
 			cancelAnimationFrame(starFrame);
@@ -345,7 +369,6 @@ $(document).ready(function(){
 					});
 					// =======================================CLICK=====================================
 					function checkingAncwer(e){
-						$(document).trigger("quizBgMusic:stop");
 						$(document).trigger("quizClickingAnswerMusic:play");
 
 						// result of clicked answer

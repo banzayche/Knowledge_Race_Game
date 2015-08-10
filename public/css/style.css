@@ -3,6 +3,28 @@
 	display: block;
 	margin: 0 auto;
 }*/
+#volume{
+    display: block;
+    position: absolute;
+    top: 50px;
+    right: 50px;
+    width: 30px;
+    height: 30px;
+    z-index: 999999999999999999999999999999999999999999999999999999999999999999999999999999999999999;
+    padding: 5px 10px 5px 8px;
+    border: 1px solid orange;
+    border-radius: 50%;
+    -webkit-transition: all .6s;
+    -moz-transition: all .6s;
+    -o-transition: all .6s;
+    -ms-transition: all .6s;
+    transition: all .6s;
+    cursor: pointer;
+    color: orange;
+}
+#volume:hover{
+      background-color: rgba(4,4,4,.1);
+}
 
 #frame {
       width: 425px;
