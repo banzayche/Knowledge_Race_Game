@@ -25,31 +25,46 @@ carImageObj.onload = function() {
 starImageObj.src = './images/star.png';
 // --------------------------------------
 
-// All variables of this part
-var canvas,
-	gameRulesObject,
-	enteredDATA,
-	variantsPosition
-//
+
 
 $(document).ready(function(){
-	canvas = document.getElementById('myCanvas');
+	// All variables of this part
+	var variablesObj = {
+		canvas: '',
+		gameRulesObject: '',
+		enteredDATA: '',
+		variantsPosition: ''
+	}
+	//
+	levelInfo(variablesObj);
+	//
+	addDataLevel(0, variablesObj);
+	//
+	creatingVarianPosition(variablesObj);
+	//
+	var newGame = new GameProcess(variablesObj);
+});
+
+// All functions of this part
+// Creating level of Game
+function levelInfo(variablesObj){
+	variablesObj.canvas = document.getElementById('myCanvas');
 	// current Level object
-	gameRulesObject = {
+	variablesObj.gameRulesObject = {
 		boxes: {
-			height: canvas.height/15,
-			width: canvas.width/10,
+			height: variablesObj.canvas.height/15,
+			width: variablesObj.canvas.width/10,
 		},
 		car: {
-			height: canvas.height/15,
-			width: canvas.width/15,
-			x: (canvas.width/3)*1.35,
-			y: (canvas.width/6)*7,
+			height: variablesObj.canvas.height/15,
+			width: variablesObj.canvas.width/15,
+			x: (variablesObj.canvas.width/3)*1.35,
+			y: (variablesObj.canvas.width/6)*7,
 			turnSpeed: 5,
 		},
 		star: {
-			height: canvas.height/15,
-			width: canvas.width/15,
+			height: variablesObj.canvas.height/15,
+			width: variablesObj.canvas.width/15,
 			addHeight: 5,
 			addWidth: 5,
 			addY: 20,
@@ -57,9 +72,8 @@ $(document).ready(function(){
 		gameSpeed: 5,
 	};
 	//
-
 	// entered DATA
-	enteredDATA = [
+	variablesObj.enteredDATA = [
 		{
 			sentenseString: "I have to lock your PC, when you step away. It's very important for security policy!",
 			repeat: 3,
@@ -82,19 +96,12 @@ $(document).ready(function(){
 			rightIndex : 2,
 		}
 	];
-	//
-	addDataLevel(0);
-	//
-	creatingVarianPosition();
-	//
-});
-
-// All functions of this part
+};
 // Function of adding data
-function addDataLevel(numberLevel){
-	gameRulesObject.currentLevel = numberLevel;
+function addDataLevel(numberLevel, variablesObj){
+	variablesObj.gameRulesObject.currentLevel = numberLevel;
 
-	var gameRules = enteredDATA[numberLevel];
+	var gameRules = variablesObj.enteredDATA[numberLevel];
 	var sentenseString = gameRules.sentenseString,
 		wordsArr = sentenseString.split(' ');
 	function detect_words(arr){
@@ -123,17 +130,17 @@ function addDataLevel(numberLevel){
 	        return arr;
 	    }
 	}
-	gameRulesObject.arr = detect_words(wordsArr);
+	variablesObj.gameRulesObject.arr = detect_words(wordsArr);
 
-	gameRulesObject.pointsAtAll = gameRulesObject.arr.length*gameRules.repeat;
-	gameRulesObject.question = gameRules.question;
-	gameRulesObject.answersVariant = gameRules.answersVariant;
-	gameRulesObject.rightIndex = gameRules.rightIndex;
+	variablesObj.gameRulesObject.pointsAtAll = variablesObj.gameRulesObject.arr.length*gameRules.repeat;
+	variablesObj.gameRulesObject.question = gameRules.question;
+	variablesObj.gameRulesObject.answersVariant = gameRules.answersVariant;
+	variablesObj.gameRulesObject.rightIndex = gameRules.rightIndex;
 }
 
 // Creating varian position
-function creatingVarianPosition(){
-	variantsPosition = [
+function creatingVarianPosition(variablesObj){
+	variablesObj.variantsPosition = [
 		[
 			{
 				id: 0,
@@ -141,14 +148,14 @@ function creatingVarianPosition(){
 				x: 140,
 				y: -355,
 				indexValue: 1,
-				value: gameRulesObject.arr[1],
+				value: variablesObj.gameRulesObject.arr[1],
 			}, {
 				id: 1,
 				type: "good",
 				x: 50,
 				y: -70,
 				indexValue: 0,
-				value: gameRulesObject.arr[0],
+				value: variablesObj.gameRulesObject.arr[0],
 			}, {
 				id: 2,
 				type: "bad",
@@ -178,6 +185,13 @@ function creatingVarianPosition(){
 			}
 		],
 		[{x:40}, {x:210}, {x:280}, {x:0}, {x:100}, {x:0}, {x:360}],
+		[{x:120}, {x:120}, {x:120}, {x:1000}, {x:120}, {x:1020}, {x:120}],
+		[{x:40}, {x:210}, {x:280}, {x:0}, {x:100}, {x:0}, {x:360}],
+		[{x:120}, {x:120}, {x:120}, {x:1000}, {x:120}, {x:1020}, {x:120}],
+		[{x:120}, {x:120}, {x:10000}, {x:10000}, {x:10000}, {x:10000}, {x:10000}],
+		[{x:120}, {x:120}, {x:120}, {x:1000}, {x:120}, {x:1020}, {x:120}],
+		[{x:40}, {x:210}, {x:280}, {x:0}, {x:100}, {x:0}, {x:360}],
+		[{x:120}, {x:120}, {x:120}, {x:1000}, {x:120}, {x:1020}, {x:120}],
 	];
 }
 //

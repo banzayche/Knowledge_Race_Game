@@ -1,8 +1,9 @@
 'use strict'
 
-$(document).ready(function(){
-	function GameProcess(){
-		var context = canvas.getContext('2d'),
+
+	function GameProcess(variablesObj){
+		var canvas = variablesObj.canvas,
+		context = canvas.getContext('2d'),
 		// gameStation = "starting" --> start of the game
 		// gameStation = "running" --> gaming process
 		// gameStation = "game_over" --> end of the game
@@ -17,7 +18,7 @@ $(document).ready(function(){
 		keyState = {},
 		// -------------
 		points = 47,
-		car = new Game.gameObjConstructor.car(gameRulesObject.car.x, gameRulesObject.car.y, gameRulesObject.car.width, gameRulesObject.car.height, "car");
+		car = new Game.gameObjConstructor.car(variablesObj.gameRulesObject.car.x, variablesObj.gameRulesObject.car.y, variablesObj.gameRulesObject.car.width, variablesObj.gameRulesObject.car.height, "car");
 
 		$(document).trigger("startMusic:play");
 
@@ -25,10 +26,10 @@ $(document).ready(function(){
 		var drawArray = [car];
 		function createDrawArray(arr, obj){
 			obj.map(function( obj, index ) {
-				arr.push(new Game.gameObjConstructor.box(obj.x, obj.y, gameRulesObject.boxes.width, gameRulesObject.boxes.height, obj.type, index, obj.value, obj.indexValue));
+				arr.push(new Game.gameObjConstructor.box(obj.x, obj.y, variablesObj.gameRulesObject.boxes.width, variablesObj.gameRulesObject.boxes.height, obj.type, index, obj.value, obj.indexValue));
 			});
 		};
-		createDrawArray(drawArray, variantsPosition[0])
+		createDrawArray(drawArray, variablesObj.variantsPosition[0])
 		// -----------------------------------------------------------------------------
 
 
@@ -61,7 +62,7 @@ $(document).ready(function(){
 				// adding new value of y position-
 				if(gameStation === "running"){
 					for (var i = 1; i<drawArray.length; i++) {
-						drawArray[i].y += gameRulesObject.gameSpeed;
+						drawArray[i].y += variablesObj.gameRulesObject.gameSpeed;
 					}
 				}
 				// -------------------------------
@@ -84,7 +85,8 @@ $(document).ready(function(){
 						// get current distance-----------
 							var carCenter = drawArray[0].get_box_center(),
 							successBoxesCenter,
-							distance;
+							distance,
+							variationPositionsQuantity = variablesObj.variantsPosition.length;
 
 							successBoxesCenter = obj.get_box_center(),
 							distance = obj.get_distance(successBoxesCenter, carCenter);
@@ -97,7 +99,7 @@ $(document).ready(function(){
 
 							   obj.hit = false;
 
-							   if(points === gameRulesObject.pointsAtAll){
+							   if(points === variablesObj.gameRulesObject.pointsAtAll){
 							   		gameStation = "quiz";
 							   }
 
@@ -109,41 +111,44 @@ $(document).ready(function(){
 							}
 						// --------------------------------
 
-						if(obj.y >= 570){
+						if(obj.y >= canvas.height){
 							if(obj.hit === false) {
 								obj.hit = true;
 							}
 							// changing values of good boxes after his hidding
 							if(obj.type === "good"){
-								if(obj.indexValue+2 < gameRulesObject.arr.length ){
+								if(obj.indexValue+2 < variablesObj.gameRulesObject.arr.length ){
 									obj.indexValue = obj.indexValue+2;
-									obj.value = gameRulesObject.arr[obj.indexValue];
-								} else if(obj.indexValue+2 === gameRulesObject.arr.length){
+									obj.value = variablesObj.gameRulesObject.arr[obj.indexValue];
+								} else if(obj.indexValue+2 === variablesObj.gameRulesObject.arr.length){
 									obj.indexValue = 0;
-									obj.value = gameRulesObject.arr[obj.indexValue];
-								} else if(obj.indexValue+2 === gameRulesObject.arr.length+1) {
+									obj.value = variablesObj.gameRulesObject.arr[obj.indexValue];
+								} else if(obj.indexValue+2 === variablesObj.gameRulesObject.arr.length+1) {
 									obj.indexValue = 1;
-									obj.value = gameRulesObject.arr[obj.indexValue];
+									obj.value = variablesObj.gameRulesObject.arr[obj.indexValue];
 								}
 							}
 
 
+							// variationPositionsQuantity - quantity of changing posirions
 							whoBehidLine++;
-					    	if(positionVariation === 1){
-					    		obj.y = 0;
-								obj.x = variantsPosition[0][i-1].x;
-								if(whoBehidLine >= drawArray.length){
-						    		whoBehidLine = 0;
-						    		positionVariation++;
+							for(var j = 1; j <= variationPositionsQuantity; j++){
+								if(j < variationPositionsQuantity && positionVariation === j){
+						    		obj.y = 0-obj.height;
+									obj.x = variablesObj.variantsPosition[(j-1)][i-1].x;
+									if(whoBehidLine >= drawArray.length){
+							    		whoBehidLine = 0;
+							    		positionVariation++;
+							    	}
+						    	} else if(j === variationPositionsQuantity && positionVariation === j){
+						    		obj.y = 0-obj.height;
+									obj.x = variablesObj.variantsPosition[(j-1)][i-1].x;
+									if(whoBehidLine >= drawArray.length){
+							    		whoBehidLine = 0;
+							    		positionVariation = 1;
+							    	}
 						    	}
-					    	} else if(positionVariation === 2){
-					    		obj.y = 0;
-								obj.x = variantsPosition[1][i-1].x;
-								if(whoBehidLine >= drawArray.length){
-						    		whoBehidLine = 0;
-						    		positionVariation--;
-						    	}
-					    	}
+							}
 						}
 					}
 				});
@@ -158,14 +163,14 @@ $(document).ready(function(){
 		// -------------------VIEWS-------------------------------------------------------------------
 			function starDrawing(obj){
 				// Window wich show to us the star
-					var width = gameRulesObject.star.width,
-						height = gameRulesObject.star.height,
+					var width = variablesObj.gameRulesObject.star.width,
+						height = variablesObj.gameRulesObject.star.height,
                         y = obj.y-obj.height,
                         x = obj.x;
 					function drawStar(){
-                        width += gameRulesObject.star.addWidth;
-                        height += gameRulesObject.star.addHeight;
-                        y -= gameRulesObject.star.addY;
+                        width += variablesObj.gameRulesObject.star.addWidth;
+                        height += variablesObj.gameRulesObject.star.addHeight;
+                        y -= variablesObj.gameRulesObject.star.addY;
 						context.drawImage(starImageObj, x, y, width, height);
 						starFrame = requestAnimationFrame(drawStar);
 					}
@@ -306,7 +311,7 @@ $(document).ready(function(){
 				gameStation = "starting";
 			    points = 0;
 			    drawArray=[car];
-			    createDrawArray(drawArray, variantsPosition[0])
+			    createDrawArray(drawArray, variablesObj.variantsPosition[0])
 			    getFrame("start")
 			}
 		function showTheQuiz(quizObj){
@@ -317,8 +322,8 @@ $(document).ready(function(){
 			cancelAnimationFrame(starFrame);
 			// canceling drawing of all game
 			getFrame("stop");
-			$("#quizQuestion").html(gameRulesObject.question);
-			gameRulesObject.answersVariant.map(function(ans, index){
+			$("#quizQuestion").html(variablesObj.gameRulesObject.question);
+			variablesObj.gameRulesObject.answersVariant.map(function(ans, index){
 				var answer = document.createElement('a');
 				answer.setAttribute("class", "list-group-item answers");
 				answer.setAttribute("index", index);
@@ -344,11 +349,11 @@ $(document).ready(function(){
 						if(valueOnFocus > 0){
 							focusAnswer(valueOnFocus-1);
 						} else{
-							focusAnswer(gameRulesObject.answersVariant.length-1);
+							focusAnswer(variablesObj.gameRulesObject.answersVariant.length-1);
 						}
 					}
 					if(e.keyCode === 40){
-						if(valueOnFocus < gameRulesObject.answersVariant.length-1){
+						if(valueOnFocus < variablesObj.gameRulesObject.answersVariant.length-1){
 							focusAnswer(valueOnFocus+1);
 						} else{
 							focusAnswer(0);
@@ -379,10 +384,10 @@ $(document).ready(function(){
 						setTimeout(function(){
 							$("#quizAnswers>a").removeClass("pressedAnswer");
 							$("#quizAnswers>a").addClass("wrongAnswers");
-							$("#quizAnswers").find("a[index="+gameRulesObject.rightIndex+"]").removeClass("wrongAnswers").addClass("trueAnswers");
+							$("#quizAnswers").find("a[index="+variablesObj.gameRulesObject.rightIndex+"]").removeClass("wrongAnswers").addClass("trueAnswers");
 						},2000);
 							// if answer right
-						if(result === gameRulesObject.answersVariant[gameRulesObject.rightIndex]){
+						if(result === variablesObj.gameRulesObject.answersVariant[variablesObj.gameRulesObject.rightIndex]){
 							setTimeout(function(){
 								$("body").addClass("bodyGood");
 								$(document).trigger("quizGoodResultMusic:play");
@@ -391,14 +396,14 @@ $(document).ready(function(){
 							setTimeout(function(){
 								$("body").removeClass("bodyGood").removeClass("bodyBad")
 								// Creatin of new Level----------------------------------------------------
-								if(gameRulesObject.currentLevel < enteredDATA.length-1){
-									console.log("Current level -  "+(gameRulesObject.currentLevel+1));
-									addDataLevel(gameRulesObject.currentLevel+1);
-									console.log("Next level -  "+(gameRulesObject.currentLevel+1));
-									creatingVarianPosition();
+								if(variablesObj.gameRulesObject.currentLevel < variablesObj.enteredDATA.length-1){
+									console.log("Current level -  "+(variablesObj.gameRulesObject.currentLevel+1));
+									addDataLevel(variablesObj.gameRulesObject.currentLevel+1, variablesObj);
+									console.log("Next level -  "+(variablesObj.gameRulesObject.currentLevel+1));
+									creatingVarianPosition(variablesObj);
 								} else{
-									addDataLevel(0);
-									creatingVarianPosition();
+									addDataLevel(0, variablesObj);
+									creatingVarianPosition(variablesObj);
 									console.log("The End of Game")
 								}
 								//--------------------------------------------------------------------
@@ -484,7 +489,7 @@ $(document).ready(function(){
 			    context.strokeStyle = 'orange';
 
 			    context.fillStyle = 'green';
-			    context.fillText("Level #: "+ (gameRulesObject.currentLevel+1), 80, 130);
+			    context.fillText("Level #: "+ (variablesObj.gameRulesObject.currentLevel+1), 80, 130);
 
 
 
@@ -505,10 +510,10 @@ $(document).ready(function(){
 
 			function gameLoop() {
 			    if (keyState[37] || keyState[65]){
-			        drawArray[0].x -= gameRulesObject.car.turnSpeed;
+			        drawArray[0].x -= variablesObj.gameRulesObject.car.turnSpeed;
 			    }
 			    if (keyState[39] || keyState[68]){
-			        drawArray[0].x += gameRulesObject.car.turnSpeed;
+			        drawArray[0].x += variablesObj.gameRulesObject.car.turnSpeed;
 			    }
 
 			    // redraw/reposition your object here
@@ -517,5 +522,4 @@ $(document).ready(function(){
 			}
 		// ------------------------------------------------------------------------------------------
 
-	}GameProcess();
-});
+	}
