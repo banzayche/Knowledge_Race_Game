@@ -512,41 +512,53 @@
 		//--------------------------------MOVING of CAR-----------------------------------------------------
 			// loop for redrawing of canvas when keydown or keyup happened
 			window.addEventListener('keydown',function(e){
+				keyState[37] = false;
+			    keyState[65] = false;
+			    keyState[37] = false;
+			    keyState[65] = false;
 			    keyState[e.keyCode || e.which] = true;
 			},true);
 			window.addEventListener('keyup',function(e){
 			    keyState[e.keyCode || e.which] = false;
 			},true);
 
+			function gammaControlling(){
+			    if (window.DeviceOrientationEvent) {
+			    	window.addEventListener("deviceorientation", function(event){
+			    		var gammaResult = Math.round(event.gamma),
+			    			car = drawArray[0];
+			    		if(gammaResult >= 0){
+			    			keyState[37] = false;
+			    			keyState[65] = false;
+			    			keyState[37] = true;
+			    			keyState[65] = true;
+			    		} else{
+			    			keyState[37] = true;
+			    			keyState[65] = true;
+			    			keyState[37] = false;
+			    			keyState[65] = false;
+			    		}
+
+			    		console.log("Listen")
+			    	});
+			    }
+			} gammaControlling();
+
 			function gameLoop() {
+				var car = drawArray[0];
+
 			    if (keyState[37] || keyState[65]){
-			        drawArray[0].x -= variablesObj.gameRulesObject.car.turnSpeed;
+			        car.x -= variablesObj.gameRulesObject.car.turnSpeed;
 			    }
 			    if (keyState[39] || keyState[68]){
-			        drawArray[0].x += variablesObj.gameRulesObject.car.turnSpeed;
+			        car.x += variablesObj.gameRulesObject.car.turnSpeed;
 			    }
 
-			    function gammaControlling(){
-			    	if (window.DeviceOrientationEvent) {
-			    		window.addEventListener("deviceorientation", function(event){
-			    			var gammaResult = Math.round(event.gamma),
-			    				car = drawArray[0];
-			    				if(gammaResult >= 0){
-			    					car.x += variablesObj.gameRulesObject.car.turnSpeed;
-			    				} else{
-			    					car.x -= variablesObj.gameRulesObject.car.turnSpeed;
-			    				}
-
-
-
-			    				if(car.x >= canvas.width){
-					                car.x = canvas.width-car.width;
-					            } else if(car.x <= 0){
-					                car.x = car.width;
-					            }
-			    		});
-			    	}
-			    } gammaControlling();
+			 //    if(car.x >= canvas.width){
+				// 	car.x = canvas.width-car.width;
+				// } else if(car.x <= 0){
+				// 	car.x = car.width;
+				// }
 			    // redraw/reposition your object here
 			    // also redraw/animate any objects not controlled by the user
 			    drawCanvas();
