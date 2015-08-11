@@ -75,25 +75,25 @@ function levelInfo(variablesObj){
 	// entered DATA
 	variablesObj.enteredDATA = [
 		{
-			sentenseString: "I have to lock your PC, when you step away. It's very important for security policy!",
-			repeat: 3,
-			question: "What do I need to do when you step away from your workplace?",
-			answersVariant : ["I have to lock your PC, when you step away.", "I have to call your mom.", "I have to play on your phone"],
-			rightIndex : 0,
-		},
-		{
-			sentenseString: "Music is your chance to have some rest!",
-			repeat: 3,
-			question: "What do I need to do when the sky is over?",
-			answersVariant : ["I have to lock your PC, when you step away.", "I have to listen music (Serj Tankain - Sky is over).", "I have to play on your phone"],
+			sentenseString: "I have to lock my PC each time I step away.",
+			repeat: 1,
+			question: "What do You do when you step away from your workplace?",
+			answersVariant : ["1. Make some coffee!", "2. I lock my PC.", "3. I'm calling my mom."],
 			rightIndex : 1,
 		},
 		{
-			sentenseString: "After work day I have to go home.",
-			repeat: 3,
-			question: "What do I need to do when you work day is over?",
-			answersVariant : ["I have to lock your PC, when you step away.", "I have to listen music (Serj Tankain - Sky is over).", "I have go to home."],
-			rightIndex : 2,
+			sentenseString: "PC locking is very important for security policy.",
+			repeat: 1,
+			question: "What is so important for security policy?",
+			answersVariant : ["1. To lock my PC Locking.", "2. Security Guard", "3. None of the above"],
+			rightIndex : 0,
+		},
+		{
+			sentenseString: "After work day I have to check if I locked my PC before going home.",
+			repeat: 1,
+			question: "What do You do when you work day is over?",
+			answersVariant : ["Dancing! We have a class.", "2. Listen to the music (Serj Tankain - Sky is over).", "3. First, I check is my PC locked."],
+			rightIndex : 3,
 		}
 	];
 };

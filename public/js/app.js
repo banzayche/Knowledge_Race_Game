@@ -4,63 +4,77 @@
 	function GameProcess(variablesObj){
 		var canvas = variablesObj.canvas,
 		context = canvas.getContext('2d'),
-		// gameStation = "starting" --> start of the game
-		// gameStation = "running" --> gaming process
-		// gameStation = "game_over" --> end of the game
-		readingOfRules = true,
-		gameStation = "starting",
-
+		// game_station = "starting" --> start of the game
+		// game_station = "running" --> gaming process
+		// game_station = "game_over" --> end of the game
+		reading_of_rules = true,
+		game_station = "starting",
+		get_document_DOM = $(document),
 		pointsFlag = true,
-		positionVariation = 1,
-		whoBehidLine = 0,
+		position_variation = 1,
+		who_behid_line = 0,
 		starFrame,
-		// for arrow keys
+		// For animation frame
+		runAnimation,
+		stop_runing,
+		//
 		keyState = {},
-		// -------------
-		points = 47,
-		car = new Game.gameObjConstructor.car(variablesObj.gameRulesObject.car.x, variablesObj.gameRulesObject.car.y, variablesObj.gameRulesObject.car.width, variablesObj.gameRulesObject.car.height, "car");
+		points = 0,
+		car = new Game.gameObjConstructor.car(variablesObj.gameRulesObject.car.x, variablesObj.gameRulesObject.car.y, variablesObj.gameRulesObject.car.width, variablesObj.gameRulesObject.car.height, "car"),
+		drawArray = [car];
 
-		$(document).trigger("startMusic:play");
 
 		// -------------CREATING_OF_DRAW-ARRAY--------------------------------------
-		var drawArray = [car];
 		function createDrawArray(arr, obj){
 			obj.map(function( obj, index ) {
 				arr.push(new Game.gameObjConstructor.box(obj.x, obj.y, variablesObj.gameRulesObject.boxes.width, variablesObj.gameRulesObject.boxes.height, obj.type, index, obj.value, obj.indexValue));
 			});
 		};
-		createDrawArray(drawArray, variablesObj.variantsPosition[0])
+
+		// For default starting game
+		get_document_DOM.trigger("startMusic:play");
+		createDrawArray(drawArray, variablesObj.variantsPosition[0]);
+		getFrame("start");
 		// -----------------------------------------------------------------------------
 
 
 		// --------------FOR ANIMATION FRAME------------------------
-			var runAnimation,
-				stopRuning;
-				getFrame("start");
-			// function which calls requestAnimationFrame
-			function getFrame(value){
-				if(value === "start"){
-					runAnimation = requestAnimationFrame(drawCanvas);
-					stopRuning = false;
-				} else{
-					cancelAnimationFrame(runAnimation);
-					stopRuning = true;
-				}
+		// function which calls requestAnimationFrame
+		function getFrame(value){
+			if(value === "start"){
+				runAnimation = requestAnimationFrame(drawCanvas);
+				stop_runing = false;
+			} else{
+				cancelAnimationFrame(runAnimation);
+				stop_runing = true;
 			}
-			$("body").keyup(function(e){
-				if(e.keyCode === 13 && stopRuning === true && gameStation === "running"){
-					getFrame("start");
-					$(document).trigger("BgMusic:play");
-				} else if(e.keyCode === 13 && stopRuning === false && gameStation === "running"){
-					getFrame("stop");
-					$(document).trigger("BgMusic:stop");
-					$(document).trigger("startMusic:play");
-				}
-			});
+		}
+		$("body").keyup(function(e){
+			if(e.keyCode === 13 && stop_runing === true && game_station === "running"){
+				getFrame("start");
+				get_document_DOM.trigger("BgMusic:play");
+			} else if(e.keyCode === 13 && stop_runing === false && game_station === "running"){
+				getFrame("stop");
+				get_document_DOM.trigger("BgMusic:stop");
+				get_document_DOM.trigger("startMusic:play");
+			}
+		});
+		$("#myCanvas").click(function(e){
+			if(stop_runing === true && game_station === "running"){
+				getFrame("start");
+				get_document_DOM.trigger("BgMusic:play");
+			} else if(stop_runing === false && game_station === "running"){
+				getFrame("stop");
+				get_document_DOM.trigger("BgMusic:stop");
+				get_document_DOM.trigger("startMusic:play");
+			}
+		});
+
+
 		// ----CONTROLLERS-----------------------------
 			function Correction(){
 				// adding new value of y position-
-				if(gameStation === "running"){
+				if(game_station === "running"){
 					for (var i = 1; i<drawArray.length; i++) {
 						drawArray[i].y += variablesObj.gameRulesObject.gameSpeed;
 					}
@@ -69,7 +83,7 @@
 
 				// rules for Car motion----
 				var maxX = 395,
-					minX = 2
+					minX = 2;
 				if(drawArray[0].x <= minX) {
 					drawArray[0].x = minX;
 				} else if (drawArray[0].x >= maxX){
@@ -100,14 +114,14 @@
 							   obj.hit = false;
 
 							   if(points === variablesObj.gameRulesObject.pointsAtAll){
-							   		gameStation = "quiz";
+							   		game_station = "quiz";
 							   }
 
-							   $(document).trigger("hitWordMusic:play");
+							   get_document_DOM.trigger("hitWordMusic:play");
 							}
 							if (distance <= drawArray[0].get_box_radius()+obj.get_box_radius() && obj.type === "bad"){
-							    	gameStation = "game_over";
-							    	$(document).trigger("badHitMusic:play");
+							    	game_station = "game_over";
+							    	get_document_DOM.trigger("badHitMusic:play");
 							}
 						// --------------------------------
 
@@ -131,21 +145,21 @@
 
 
 							// variationPositionsQuantity - quantity of changing posirions
-							whoBehidLine++;
+							who_behid_line++;
 							for(var j = 1; j <= variationPositionsQuantity; j++){
-								if(j < variationPositionsQuantity && positionVariation === j){
+								if(j < variationPositionsQuantity && position_variation === j){
 						    		obj.y = 0-obj.height;
 									obj.x = variablesObj.variantsPosition[(j-1)][i-1].x;
-									if(whoBehidLine >= drawArray.length){
-							    		whoBehidLine = 0;
-							    		positionVariation++;
+									if(who_behid_line >= drawArray.length){
+							    		who_behid_line = 0;
+							    		position_variation++;
 							    	}
-						    	} else if(j === variationPositionsQuantity && positionVariation === j){
+						    	} else if(j === variationPositionsQuantity && position_variation === j){
 						    		obj.y = 0-obj.height;
 									obj.x = variablesObj.variantsPosition[(j-1)][i-1].x;
-									if(whoBehidLine >= drawArray.length){
-							    		whoBehidLine = 0;
-							    		positionVariation = 1;
+									if(who_behid_line >= drawArray.length){
+							    		who_behid_line = 0;
+							    		position_variation = 1;
 							    	}
 						    	}
 							}
@@ -219,16 +233,16 @@
 				// stopping of AnimationFrame
 				getFrame("stop")
 
-				$(document).trigger("BgMusic:stop");
-				$(document).trigger("gameOverMusic:play");
+				get_document_DOM.trigger("BgMusic:stop");
+				get_document_DOM.trigger("gameOverMusic:play");
 				setTimeout(getStartAttrs, 2000);
 			};
 			function drawStart(){
-				if(readingOfRules === true){
+				if(reading_of_rules === true){
 					drawRules()
-				} else if(readingOfRules === false){
+				} else if(reading_of_rules === false){
 
-					$(document).trigger("startMusic:play");
+					get_document_DOM.trigger("startMusic:play");
 
 					context.clearRect(0, 0, canvas.width, canvas.height);
 					context.beginPath();
@@ -251,8 +265,8 @@
 					// stopping of AnimationFrame
 					getFrame("stop");
 
-					// next gameStation
-					gameStation = "running";
+					// next game_station
+					game_station = "running";
 				}
 			};
 			function drawRules(){
@@ -284,97 +298,96 @@
 				context.closePath();
 
 				$("body").keyup(function(e){
-					if(e.keyCode === 13 && readingOfRules === true){
-						readingOfRules = false
+					if(e.keyCode === 13 && reading_of_rules === true){
+						reading_of_rules = false
+					}
+				});
+				$("#myCanvas").click(function(e){
+					if(reading_of_rules === true){
+						reading_of_rules = false;
 					}
 				});
 			}
 		// -------------------------------------------------------------------------------------------
 		// Functions---------------------------------------------------------------------------------
-		// volume Events
-		$("#volume").click(function(){
-			if($('#volume').attr("class") === 'volume-on'){
-				$(document).trigger("volume:off");
-				$('#volume').removeClass("volume-on");
-				$('#volume').html('<span class="glyphicon glyphicon-volume-off"></span>');
-				$(document).focus();
-			} else{
-				$(document).trigger("volume:on");
-				$('#volume').addClass("volume-on");
-				$('#volume').html('<span class="glyphicon glyphicon-volume-up"></span>');
-				$(document).focus();
-			}
-		});
-		// =============
+
 
 		function getStartAttrs(){
-				gameStation = "starting";
+				game_station = "starting";
 			    points = 0;
 			    drawArray=[car];
 			    createDrawArray(drawArray, variablesObj.variantsPosition[0])
 			    getFrame("start")
 			}
 		function showTheQuiz(quizObj){
-			$(document).trigger("BgMusic:stop");
-			$(document).trigger("quizStartMusic:play");
+			get_document_DOM.trigger("BgMusic:stop");
+			get_document_DOM.trigger("quizStartMusic:play");
 
+			var my_modal_DOM = $('#myModal'),
+				quiz_question_DOM = $('#quizQuestion'),
+				quiz_answers_DOM = $('#quizAnswers');
 			// canceling drawing of star
 			cancelAnimationFrame(starFrame);
 			// canceling drawing of all game
 			getFrame("stop");
-			$("#quizQuestion").html(variablesObj.gameRulesObject.question);
+			quiz_question_DOM.html(variablesObj.gameRulesObject.question);
 			variablesObj.gameRulesObject.answersVariant.map(function(ans, index){
 				var answer = document.createElement('a');
 				answer.setAttribute("class", "list-group-item answers");
 				answer.setAttribute("index", index);
 				answer.setAttribute("href", "#");
 				answer.innerHTML = ans;
-				$("#quizAnswers").append(answer);
+				quiz_answers_DOM.append(answer);
 			});
-			$('#myModal').modal('show');
+			my_modal_DOM.modal('show');
 
 			workingWithAnswers();
 		}
 
 		function workingWithAnswers(){
-				var canAnsew = true,
-					valueOnFocus;
+				var can_answer = true,
+					value_on_focus,
+					my_modal_DOM = $('#myModal'),
+					quiz_answers_DOM = $('#quizAnswers'),
+					quiz_answers_a_DOM = $("#quizAnswers>a"),
+					body_DOM = $('body');
+
 				function focusAnswer(index){
-					$("#quizAnswers").find("a[index="+index+"]").focus()
-					valueOnFocus = index;
+					quiz_answers_DOM.find("a[index="+index+"]").focus()
+					value_on_focus = index;
 				}
 				focusAnswer(0);
-				$("#quizAnswers>a").keyup(function(e){
+				quiz_answers_a_DOM.keyup(function(e){
 					if(e.keyCode === 38){
-						if(valueOnFocus > 0){
-							focusAnswer(valueOnFocus-1);
+						if(value_on_focus > 0){
+							focusAnswer(value_on_focus-1);
 						} else{
 							focusAnswer(variablesObj.gameRulesObject.answersVariant.length-1);
 						}
 					}
 					if(e.keyCode === 40){
-						if(valueOnFocus < variablesObj.gameRulesObject.answersVariant.length-1){
-							focusAnswer(valueOnFocus+1);
+						if(value_on_focus < variablesObj.gameRulesObject.answersVariant.length-1){
+							focusAnswer(value_on_focus+1);
 						} else{
 							focusAnswer(0);
 						}
 					}
 				});
-				$("#quizAnswers>a").keyup(function(e){
-					if(e.keyCode === 13 && canAnsew == true){
+				quiz_answers_a_DOM.keyup(function(e){
+					if(e.keyCode === 13 && can_answer == true){
 						checkingAncwer(e)
 					}
 				});
 				// checking the answer
-				$("#quizAnswers>a").click(function(e){
+				quiz_answers_a_DOM.click(function(e){
 					// user can unswer only one time
-					if(canAnsew == true){
+					if(can_answer == true){
 						checkingAncwer(e)
 					}
 					});
 					// =======================================CLICK=====================================
 					function checkingAncwer(e){
-						$(document).trigger("quizClickingAnswerMusic:play");
+						get_document_DOM.trigger("quizClickingAnswerMusic:play");
 
 						// result of clicked answer
 						var result = $(e.target).html();
@@ -382,19 +395,19 @@
 						$(e.target).addClass("pressedAnswer");
 						// marking of answers
 						setTimeout(function(){
-							$("#quizAnswers>a").removeClass("pressedAnswer");
-							$("#quizAnswers>a").addClass("wrongAnswers");
-							$("#quizAnswers").find("a[index="+variablesObj.gameRulesObject.rightIndex+"]").removeClass("wrongAnswers").addClass("trueAnswers");
+							quiz_answers_a_DOM.removeClass("pressedAnswer");
+							quiz_answers_a_DOM.addClass("wrongAnswers");
+							quiz_answers_DOM.find("a[index="+variablesObj.gameRulesObject.rightIndex+"]").removeClass("wrongAnswers").addClass("trueAnswers");
 						},2000);
 							// if answer right
 						if(result === variablesObj.gameRulesObject.answersVariant[variablesObj.gameRulesObject.rightIndex]){
 							setTimeout(function(){
-								$("body").addClass("bodyGood");
-								$(document).trigger("quizGoodResultMusic:play");
+								body_DOM.addClass("bodyGood");
+								get_document_DOM.trigger("quizGoodResultMusic:play");
 							},2000);
-							canAnsew = false;
+							can_answer = false;
 							setTimeout(function(){
-								$("body").removeClass("bodyGood").removeClass("bodyBad")
+								body_DOM.removeClass("bodyGood").removeClass("bodyBad")
 								// Creatin of new Level----------------------------------------------------
 								if(variablesObj.gameRulesObject.currentLevel < variablesObj.enteredDATA.length-1){
 									console.log("Current level -  "+(variablesObj.gameRulesObject.currentLevel+1));
@@ -407,28 +420,24 @@
 									console.log("The End of Game")
 								}
 								//--------------------------------------------------------------------
-								gameStation = "starting";
-								$('#myCanvas').show();
-								$('h1').css('visibility', 'hidden');
+								game_station = "starting";
 								getStartAttrs();
-								$('#myModal').modal('hide')
-								$("#quizAnswers").html('')
+								my_modal_DOM.modal('hide')
+								quiz_answers_DOM.html('')
 							}, 5000)
 						// if answer false
 						} else{
 							setTimeout(function(){
-								$("body").addClass("bodyBad");
-								$(document).trigger("quizBadResultMusic:play");
+								body_DOM.addClass("bodyBad");
+								get_document_DOM.trigger("quizBadResultMusic:play");
 							},2000);
-							canAnsew = false;
+							can_answer = false;
 							setTimeout(function(){
-								$("body").removeClass("bodyGood").removeClass("bodyBad")
-								gameStation = "starting";
-								$('#myCanvas').show();
-								$('h1').css('visibility', 'hidden');
+								body_DOM.removeClass("bodyGood").removeClass("bodyBad")
+								game_station = "starting";
 								getStartAttrs();
-								$('#myModal').modal('hide')
-								$("#quizAnswers").html('')
+								my_modal_DOM.modal('hide')
+								quiz_answers_DOM.html('')
 							}, 5000)
 						}
 					}
@@ -444,12 +453,13 @@
 			function drawCanvas(){
 				// getting car position
 				// (when we call this function we also do closure of "runAnimation = requestAnimationFrame(drawCanvas);" that's why we have a looping drawing)
-				gameLoop();
+				// gameLoop();
+				runAnimation = requestAnimationFrame(gameLoop);
 				//
 
 				context.clearRect(0, 0, canvas.width, canvas.height);
 				// when the game is starting
-			    if(gameStation === "starting"){
+			    if(game_station === "starting"){
 			    	drawStart();
 			    	// stopping running this function
 			    	// we don't need drawing of boxes or car
@@ -471,12 +481,12 @@
 			    // control of game rules
 			    Correction();
 
-			    if(gameStation === "quiz"){
+			    if(game_station === "quiz"){
 			    	showTheQuiz();
 			    	return;
 		        }
 			    // when you hit "Bad" box
-			    if(gameStation === "game_over"){
+			    if(game_station === "game_over"){
 			    	drawGameOver();
 		        }
 
@@ -502,23 +512,59 @@
 		//--------------------------------MOVING of CAR-----------------------------------------------------
 			// loop for redrawing of canvas when keydown or keyup happened
 			window.addEventListener('keydown',function(e){
+				keyState[0];
 			    keyState[e.keyCode || e.which] = true;
 			},true);
 			window.addEventListener('keyup',function(e){
 			    keyState[e.keyCode || e.which] = false;
 			},true);
 
+			function gammaControlling(){
+			    if (window.DeviceOrientationEvent) {
+			    	window.addEventListener("deviceorientation", function(event){
+			    		var gammaResult = Math.round(event.gamma),
+			    			car = drawArray[0];
+			    		if(gammaResult > 5){
+			    			keyState[0] = true;
+			    		} else if(gammaResult < -5){
+			    			keyState[0] = false;
+			    		} else{
+			    			keyState[0] = 'middle';
+			    		}
+
+			    		console.log("Listen")
+			    	});
+			    }
+			} gammaControlling();
+
 			function gameLoop() {
+				var car = drawArray[0];
+
 			    if (keyState[37] || keyState[65]){
-			        drawArray[0].x -= variablesObj.gameRulesObject.car.turnSpeed;
+			        car.x -= variablesObj.gameRulesObject.car.turnSpeed;
 			    }
 			    if (keyState[39] || keyState[68]){
-			        drawArray[0].x += variablesObj.gameRulesObject.car.turnSpeed;
+			        car.x += variablesObj.gameRulesObject.car.turnSpeed;
 			    }
 
+				if(keyState[0] === true){
+					car.x += variablesObj.gameRulesObject.car.turnSpeed;
+				}
+				if(keyState[0] === false){
+					car.x -= variablesObj.gameRulesObject.car.turnSpeed;
+				}
+				if(keyState[0] === 'middle'){
+					car.x = car.x;
+				}
+
+			    if(car.x >= canvas.width){
+					car.x = canvas.width-car.width;
+				} else if(car.x <= 0){
+					car.x = 0;
+				}
 			    // redraw/reposition your object here
 			    // also redraw/animate any objects not controlled by the user
-			    runAnimation = requestAnimationFrame(drawCanvas);
+			    drawCanvas();
 			}
 		// ------------------------------------------------------------------------------------------
 
