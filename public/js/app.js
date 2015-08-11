@@ -19,7 +19,7 @@
 		stop_runing,
 		//
 		keyState = {},
-		points = 47,
+		points = 0,
 		car = new Game.gameObjConstructor.car(variablesObj.gameRulesObject.car.x, variablesObj.gameRulesObject.car.y, variablesObj.gameRulesObject.car.width, variablesObj.gameRulesObject.car.height, "car"),
 		drawArray = [car];
 
@@ -526,22 +526,24 @@
 			        drawArray[0].x += variablesObj.gameRulesObject.car.turnSpeed;
 			    }
 
-
-
-
 			    function gammaControlling(){
 			    	if (window.DeviceOrientationEvent) {
 			    		window.addEventListener("deviceorientation", function(event){
 			    			var gammaResult = Math.round(event.gamma),
-			    				car_velocity = gammaResult,
 			    				car = drawArray[0];
+			    				if(gammaResult >= 0){
+			    					car.x += variablesObj.gameRulesObject.car.turnSpeed;
+			    				} else{
+			    					car.x -= variablesObj.gameRulesObject.car.turnSpeed;
+			    				}
+
+
+
 			    				if(car.x >= canvas.width){
 					                car.x = canvas.width-car.width;
 					            } else if(car.x <= 0){
 					                car.x = car.width;
 					            }
-
-			    				car.x += car_velocity/2;
 			    		});
 			    	}
 			    } gammaControlling();
