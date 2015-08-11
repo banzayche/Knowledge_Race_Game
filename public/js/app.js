@@ -524,12 +524,12 @@
 			    	window.addEventListener("deviceorientation", function(event){
 			    		var gammaResult = Math.round(event.gamma),
 			    			car = drawArray[0];
-			    		if(gammaResult > 0){
+			    		if(gammaResult > 20){
 			    			keyState[0] = true;
-			    		} else if(gammaResult === 0){
-			    			keyState[0] = 0;
-			    		} else{
+			    		} else if(gammaResult < -20){
 			    			keyState[0] = false;
+			    		} else{
+			    			keyState[0] = 0;
 			    		}
 
 			    		console.log("Listen")
