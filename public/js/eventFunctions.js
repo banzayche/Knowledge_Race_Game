@@ -1,6 +1,6 @@
 'use strict'
 
-function soundConfigurator(engineMusic){// event
+function soundConfigurator(engineMusic){
 	$(document).on( "volume:off", volumeOff).
 				on( "volume:on", volumeOn).
 				on( "BgMusic:play", playBgMusic).
@@ -23,6 +23,30 @@ function soundConfigurator(engineMusic){// event
 		backgroundMusic.volume = currentVolume;
 		secondPlanMusic.volume = currentVolume;
 
+		var start_music = new Audio(engineMusic.startMusic);
+		start_music.preload = "true";
+
+		var bg_car_engine = new Audio(engineMusic.bgMusic);
+		bg_car_engine.preload = "true";
+
+		var quiz_start_music = new Audio(engineMusic.quizStartMusic);
+		quiz_start_music.preload = "true";
+
+		var clicking_answer = new Audio(engineMusic.clickingAnswer);
+		bg_car_engine.preload = "true";
+
+		var good_result_quiz = new Audio(engineMusic.goodResultQuiz);
+		good_result_quiz.preload = "true";
+
+		var bad_result_quiz = new Audio(engineMusic.badResultQuiz);
+		bg_car_engine.preload = "true";
+
+		var game_over = new Audio(engineMusic.gameOver);
+		start_music.preload = "true";
+
+		var word_hit = new Audio(engineMusic.wordHit);
+		bg_car_engine.preload = "true";
+
 	// function for event
 	// Operations with volume
 	function volumeOn(){
@@ -39,7 +63,7 @@ function soundConfigurator(engineMusic){// event
 	function playBgMusic(){
 		backgroundMusic.pause();
 		console.log("playing bg music");
-		backgroundMusic.src = engineMusic.bgMusic;
+		backgroundMusic = bg_car_engine;
 		backgroundMusic.loop = true;
 		backgroundMusic.play();
 	}
@@ -51,14 +75,14 @@ function soundConfigurator(engineMusic){// event
 	function playQuizStartMusic(){
 		secondPlanMusic.pause();
 		console.log("playing Quiz BG music");
-		secondPlanMusic.src = engineMusic.quizStartMusic;
+		secondPlanMusic = quiz_start_music;
 		secondPlanMusic.play();
 	}
 	// good hit music
 	function playHitWordMusic(){
 		secondPlanMusic.pause();
 		console.log("playing hit words music");
-		secondPlanMusic.src = engineMusic.wordHit;
+		secondPlanMusic = word_hit;
 		secondPlanMusic.play();
 	}
 	// bad hit music. For future functionality
@@ -69,7 +93,7 @@ function soundConfigurator(engineMusic){// event
 	function playStartMusic(){
 		backgroundMusic.pause();
 		console.log("playing start music");
-		backgroundMusic.src = engineMusic.startMusic;
+		backgroundMusic = start_music;
 		backgroundMusic.loop = true;
 		backgroundMusic.play();
 	}
@@ -77,7 +101,7 @@ function soundConfigurator(engineMusic){// event
 	function playGameOverMusic(){
 		backgroundMusic.pause();
 		console.log("playing game over music");
-		backgroundMusic.src = engineMusic.gameOver;
+		backgroundMusic = game_over;
 		backgroundMusic.loop = false;
 		backgroundMusic.play();
 	}
@@ -85,20 +109,20 @@ function soundConfigurator(engineMusic){// event
 	function playQuizClickingAnswerMusic(){
 		secondPlanMusic.pause();
 		console.log("playing Clicking answer music");
-		secondPlanMusic.src = engineMusic.clickingAnswer;
+		secondPlanMusic = clicking_answer;
 		secondPlanMusic.play();
 	}
 	// Quiz result music
 	function playQuizGoodResultMusic(){
 		secondPlanMusic.pause();
 		console.log("playing Quiz good result music");
-		secondPlanMusic.src = engineMusic.goodResultQuiz;
+		secondPlanMusic = good_result_quiz;
 		secondPlanMusic.play();
 	}
 	function playQuizBadResultMusic(){
 		backgroundMusic.pause();
 		console.log("playing Quiz bad result music");
-		secondPlanMusic.src = engineMusic.badResultQuiz;
+		secondPlanMusic = bad_result_quiz;
 		secondPlanMusic.play();
 	}
 };
