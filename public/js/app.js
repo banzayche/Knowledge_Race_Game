@@ -524,9 +524,9 @@
 			    	window.addEventListener("deviceorientation", function(event){
 			    		var gammaResult = Math.round(event.gamma),
 			    			car = drawArray[0];
-			    		if(gammaResult > 20){
+			    		if(gammaResult > 5){
 			    			keyState[0] = true;
-			    		} else if(gammaResult < -20){
+			    		} else if(gammaResult < -5){
 			    			keyState[0] = false;
 			    		} else{
 			    			keyState[0] = 'middle';
