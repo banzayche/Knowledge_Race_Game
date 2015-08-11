@@ -529,7 +529,7 @@
 			    		} else if(gammaResult < -20){
 			    			keyState[0] = false;
 			    		} else{
-			    			keyState[0] = 0;
+			    			keyState[0] = 'middle';
 			    		}
 
 			    		console.log("Listen")
@@ -553,8 +553,8 @@
 				if(keyState[0] === false){
 					car.x -= variablesObj.gameRulesObject.car.turnSpeed;
 				}
-				if(keyState[0] === 0){
-					car.x += 0;
+				if(keyState[0] === 'middle'){
+					car.x = car.x;
 				}
 
 			    if(car.x >= canvas.width){
