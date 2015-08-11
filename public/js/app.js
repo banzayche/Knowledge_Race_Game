@@ -1,114 +1,89 @@
 'use strict'
 
-$(document).ready(function(){
-	function GameProcess(){
-		var canvas = document.getElementById('myCanvas'),
+
+	function GameProcess(variablesObj){
+		var canvas = variablesObj.canvas,
 		context = canvas.getContext('2d'),
-		succesLearning = 1,
-		currentLearning,
-
-
-		// gameStation = "starting" --> start of the game
-		// gameStation = "running" --> gaming process
-		// gameStation = "game_over" --> end of the game
-		gameStation = "starting",
-
+		// game_station = "starting" --> start of the game
+		// game_station = "running" --> gaming process
+		// game_station = "game_over" --> end of the game
+		reading_of_rules = true,
+		game_station = "starting",
+		get_document_DOM = $(document),
 		pointsFlag = true,
-		positionVariation = 1,
-		whoBehidLine = 0,
+		position_variation = 1,
+		who_behid_line = 0,
 		starFrame,
-		// for arrow keys
+		// For animation frame
+		runAnimation,
+		stop_runing,
+		//
 		keyState = {},
-		// -------------
-		points = 0,
-		car = new Game.gameObjConstructor.car(185, 480, 22,35, "car"),
+		points = 47,
+		car = new Game.gameObjConstructor.car(variablesObj.gameRulesObject.car.x, variablesObj.gameRulesObject.car.y, variablesObj.gameRulesObject.car.width, variablesObj.gameRulesObject.car.height, "car"),
+		drawArray = [car];
 
-		// CAR
-		carImageObj = new Image(),
-		canDrawCar = false;
-		carImageObj.onload = function() {
-			canDrawCar = true;
-		};
-		carImageObj.src = './images/car3.png';
-		// --------------------------------------------
-		// BAD
-		var badImageObj = new Image();
-		var canDrawBad = false;
-		carImageObj.onload = function() {
-			canDrawBad = true;
-		};
-		badImageObj.src = './images/bad.png';
-		// ----------------------------------------------
-		// STAR
-		var starImageObj = new Image();
-		var canDrawStar = false;
-		carImageObj.onload = function() {
-			canDrawStar = true;
-		};
-		starImageObj.src = './images/star.png';
-		// --------------------------------------
-		var drawArray,
-		succesLearning = 3,
-		currentLearning = 0,
-		question = "",
-		answers = [],
-		trueAnsverIndex = 2;
 
 		// -------------CREATING_OF_DRAW-ARRAY--------------------------------------
-		drawArray = [car];
 		function createDrawArray(arr, obj){
-			var width = 60,
-				height = 50;
 			obj.map(function( obj, index ) {
-				arr.push(new Game.gameObjConstructor.box(obj.x, obj.y, width, height, obj.type, index, obj.value, obj.indexValue));
+				arr.push(new Game.gameObjConstructor.box(obj.x, obj.y, variablesObj.gameRulesObject.boxes.width, variablesObj.gameRulesObject.boxes.height, obj.type, index, obj.value, obj.indexValue));
 			});
 		};
-		createDrawArray(drawArray, variantsPosition[0])
+
+		// For default starting game
+		get_document_DOM.trigger("startMusic:play");
+		createDrawArray(drawArray, variablesObj.variantsPosition[0]);
+		getFrame("start");
 		// -----------------------------------------------------------------------------
 
 
 		// --------------FOR ANIMATION FRAME------------------------
-			var runAnimation,
-				stopRuning;
-				getFrame("start");
-			// function which calls requestAnimationFrame
-			function getFrame(value){
-				if(value === "start"){
-					runAnimation = requestAnimationFrame(drawCanvas);
-					stopRuning = false;
-				} else{
-					cancelAnimationFrame(runAnimation);
-					stopRuning = true;
-				}
+		// function which calls requestAnimationFrame
+		function getFrame(value){
+			if(value === "start"){
+				runAnimation = requestAnimationFrame(drawCanvas);
+				stop_runing = false;
+			} else{
+				cancelAnimationFrame(runAnimation);
+				stop_runing = true;
 			}
-			$("body").keyup(function(e){
-				if(e.keyCode === 13 && stopRuning === true && gameStation === "running"){
-					getFrame("start");
-				} else if(e.keyCode === 13 && stopRuning === false && gameStation === "running"){
-					getFrame("stop");
-				}
-			});
-			$("body").click(function(e){
-				if(e.target.id == "start"){
-					getFrame("start")
-				} else if(e.target.id == "stop"){
-					getFrame("stop")
-				}
-			});
+		}
+		$("body").keyup(function(e){
+			if(e.keyCode === 13 && stop_runing === true && game_station === "running"){
+				getFrame("start");
+				get_document_DOM.trigger("BgMusic:play");
+			} else if(e.keyCode === 13 && stop_runing === false && game_station === "running"){
+				getFrame("stop");
+				get_document_DOM.trigger("BgMusic:stop");
+				get_document_DOM.trigger("startMusic:play");
+			}
+		});
+		$("#myCanvas").click(function(e){
+			if(stop_runing === true && game_station === "running"){
+				getFrame("start");
+				get_document_DOM.trigger("BgMusic:play");
+			} else if(stop_runing === false && game_station === "running"){
+				getFrame("stop");
+				get_document_DOM.trigger("BgMusic:stop");
+				get_document_DOM.trigger("startMusic:play");
+			}
+		});
+
 
 		// ----CONTROLLERS-----------------------------
 			function Correction(){
 				// adding new value of y position-
-				if(gameStation === "running"){
+				if(game_station === "running"){
 					for (var i = 1; i<drawArray.length; i++) {
-						drawArray[i].y +=6;
+						drawArray[i].y += variablesObj.gameRulesObject.gameSpeed;
 					}
 				}
 				// -------------------------------
 
 				// rules for Car motion----
 				var maxX = 395,
-					minX = 2
+					minX = 2;
 				if(drawArray[0].x <= minX) {
 					drawArray[0].x = minX;
 				} else if (drawArray[0].x >= maxX){
@@ -124,7 +99,8 @@ $(document).ready(function(){
 						// get current distance-----------
 							var carCenter = drawArray[0].get_box_center(),
 							successBoxesCenter,
-							distance;
+							distance,
+							variationPositionsQuantity = variablesObj.variantsPosition.length;
 
 							successBoxesCenter = obj.get_box_center(),
 							distance = obj.get_distance(successBoxesCenter, carCenter);
@@ -134,53 +110,59 @@ $(document).ready(function(){
 							    points ++;
 
 							   starDrawing(obj);
-							   // fatalHit - столкновение с нежелательным обьектом, которое влечет перезагрузку уровня
+
 							   obj.hit = false;
 
-							   if(points === gameRulesObject.pointsAtAll){
-							   		gameStation = "quiz";
+							   if(points === variablesObj.gameRulesObject.pointsAtAll){
+							   		game_station = "quiz";
 							   }
+
+							   get_document_DOM.trigger("hitWordMusic:play");
 							}
 							if (distance <= drawArray[0].get_box_radius()+obj.get_box_radius() && obj.type === "bad"){
-							    	gameStation = "game_over";
+							    	game_station = "game_over";
+							    	get_document_DOM.trigger("badHitMusic:play");
 							}
 						// --------------------------------
 
-						if(obj.y >= 570){
+						if(obj.y >= canvas.height){
 							if(obj.hit === false) {
 								obj.hit = true;
 							}
 							// changing values of good boxes after his hidding
 							if(obj.type === "good"){
-								if(obj.indexValue+2 < gameRulesObject.arr.length ){
+								if(obj.indexValue+2 < variablesObj.gameRulesObject.arr.length ){
 									obj.indexValue = obj.indexValue+2;
-									obj.value = gameRulesObject.arr[obj.indexValue];
-								} else if(obj.indexValue+2 === gameRulesObject.arr.length){
+									obj.value = variablesObj.gameRulesObject.arr[obj.indexValue];
+								} else if(obj.indexValue+2 === variablesObj.gameRulesObject.arr.length){
 									obj.indexValue = 0;
-									obj.value = gameRulesObject.arr[obj.indexValue];
-								} else if(obj.indexValue+2 === gameRulesObject.arr.length+1) {
+									obj.value = variablesObj.gameRulesObject.arr[obj.indexValue];
+								} else if(obj.indexValue+2 === variablesObj.gameRulesObject.arr.length+1) {
 									obj.indexValue = 1;
-									obj.value = gameRulesObject.arr[obj.indexValue];
+									obj.value = variablesObj.gameRulesObject.arr[obj.indexValue];
 								}
 							}
 
 
-							whoBehidLine++;
-					    	if(positionVariation === 1){
-					    		obj.y = 0;
-								obj.x = variantsPosition[0][i-1].x;
-								if(whoBehidLine >= drawArray.length){
-						    		whoBehidLine = 0;
-						    		positionVariation++;
+							// variationPositionsQuantity - quantity of changing posirions
+							who_behid_line++;
+							for(var j = 1; j <= variationPositionsQuantity; j++){
+								if(j < variationPositionsQuantity && position_variation === j){
+						    		obj.y = 0-obj.height;
+									obj.x = variablesObj.variantsPosition[(j-1)][i-1].x;
+									if(who_behid_line >= drawArray.length){
+							    		who_behid_line = 0;
+							    		position_variation++;
+							    	}
+						    	} else if(j === variationPositionsQuantity && position_variation === j){
+						    		obj.y = 0-obj.height;
+									obj.x = variablesObj.variantsPosition[(j-1)][i-1].x;
+									if(who_behid_line >= drawArray.length){
+							    		who_behid_line = 0;
+							    		position_variation = 1;
+							    	}
 						    	}
-					    	} else if(positionVariation === 2){
-					    		obj.y = 0;
-								obj.x = variantsPosition[1][i-1].x;
-								if(whoBehidLine >= drawArray.length){
-						    		whoBehidLine = 0;
-						    		positionVariation--;
-						    	}
-					    	}
+							}
 						}
 					}
 				});
@@ -195,14 +177,14 @@ $(document).ready(function(){
 		// -------------------VIEWS-------------------------------------------------------------------
 			function starDrawing(obj){
 				// Window wich show to us the star
-					var width = 30,
-						height = 40,
-                        y = obj.y-60,
+					var width = variablesObj.gameRulesObject.star.width,
+						height = variablesObj.gameRulesObject.star.height,
+                        y = obj.y-obj.height,
                         x = obj.x;
 					function drawStar(){
-                        width +=15;
-                        height +=15;
-                        y -= 20;
+                        width += variablesObj.gameRulesObject.star.addWidth;
+                        height += variablesObj.gameRulesObject.star.addHeight;
+                        y -= variablesObj.gameRulesObject.star.addY;
 						context.drawImage(starImageObj, x, y, width, height);
 						starFrame = requestAnimationFrame(drawStar);
 					}
@@ -251,132 +233,214 @@ $(document).ready(function(){
 				// stopping of AnimationFrame
 				getFrame("stop")
 
+				get_document_DOM.trigger("BgMusic:stop");
+				get_document_DOM.trigger("gameOverMusic:play");
 				setTimeout(getStartAttrs, 2000);
 			};
 			function drawStart(){
+				if(reading_of_rules === true){
+					drawRules()
+				} else if(reading_of_rules === false){
+
+					get_document_DOM.trigger("startMusic:play");
+
+					context.clearRect(0, 0, canvas.width, canvas.height);
+					context.beginPath();
+
+					context.rect(0, 0, canvas.width, canvas.height);
+					context.fillStyle = 'rgba(4,4,4,0.9)';
+					context.shadowColor = 'black';
+				    context.shadowBlur = 20;
+				    context.shadowOffsetX = 10;
+				    context.shadowOffsetY = 10;
+
+					context.font = 'bold 25pt Calibri';
+					context.fillStyle = 'green';
+					context.fillText('Press Enter!', 120, 280);
+					context.shadowColor = 'black';
+					context.shadowColor = 'black';
+
+					context.closePath();
+
+					// stopping of AnimationFrame
+					getFrame("stop");
+
+					// next game_station
+					game_station = "running";
+				}
+			};
+			function drawRules(){
+
 				context.clearRect(0, 0, canvas.width, canvas.height);
 				context.beginPath();
 
 				context.rect(0, 0, canvas.width, canvas.height);
 				context.fillStyle = 'rgba(4,4,4,0.9)';
-				context.shadowColor = 'black';
-			    context.shadowBlur = 20;
-			    context.shadowOffsetX = 10;
-			    context.shadowOffsetY = 10;
-
 				context.font = 'bold 25pt Calibri';
-				context.fillStyle = 'green';
-				context.fillText('Press Enter!', 120, 280);
-				context.shadowColor = 'black';
-				context.shadowColor = 'black';
+				context.fillText('You have to read the rules!', 20, 280);
+				context.shadowColor = 'transparent';
+
+				context.fillStyle = 'red';
+				context.font = 'bold 15pt Calibri';
+				context.fillText('You have to hit the words and in the end of', 30, 340);
+				context.fillText('the level answer on some question.', 30, 360);
+
+
+				context.fillStyle = 'rgba(4,4,4,0.9)';
+				context.fillText('Control options:', 30, 390);
+				context.fillText('<--- Press Left Arrow - if you want turn left', 30, 410);
+				context.fillText('---> Press Right Arrow - if you want turn right', 30, 440);
+				context.fillText('Press ENTER - if you want Stop/Play the game', 30, 470);
+
+				context.fillStyle = 'red';
+				context.fillText('Press ENTER - if you understand all this things', 20, 550);
 
 				context.closePath();
 
-				// stopping of AnimationFrame
-				getFrame("stop");
-
-				// next gameStation
-				gameStation = "running";
-			};
+				$("body").keyup(function(e){
+					if(e.keyCode === 13 && reading_of_rules === true){
+						reading_of_rules = false
+					}
+				});
+				$("#myCanvas").click(function(e){
+					if(reading_of_rules === true){
+						reading_of_rules = false;
+					}
+				});
+			}
 		// -------------------------------------------------------------------------------------------
 		// Functions---------------------------------------------------------------------------------
+
+
 		function getStartAttrs(){
-				gameStation = "starting";
+				game_station = "starting";
 			    points = 0;
 			    drawArray=[car];
-			    createDrawArray(drawArray, variantsPosition[0])
+			    createDrawArray(drawArray, variablesObj.variantsPosition[0])
 			    getFrame("start")
 			}
 		function showTheQuiz(quizObj){
+			get_document_DOM.trigger("BgMusic:stop");
+			get_document_DOM.trigger("quizStartMusic:play");
+
+			var my_modal_DOM = $('#myModal'),
+				quiz_question_DOM = $('#quizQuestion'),
+				quiz_answers_DOM = $('#quizAnswers');
 			// canceling drawing of star
 			cancelAnimationFrame(starFrame);
 			// canceling drawing of all game
 			getFrame("stop");
-			// clearing of quiz element
-
-			gameRulesObject.answersVariant.map(function(ans, index){
+			quiz_question_DOM.html(variablesObj.gameRulesObject.question);
+			variablesObj.gameRulesObject.answersVariant.map(function(ans, index){
 				var answer = document.createElement('a');
 				answer.setAttribute("class", "list-group-item answers");
 				answer.setAttribute("index", index);
 				answer.setAttribute("href", "#");
 				answer.innerHTML = ans;
-				$("#quizAnswers").append(answer);
+				quiz_answers_DOM.append(answer);
 			});
-			$('#myModal').modal('show');
-			$("#quizAnswers").find("a[index="+gameRulesObject.rightIndex+"]").focus()
-			var canAnsew = true;
+			my_modal_DOM.modal('show');
 
+			workingWithAnswers();
+		}
 
+		function workingWithAnswers(){
+				var can_answer = true,
+					value_on_focus,
+					my_modal_DOM = $('#myModal'),
+					quiz_answers_DOM = $('#quizAnswers'),
+					quiz_answers_a_DOM = $("#quizAnswers>a"),
+					body_DOM = $('body');
 
-
-
-
-
-
-
-
-
-			// checking the answer
-			$("#quizAnswers>a").click(function(e){
-				// user can unswer only one time
-				if(canAnsew == true){
-					// result of clicked answer
-					var result = $(e.target).html();
-						// animation of pressed answer
-					$(e.target).addClass("pressedAnswer");
-					// marking of answers
-					setTimeout(function(){
-						$("#quizAnswers>a").removeClass("pressedAnswer");
-						$("#quizAnswers>a").addClass("wrongAnswers");
-						$("#quizAnswers").find("a[index="+gameRulesObject.rightIndex+"]").removeClass("wrongAnswers").addClass("trueAnswers");
-					},2000);
-						// if answer right
-					if(result === gameRulesObject.answersVariant[gameRulesObject.rightIndex]){
-						console.log('Nice Work');
-						setTimeout(function(){
-							$("body").addClass("bodyGood");
-						},2000);
-						canAnsew = false;
-						setTimeout(function(){
-							$("body").removeClass("bodyGood").removeClass("bodyBad")
-							// Creatin of new Level----------------------------------------------------
-							if(gameRulesObject.currentLevel < enteredDATA.length-1){
-								console.log(gameRulesObject.currentLevel)
-								addDataLevel(gameRulesObject.currentLevel+1);
-								creatingVarianPosition();
-							} else{
-								addDataLevel(0);
-								creatingVarianPosition();
-								console.log("The End")
-							}
-							//--------------------------------------------------------------------
-							gameStation = "starting";
-							$('#myCanvas').show();
-							$('h1').css('visibility', 'hidden');
-							getStartAttrs();
-							$('#myModal').modal('hide')
-							$("#quizAnswers").html('')
-						}, 10000)
-					// if answer false
-					} else{
-						console.log('Nice try');
-						setTimeout(function(){
-							$("body").addClass("bodyBad");
-						},2000);
-						canAnsew = false;
-						setTimeout(function(){
-							$("body").removeClass("bodyGood").removeClass("bodyBad")
-							gameStation = "starting";
-							$('#myCanvas').show();
-							$('h1').css('visibility', 'hidden');
-							getStartAttrs();
-							$('#myModal').modal('hide')
-							$("#quizAnswers").html('')
-						}, 10000)
+				function focusAnswer(index){
+					quiz_answers_DOM.find("a[index="+index+"]").focus()
+					value_on_focus = index;
+				}
+				focusAnswer(0);
+				quiz_answers_a_DOM.keyup(function(e){
+					if(e.keyCode === 38){
+						if(value_on_focus > 0){
+							focusAnswer(value_on_focus-1);
+						} else{
+							focusAnswer(variablesObj.gameRulesObject.answersVariant.length-1);
+						}
 					}
+					if(e.keyCode === 40){
+						if(value_on_focus < variablesObj.gameRulesObject.answersVariant.length-1){
+							focusAnswer(value_on_focus+1);
+						} else{
+							focusAnswer(0);
+						}
 					}
 				});
-				// =======================================CLICK=====================================
+				quiz_answers_a_DOM.keyup(function(e){
+					if(e.keyCode === 13 && can_answer == true){
+						checkingAncwer(e)
+					}
+				});
+				// checking the answer
+				quiz_answers_a_DOM.click(function(e){
+					// user can unswer only one time
+					if(can_answer == true){
+						checkingAncwer(e)
+					}
+					});
+					// =======================================CLICK=====================================
+					function checkingAncwer(e){
+						get_document_DOM.trigger("quizClickingAnswerMusic:play");
+
+						// result of clicked answer
+						var result = $(e.target).html();
+							// animation of pressed answer
+						$(e.target).addClass("pressedAnswer");
+						// marking of answers
+						setTimeout(function(){
+							quiz_answers_a_DOM.removeClass("pressedAnswer");
+							quiz_answers_a_DOM.addClass("wrongAnswers");
+							quiz_answers_DOM.find("a[index="+variablesObj.gameRulesObject.rightIndex+"]").removeClass("wrongAnswers").addClass("trueAnswers");
+						},2000);
+							// if answer right
+						if(result === variablesObj.gameRulesObject.answersVariant[variablesObj.gameRulesObject.rightIndex]){
+							setTimeout(function(){
+								body_DOM.addClass("bodyGood");
+								get_document_DOM.trigger("quizGoodResultMusic:play");
+							},2000);
+							can_answer = false;
+							setTimeout(function(){
+								body_DOM.removeClass("bodyGood").removeClass("bodyBad")
+								// Creatin of new Level----------------------------------------------------
+								if(variablesObj.gameRulesObject.currentLevel < variablesObj.enteredDATA.length-1){
+									console.log("Current level -  "+(variablesObj.gameRulesObject.currentLevel+1));
+									addDataLevel(variablesObj.gameRulesObject.currentLevel+1, variablesObj);
+									console.log("Next level -  "+(variablesObj.gameRulesObject.currentLevel+1));
+									creatingVarianPosition(variablesObj);
+								} else{
+									addDataLevel(0, variablesObj);
+									creatingVarianPosition(variablesObj);
+									console.log("The End of Game")
+								}
+								//--------------------------------------------------------------------
+								game_station = "starting";
+								getStartAttrs();
+								my_modal_DOM.modal('hide')
+								quiz_answers_DOM.html('')
+							}, 5000)
+						// if answer false
+						} else{
+							setTimeout(function(){
+								body_DOM.addClass("bodyBad");
+								get_document_DOM.trigger("quizBadResultMusic:play");
+							},2000);
+							can_answer = false;
+							setTimeout(function(){
+								body_DOM.removeClass("bodyGood").removeClass("bodyBad")
+								game_station = "starting";
+								getStartAttrs();
+								my_modal_DOM.modal('hide')
+								quiz_answers_DOM.html('')
+							}, 5000)
+						}
+					}
 			}
 		// ------------------------------------------------------------------------------------------
 
@@ -389,12 +453,13 @@ $(document).ready(function(){
 			function drawCanvas(){
 				// getting car position
 				// (when we call this function we also do closure of "runAnimation = requestAnimationFrame(drawCanvas);" that's why we have a looping drawing)
-				gameLoop();
+				// gameLoop();
+				runAnimation = requestAnimationFrame(gameLoop);
 				//
 
 				context.clearRect(0, 0, canvas.width, canvas.height);
 				// when the game is starting
-			    if(gameStation === "starting"){
+			    if(game_station === "starting"){
 			    	drawStart();
 			    	// stopping running this function
 			    	// we don't need drawing of boxes or car
@@ -416,12 +481,12 @@ $(document).ready(function(){
 			    // control of game rules
 			    Correction();
 
-			    if(gameStation === "quiz"){
+			    if(game_station === "quiz"){
 			    	showTheQuiz();
 			    	return;
 		        }
 			    // when you hit "Bad" box
-			    if(gameStation === "game_over"){
+			    if(game_station === "game_over"){
 			    	drawGameOver();
 		        }
 
@@ -434,7 +499,7 @@ $(document).ready(function(){
 			    context.strokeStyle = 'orange';
 
 			    context.fillStyle = 'green';
-			    context.fillText("Level #: "+ (gameRulesObject.currentLevel+1), 80, 130);
+			    context.fillText("Level #: "+ (variablesObj.gameRulesObject.currentLevel+1), 80, 130);
 
 
 
@@ -455,17 +520,35 @@ $(document).ready(function(){
 
 			function gameLoop() {
 			    if (keyState[37] || keyState[65]){
-			        drawArray[0].x -= 5;
+			        drawArray[0].x -= variablesObj.gameRulesObject.car.turnSpeed;
 			    }
 			    if (keyState[39] || keyState[68]){
-			        drawArray[0].x += 5;
+			        drawArray[0].x += variablesObj.gameRulesObject.car.turnSpeed;
 			    }
 
+
+
+
+			    function gammaControlling(){
+			    	if (window.DeviceOrientationEvent) {
+			    		window.addEventListener("deviceorientation", function(event){
+			    			var gammaResult = Math.round(event.gamma),
+			    				car_velocity = gammaResult,
+			    				car = drawArray[0];
+			    				if(car.x >= canvas.width){
+					                car.x = canvas.width-car.width;
+					            } else if(car.x <= 0){
+					                car.x = car.width;
+					            }
+
+			    				car.x += car_velocity/2;
+			    		});
+			    	}
+			    } gammaControlling();
 			    // redraw/reposition your object here
 			    // also redraw/animate any objects not controlled by the user
-			    runAnimation = requestAnimationFrame(drawCanvas);
+			    drawCanvas();
 			}
 		// ------------------------------------------------------------------------------------------
 
-	}GameProcess();
-});
+	}

@@ -1,3 +1,5 @@
+'use strict'
+
 var Game = {
 	// constructor for game objects
 	gameObjConstructor: {
@@ -69,24 +71,16 @@ var Game = {
 
 			    return A_side;
 			}
-		},
-		returnThis: function(){return this}
+		}
 	},
 	getMusic : {
-		drive : "../music",
-		hit : "../music",
-		turn : "../music",
-		get_coin : "../music",
-		game_start : "../music",
-		game_over : "../music",
-		quiz_start : "../music",
-		right_answer : "../music",
-		wrong_answer : "../music"
-	},
-	getImagesSrc : {
-		road : "../images",
-		car : "../images",
-		bad_box_1 : "../images",
-		bad_box_2 : "../images",
+		bgMusic: './music/car_bg.mp3',
+		wordHit: './music/word_hit.mp3',
+		startMusic: './music/intro_game.mp3',
+		gameOver: './music/game_over.mp3',
+		quizStartMusic: './music/beginning_of_quiz.mp3',
+		clickingAnswer: './music/clicking_answer.mp3',
+		goodResultQuiz: './music/good_answer.mp3',
+		badResultQuiz: './music/something_bad.mp3',
 	}
 };

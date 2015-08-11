@@ -1,8 +1,35 @@
 /*#myCanvas{
-	border: 2px solid grey;
-	display: block;
-	margin: 0 auto;
+  border: 2px solid grey;
+  display: block;
+  margin: 0 auto;
 }*/
+body{
+  min-width: 700px;
+  position: relative;
+}
+#volume{
+    display: block;
+    position: absolute;
+    top: 5%;
+    right: 5%;
+    width: 60px;
+    height: 60px;
+    z-index: 999999999999999999999999999999999999999999999999999999999999999999999999999999999999999;
+    padding: 15px 20px;
+    border: 1px solid orange;
+    border-radius: 50%;
+    -webkit-transition: all .6s;
+    -moz-transition: all .6s;
+    -o-transition: all .6s;
+    -ms-transition: all .6s;
+    transition: all .6s;
+    cursor: pointer;
+    color: orange;
+    font-size: 25px;
+}
+#volume:hover{
+      background-color: rgba(4,4,4,.1);
+}
 
 #frame {
       width: 425px;
@@ -47,10 +74,12 @@
       -ms-transform: rotateX(7deg) rotateY(0deg) rotateZ(0deg);
       transform: rotateX(7deg) rotateY(0deg) rotateZ(0deg);
 }
+
+/*QUIZ*/
 #quizAnswers{
       cursor: pointer;
 }
-/* The animation code */
+
 @keyframes pressedAnswer {
     0%  {background-color: white;}
     10% {background-color: rgba(4,4,4,.2);}
@@ -62,8 +91,8 @@
     90% {background-color: rgba(4,4,4,.2);}
 }
 
-/* The element to apply the animation to */
 .pressedAnswer {
+    background-color: transparent !important;
     animation-name: pressedAnswer;
     animation-duration: 2s;
 }
@@ -121,9 +150,9 @@
       text-shadow: 1px 1px 1px black;
       font-weight: bold;
 }
-/*#myModal .modal-header{
-      background-image: url('../images/atention.png');
-}*/
+
 #myModal .modal-footer{
       background-image: url('../images/atention.png');
 }
+
+#myModal a:focus {outline:none;background-color: rgba(4,4,4,.1)}
