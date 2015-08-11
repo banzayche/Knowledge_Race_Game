@@ -60,7 +60,7 @@ function levelInfo(variablesObj){
 			width: variablesObj.canvas.width/15,
 			x: (variablesObj.canvas.width/3)*1.35,
 			y: (variablesObj.canvas.width/6)*7,
-			turnSpeed: 5,
+			turnSpeed: 8,
 		},
 		star: {
 			height: variablesObj.canvas.height/15,

@@ -560,7 +560,7 @@
 			    if(car.x >= canvas.width){
 					car.x = canvas.width-car.width;
 				} else if(car.x <= 0){
-					car.x = car.width;
+					car.x = 0;
 				}
 			    // redraw/reposition your object here
 			    // also redraw/animate any objects not controlled by the user
