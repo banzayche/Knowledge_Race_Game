@@ -512,10 +512,7 @@
 		//--------------------------------MOVING of CAR-----------------------------------------------------
 			// loop for redrawing of canvas when keydown or keyup happened
 			window.addEventListener('keydown',function(e){
-				keyState[37] = false;
-			    keyState[65] = false;
-			    keyState[37] = false;
-			    keyState[65] = false;
+				keyState[0];
 			    keyState[e.keyCode || e.which] = true;
 			},true);
 			window.addEventListener('keyup',function(e){
@@ -527,16 +524,12 @@
 			    	window.addEventListener("deviceorientation", function(event){
 			    		var gammaResult = Math.round(event.gamma),
 			    			car = drawArray[0];
-			    		if(gammaResult >= 0){
-			    			keyState[37] = false;
-			    			keyState[65] = false;
-			    			keyState[37] = true;
-			    			keyState[65] = true;
+			    		if(gammaResult > 0){
+			    			keyState[0] = true;
+			    		} else if(gammaResult === 0){
+			    			keyState[0] = 0;
 			    		} else{
-			    			keyState[37] = true;
-			    			keyState[65] = true;
-			    			keyState[37] = false;
-			    			keyState[65] = false;
+			    			keyState[0] = false;
 			    		}
 
 			    		console.log("Listen")
@@ -554,11 +547,21 @@
 			        car.x += variablesObj.gameRulesObject.car.turnSpeed;
 			    }
 
-			 //    if(car.x >= canvas.width){
-				// 	car.x = canvas.width-car.width;
-				// } else if(car.x <= 0){
-				// 	car.x = car.width;
-				// }
+				if(keyState[0] === true){
+					car.x += variablesObj.gameRulesObject.car.turnSpeed;
+				}
+				if(keyState[0] === false){
+					car.x -= variablesObj.gameRulesObject.car.turnSpeed;
+				}
+				if(keyState[0] === 0){
+					car.x += 0;
+				}
+
+			    if(car.x >= canvas.width){
+					car.x = canvas.width-car.width;
+				} else if(car.x <= 0){
+					car.x = car.width;
+				}
 			    // redraw/reposition your object here
 			    // also redraw/animate any objects not controlled by the user
 			    drawCanvas();
