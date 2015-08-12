@@ -20,8 +20,24 @@ function soundConfigurator(engineMusic){
 		currentVolume = 0.8,
 		backgroundMusic = new Audio(),
 		secondPlanMusic = new Audio();
-		backgroundMusic.volume = currentVolume;
-		secondPlanMusic.volume = currentVolume;
+
+		function changeVolume(value){
+			if(value === "off"){
+				currentVolume = 0;
+			} else{
+				currentVolume = standartVolume;
+			}
+			backgroundMusic.volume = currentVolume;
+			secondPlanMusic.volume = currentVolume;
+			start_music.volume = currentVolume;
+			bg_car_engine.volume = currentVolume;
+			quiz_start_music.volume = currentVolume;
+			clicking_answer.volume = currentVolume;
+			good_result_quiz.volume = currentVolume;
+			bad_result_quiz.volume = currentVolume;
+			game_over.volume = currentVolume;
+			word_hit.volume  = currentVolume;
+		}
 
 		var start_music = new Audio(engineMusic.startMusic);
 		start_music.preload = "true";
@@ -47,17 +63,14 @@ function soundConfigurator(engineMusic){
 		var word_hit = new Audio(engineMusic.wordHit);
 		bg_car_engine.preload = "true";
 
+		changeVolume();
 	// function for event
 	// Operations with volume
 	function volumeOn(){
-		currentVolume = standartVolume,
-		backgroundMusic.volume = currentVolume;
-		secondPlanMusic.volume = currentVolume;
+		changeVolume();
 	}
 	function volumeOff(){
-		currentVolume = 0,
-		backgroundMusic.volume = currentVolume;
-		secondPlanMusic.volume = currentVolume;
+		changeVolume('off');
 	}
 	// Game BG music
 	function playBgMusic(){
