@@ -72,30 +72,178 @@ function levelInfo(variablesObj){
 		gameSpeed: 5,
 	};
 	//
-	// entered DATA
-	variablesObj.enteredDATA = [
-		{
-			sentenseString: "I have to lock my PC each time I step away.",
-			repeat: 1,
-			question: "What do You do when you step away from your workplace?",
-			answersVariant : ["1. Make some coffee!", "2. I lock my PC.", "3. I'm calling my mom."],
-			rightIndex : 1,
-		},
-		{
-			sentenseString: "PC locking is very important for security policy.",
-			repeat: 1,
-			question: "What is so important for security policy?",
-			answersVariant : ["1. To lock my PC Locking.", "2. Security Guard", "3. None of the above"],
-			rightIndex : 0,
-		},
-		{
-			sentenseString: "After work day I have to check if I locked my PC before going home.",
-			repeat: 1,
-			question: "What do You do when you work day is over?",
-			answersVariant : ["Dancing! We have a class.", "2. Listen to the music (Serj Tankain - Sky is over).", "3. First, I check is my PC locked."],
-			rightIndex : 3,
+
+	var themesObj = {
+		1: [
+			{
+				sentenseString: "ONE",
+				splitAttr: ' ',
+				repeat: 20,
+				question: "What do You do when you step away from your workplace?",
+				answersVariant : ["1. Make some coffee!", "2. I lock my PC.", "3. I'm calling my mom."],
+				rightIndex : 1,
+			},
+			{
+				sentenseString: "PC locking is very important for security policy.",
+				splitAttr: ' ',
+				repeat: 1,
+				question: "What is so important for security policy?",
+				answersVariant : ["1. To lock my PC Locking.", "2. Security Guard", "3. None of the above"],
+				rightIndex : 0,
+			},
+			{
+				sentenseString: "After work day I have to check if I locked my PC before going home.",
+				splitAttr: ' ',
+				repeat: 1,
+				question: "What do You do when you work day is over?",
+				answersVariant : ["Dancing! We have a class.", "2. Listen to the music (Serj Tankain - Sky is over).", "3. First, I check is my PC locked."],
+				rightIndex : 3,
+			}
+		],
+		2: [
+			{
+				sentenseString: "TWO TWO",
+				splitAttr: ' ',
+				repeat: 10,
+				question: "What do You do when you step away from your workplace?",
+				answersVariant : ["1. Make some coffee!", "2. I lock my PC.", "3. I'm calling my mom."],
+				rightIndex : 1,
+			},
+			{
+				sentenseString: "PC locking is very important for security policy.",
+				splitAttr: ' ',
+				repeat: 1,
+				question: "What is so important for security policy?",
+				answersVariant : ["1. To lock my PC Locking.", "2. Security Guard", "3. None of the above"],
+				rightIndex : 0,
+			},
+			{
+				sentenseString: "After work day I have to check if I locked my PC before going home.",
+				splitAttr: ' ',
+				repeat: 1,
+				question: "What do You do when you work day is over?",
+				answersVariant : ["Dancing! We have a class.", "2. Listen to the music (Serj Tankain - Sky is over).", "3. First, I check is my PC locked."],
+				rightIndex : 3,
+			}
+		],
+		3: [
+			{
+				sentenseString: "THREE THREE",
+				splitAttr: ' ',
+				repeat: 10,
+				question: "What do You do when you step away from your workplace?",
+				answersVariant : ["1. Make some coffee!", "2. I lock my PC.", "3. I'm calling my mom."],
+				rightIndex : 1,
+			},
+			{
+				sentenseString: "PC locking is very important for security policy.",
+				splitAttr: ' ',
+				repeat: 1,
+				question: "What is so important for security policy?",
+				answersVariant : ["1. To lock my PC Locking.", "2. Security Guard", "3. None of the above"],
+				rightIndex : 0,
+			},
+			{
+				sentenseString: "After work day I have to check if I locked my PC before going home.",
+				splitAttr: ' ',
+				repeat: 1,
+				question: "What do You do when you work day is over?",
+				answersVariant : ["Dancing! We have a class.", "2. Listen to the music (Serj Tankain - Sky is over).", "3. First, I check is my PC locked."],
+				rightIndex : 3,
+			}
+		],
+		4: [
+			{
+				sentenseString: "FOUR FOUR",
+				splitAttr: ' ',
+				repeat: 10,
+				question: "What do You do when you step away from your workplace?",
+				answersVariant : ["1. Make some coffee!", "2. I lock my PC.", "3. I'm calling my mom."],
+				rightIndex : 1,
+			},
+			{
+				sentenseString: "PC locking is very important for security policy.",
+				splitAttr: ' ',
+				repeat: 1,
+				question: "What is so important for security policy?",
+				answersVariant : ["1. To lock my PC Locking.", "2. Security Guard", "3. None of the above"],
+				rightIndex : 0,
+			},
+			{
+				sentenseString: "After work day I have to check if I locked my PC before going home.",
+				splitAttr: ' ',
+				repeat: 1,
+				question: "What do You do when you work day is over?",
+				answersVariant : ["Dancing! We have a class.", "2. Listen to the music (Serj Tankain - Sky is over).", "3. First, I check is my PC locked."],
+				rightIndex : 3,
+			}
+		],
+		5: [
+			{
+				sentenseString: "FIFE FIFE",
+				splitAttr: ' ',
+				repeat: 10,
+				question: "What do You do when you step away from your workplace?",
+				answersVariant : ["1. Make some coffee!", "2. I lock my PC.", "3. I'm calling my mom."],
+				rightIndex : 1,
+			},
+			{
+				sentenseString: "PC locking is very important for security policy.",
+				splitAttr: ' ',
+				repeat: 1,
+				question: "What is so important for security policy?",
+				answersVariant : ["1. To lock my PC Locking.", "2. Security Guard", "3. None of the above"],
+				rightIndex : 0,
+			},
+			{
+				sentenseString: "After work day I have to check if I locked my PC before going home.",
+				splitAttr: ' ',
+				repeat: 1,
+				question: "What do You do when you work day is over?",
+				answersVariant : ["Dancing! We have a class.", "2. Listen to the music (Serj Tankain - Sky is over).", "3. First, I check is my PC locked."],
+				rightIndex : 3,
+			}
+		],
+		6: [
+			{
+				sentenseString: "SIX SIX",
+				splitAttr: ' ',
+				repeat: 10,
+				question: "What do You do when you step away from your workplace?",
+				answersVariant : ["1. Make some coffee!", "2. I lock my PC.", "3. I'm calling my mom."],
+				rightIndex : 1,
+			},
+			{
+				sentenseString: "PC locking is very important for security policy.",
+				splitAttr: ' ',
+				repeat: 1,
+				question: "What is so important for security policy?",
+				answersVariant : ["1. To lock my PC Locking.", "2. Security Guard", "3. None of the above"],
+				rightIndex : 0,
+			},
+			{
+				sentenseString: "After work day I have to check if I locked my PC before going home.",
+				splitAttr: ' ',
+				repeat: 1,
+				question: "What do You do when you work day is over?",
+				answersVariant : ["Dancing! We have a class.", "2. Listen to the music (Serj Tankain - Sky is over).", "3. First, I check is my PC locked."],
+				rightIndex : 3,
+			}
+		],
+	}
+	// read url
+	var readUrlParams = function(name){
+		var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+
+		if(results !== null){
+			return results[1]
+		} else{
+			return 1
 		}
-	];
+	}
+	// entered DATA
+	variablesObj.enteredDATA = themesObj[readUrlParams('game')];
+
 };
 // Function of adding data
 function addDataLevel(numberLevel, variablesObj){
@@ -103,11 +251,15 @@ function addDataLevel(numberLevel, variablesObj){
 
 	var gameRules = variablesObj.enteredDATA[numberLevel];
 	var sentenseString = gameRules.sentenseString,
-		wordsArr = sentenseString.split(' ');
+		wordsArr = sentenseString.split(gameRules.splitAttr);
 	function detect_words(arr){
 	    var lengthArr = arr.length;
 	    if(lengthArr%2 === 0){
 	        return arr;
+	    } else if(lengthArr === 1){
+	    	arr.push(arr[0]);
+	    	gameRules.repeat = Math.round(gameRules.repeat/2);
+	    	return arr;
 	    } else{
 	        return searchMin(arr);
 	    }

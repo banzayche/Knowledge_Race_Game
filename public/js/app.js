@@ -1,6 +1,5 @@
 'use strict'
 
-
 	function GameProcess(variablesObj){
 		var canvas = variablesObj.canvas,
 		context = canvas.getContext('2d'),
@@ -357,8 +356,9 @@
 					value_on_focus = index;
 				}
 				focusAnswer(0);
-				quiz_answers_a_DOM.keyup(function(e){
+				quiz_answers_a_DOM.keydown(function(e){
 					if(e.keyCode === 38){
+			        	e.preventDefault();
 						if(value_on_focus > 0){
 							focusAnswer(value_on_focus-1);
 						} else{
@@ -366,6 +366,7 @@
 						}
 					}
 					if(e.keyCode === 40){
+						e.preventDefault();
 						if(value_on_focus < variablesObj.gameRulesObject.answersVariant.length-1){
 							focusAnswer(value_on_focus+1);
 						} else{
@@ -512,6 +513,13 @@
 		//--------------------------------MOVING of CAR-----------------------------------------------------
 			// loop for redrawing of canvas when keydown or keyup happened
 			window.addEventListener('keydown',function(e){
+				if (e.keyCode == 37 || e.keyCode == 65){
+			        e.preventDefault();
+			    }
+			    if (e.keyCode == 39 || e.keyCode == 68){
+			        e.preventDefault();
+			    }
+
 				keyState[0];
 			    keyState[e.keyCode || e.which] = true;
 			},true);
