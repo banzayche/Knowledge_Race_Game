@@ -20,7 +20,8 @@
 	</head>
 	<body>
 		<div id="volume" class="volume-on"><span class="glyphicon glyphicon-volume-up"></span></div>
-		<div class="modal" id="myModal" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+		<!-- quiz modal -->
+		<div class="modal fade" id="quizModal" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
 		  <div class="modal-dialog modal-sm">
 		    <div class="modal-content">
 		      <div class="modal-header">
@@ -35,6 +36,25 @@
 		    </div>
 		  </div>
 		</div>
+		<!-- // quiz modal -->
+		<!-- rules modal -->
+		<div class="modal" id="splashModal" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h3 class="modal-title text-center" id="splash-header"></h3>
+		      </div>
+		      <div class="modal-body">
+		        <div class="list-group" id="splash-content">
+				</div>
+		      </div>
+		      <div class="modal-footer" id="splash-footer">
+		      	<button class="btn btn-primary hide-splash">OK</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		<!-- // rules modal -->
 		<div id="frame">
 			<canvas id="myCanvas" width="420px" height="580px"></canvas>
 		</div>

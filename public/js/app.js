@@ -72,7 +72,7 @@
 
 		// ----CONTROLLERS-----------------------------
 			function Correction(){
-				// adding new value of y position-
+				// adding new value of y position
 				if(game_station === "running"){
 					for (var i = 1; i<drawArray.length; i++) {
 						drawArray[i].y += variablesObj.gameRulesObject.gameSpeed;
@@ -81,8 +81,8 @@
 				// -------------------------------
 
 				// rules for Car motion----
-				var maxX = 395,
-					minX = 2;
+				var maxX = canvas.width-car.width,
+					minX = 0;
 				if(drawArray[0].x <= minX) {
 					drawArray[0].x = minX;
 				} else if (drawArray[0].x >= maxX){
@@ -234,82 +234,112 @@
 
 				get_document_DOM.trigger("BgMusic:stop");
 				get_document_DOM.trigger("gameOverMusic:play");
+
+				// restart level
 				setTimeout(getStartAttrs, 2000);
 			};
-			function drawStart(){
+			function drawStartModals(){
 				if(reading_of_rules === true){
-					drawRules()
+					drawRulesModal()
 				} else if(reading_of_rules === false){
-
+					// get music
 					get_document_DOM.trigger("startMusic:play");
-
-					context.clearRect(0, 0, canvas.width, canvas.height);
-					context.beginPath();
-
-					context.rect(0, 0, canvas.width, canvas.height);
-					context.fillStyle = 'rgba(4,4,4,0.9)';
-					context.shadowColor = 'black';
-				    context.shadowBlur = 20;
-				    context.shadowOffsetX = 10;
-				    context.shadowOffsetY = 10;
-
-					context.font = 'bold 25pt Calibri';
-					context.fillStyle = 'green';
-					context.fillText('Press Enter!', 120, 280);
-					context.shadowColor = 'black';
-					context.shadowColor = 'black';
-
-					context.closePath();
-
 					// stopping of AnimationFrame
 					getFrame("stop");
 
-					// next game_station
-					game_station = "running";
+					var rules_object = {
+						title: variablesObj.gameRulesObject.start_splash.title,
+						content: variablesObj.gameRulesObject.start_splash.content,
+						show: variablesObj.gameRulesObject.start_splash.show,
+						toDo: function(){
+							drawStartCanvas();
+						},
+					}
+					getModalSplash(rules_object);
 				}
 			};
-			function drawRules(){
-
+			function drawStartCanvas(){
 				context.clearRect(0, 0, canvas.width, canvas.height);
 				context.beginPath();
 
 				context.rect(0, 0, canvas.width, canvas.height);
 				context.fillStyle = 'rgba(4,4,4,0.9)';
+				context.shadowColor = 'black';
+			    context.shadowBlur = 20;
+			    context.shadowOffsetX = 10;
+			    context.shadowOffsetY = 10;
+
 				context.font = 'bold 25pt Calibri';
-				context.fillText('You have to read the rules!', 20, 280);
-				context.shadowColor = 'transparent';
-
-				context.fillStyle = 'red';
-				context.font = 'bold 15pt Calibri';
-				context.fillText('You have to hit the words and in the end of', 30, 340);
-				context.fillText('the level answer on some question.', 30, 360);
-
-
-				context.fillStyle = 'rgba(4,4,4,0.9)';
-				context.fillText('Control options:', 30, 390);
-				context.fillText('<--- Press Left Arrow - if you want turn left', 30, 410);
-				context.fillText('---> Press Right Arrow - if you want turn right', 30, 440);
-				context.fillText('Press ENTER - if you want Stop/Play the game', 30, 470);
-
-				context.fillStyle = 'red';
-				context.fillText('Press ENTER - if you understand all this things', 20, 550);
+				context.fillStyle = 'green';
+				context.fillText('Press Enter!', 120, 280);
+				context.shadowColor = 'black';
+				context.shadowColor = 'black';
 
 				context.closePath();
 
-				$("body").keyup(function(e){
-					if(e.keyCode === 13 && reading_of_rules === true){
-						reading_of_rules = false
-					}
-				});
-				$("#myCanvas").click(function(e){
-					if(reading_of_rules === true){
+				// next game_station
+				game_station = "running";
+			};
+			function drawRulesModal(){
+				var rules_object = {
+					title: variablesObj.gameRulesObject.rules_splash.title,
+					content: variablesObj.gameRulesObject.rules_splash.content,
+					show: variablesObj.gameRulesObject.rules_splash.show,
+					toDo: function(){
 						reading_of_rules = false;
-					}
-				});
+					},
+				}
+				getModalSplash(rules_object);
 			}
 		// -------------------------------------------------------------------------------------------
 		// Functions---------------------------------------------------------------------------------
+		function getModalSplash(obj){
+			if(obj.show == true){
+				var splash_modal = true;
+				var rules_modal_DOM = $('#splashModal'),
+						rules_header_DOM = $('#splash-header'),
+						rules_content_DOM = $('#splash-content'),
+						rules_footer_DOM = $('#splash-footer');
 
+				rules_header_DOM.html(obj.title);
+				rules_content_DOM.html(obj.content);
+				rules_modal_DOM.modal('show');
+
+
+				$('#splashModal .modal-content').slideDown();
+
+
+				function onKeupEvent(e){
+					if(e.keyCode === 13 && splash_modal === true){
+						$('#splashModal .modal-content').hide(500);
+						splash_modal = false;
+						unbinEvents();
+						rules_modal_DOM.modal('hide');
+
+						obj.toDo();
+					}
+				}
+				function onclickEvent(){
+					$('#splashModal .modal-content').hide(500);
+					splash_modal = false;
+					unbinEvents();
+					rules_modal_DOM.modal('hide');
+
+					obj.toDo();
+				}
+				function unbinEvents(){
+					$("#splash-footer>.hide-splash").unbind( "click", onclickEvent );
+					$("body").unbind( "keyup", onKeupEvent );
+				}
+
+				$("body").bind( "keyup", onKeupEvent );
+				$("#splash-footer>.hide-splash").bind( "click", onclickEvent );
+			} else{
+				obj.toDo();
+			}
+
+
+		}
 
 		function getStartAttrs(){
 				game_station = "starting";
@@ -322,7 +352,7 @@
 			get_document_DOM.trigger("BgMusic:stop");
 			get_document_DOM.trigger("quizStartMusic:play");
 
-			var my_modal_DOM = $('#myModal'),
+			var my_modal_DOM = $('#quizModal'),
 				quiz_question_DOM = $('#quizQuestion'),
 				quiz_answers_DOM = $('#quizAnswers');
 			// canceling drawing of star
@@ -346,7 +376,7 @@
 		function workingWithAnswers(){
 				var can_answer = true,
 					value_on_focus,
-					my_modal_DOM = $('#myModal'),
+					my_modal_DOM = $('#quizModal'),
 					quiz_answers_DOM = $('#quizAnswers'),
 					quiz_answers_a_DOM = $("#quizAnswers>a"),
 					body_DOM = $('body');
@@ -399,16 +429,31 @@
 							quiz_answers_a_DOM.removeClass("pressedAnswer");
 							quiz_answers_a_DOM.addClass("wrongAnswers");
 							quiz_answers_DOM.find("a[index="+variablesObj.gameRulesObject.rightIndex+"]").removeClass("wrongAnswers").addClass("trueAnswers");
-						},2000);
+						},1000);
 							// if answer right
 						if(result === variablesObj.gameRulesObject.answersVariant[variablesObj.gameRulesObject.rightIndex]){
 							setTimeout(function(){
 								body_DOM.addClass("bodyGood");
 								get_document_DOM.trigger("quizGoodResultMusic:play");
-							},2000);
+							},1000);
 							can_answer = false;
 							setTimeout(function(){
 								body_DOM.removeClass("bodyGood").removeClass("bodyBad")
+
+
+								my_modal_DOM.modal('hide');
+								quiz_answers_DOM.html('');
+
+								// obj for splash screen
+								var rules_object = {
+									title: variablesObj.gameRulesObject.end_splash.title,
+									content: variablesObj.gameRulesObject.end_splash.content,
+									show: variablesObj.gameRulesObject.end_splash.show,
+									toDo: function(){
+										game_station = "starting";
+										getStartAttrs();
+									},
+								}
 								// Creatin of new Level----------------------------------------------------
 								if(variablesObj.gameRulesObject.currentLevel < variablesObj.enteredDATA.length-1){
 									console.log("Current level -  "+(variablesObj.gameRulesObject.currentLevel+1));
@@ -419,19 +464,32 @@
 									addDataLevel(0, variablesObj);
 									creatingVarianPosition(variablesObj);
 									console.log("The End of Game")
+
+									rules_object.toDo = function(){
+										var rules_object = {
+											title: variablesObj.gameRulesObject.result_splash.title,
+											content: variablesObj.gameRulesObject.result_splash.content,
+											show: variablesObj.gameRulesObject.result_splash.show,
+											toDo: function(){
+												game_station = "starting";
+												getStartAttrs();
+											},
+										}
+										getModalSplash(rules_object);
+									}
 								}
 								//--------------------------------------------------------------------
-								game_station = "starting";
-								getStartAttrs();
-								my_modal_DOM.modal('hide')
-								quiz_answers_DOM.html('')
-							}, 5000)
+								getModalSplash(rules_object);
+
+							}, 2400)
+
+
 						// if answer false
 						} else{
 							setTimeout(function(){
 								body_DOM.addClass("bodyBad");
 								get_document_DOM.trigger("quizBadResultMusic:play");
-							},2000);
+							},1000);
 							can_answer = false;
 							setTimeout(function(){
 								body_DOM.removeClass("bodyGood").removeClass("bodyBad")
@@ -439,7 +497,7 @@
 								getStartAttrs();
 								my_modal_DOM.modal('hide')
 								quiz_answers_DOM.html('')
-							}, 5000)
+							}, 2400)
 						}
 					}
 			}
@@ -461,7 +519,7 @@
 				context.clearRect(0, 0, canvas.width, canvas.height);
 				// when the game is starting
 			    if(game_station === "starting"){
-			    	drawStart();
+			    	drawStartModals();
 			    	// stopping running this function
 			    	// we don't need drawing of boxes or car
 			    	return;

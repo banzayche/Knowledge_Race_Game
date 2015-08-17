@@ -82,78 +82,78 @@ body{
 }
 
 @keyframes pressedAnswer {
-    0%  {background-color: white;}
-    10% {background-color: rgba(4,4,4,.2);}
-    20% {background-color: white;}
-    30% {background-color: rgba(4,4,4,.2);}
-    40% {background-color: white;}
+    25%  {background-color: white;}
     50% {background-color: rgba(4,4,4,.2);}
-    70% {background-color: white;}
-    90% {background-color: rgba(4,4,4,.2);}
+    75% {background-color: white;}
+    100% {background-color: rgba(4,4,4,.2);}
 }
 
 .pressedAnswer {
     background-color: transparent !important;
     animation-name: pressedAnswer;
-    animation-duration: 2s;
+    animation-duration: 1s;
 }
 .wrongAnswers{
-      transition: background-color 1s;
+      transition: background-color 0.5s;
       background-color: #F56464 !important;
 }
 .trueAnswers{
-      transition: background-color 1s;
+      transition: background-color 0.5s;
       background-color: #8BE093 !important;
 }
 
 @keyframes bodyGood {
-    0%  {background-color: white;}
-    10% {background-color: #8BE093;}
-    20% {background-color: white;}
-    30% {background-color: #8BE093;}
-    40% {background-color: white;}
+    25%  {background-color: white;}
     50% {background-color: #8BE093;}
-    70% {background-color: white;}
-    90% {background-color: #8BE093;}
+    75% {background-color: white;}
+    100% {background-color: #8BE093;}
 }
 .bodyGood{
     animation-name: bodyGood;
-    animation-duration: 2s;
+    animation-duration: 1s;
 }
 @keyframes bodyBad {
-    0%  {background-color: white;}
-    10% {background-color: #F56464;}
-    20% {background-color: white;}
-    30% {background-color: #F56464;}
-    40% {background-color: white;}
+    25%  {background-color: white;}
     50% {background-color: #F56464;}
-    70% {background-color: white;}
-    90% {background-color: #F56464;}
+    75% {background-color: white;}
+    100% {background-color: #F56464;}
 }
 .bodyBad{
     animation-name: bodyBad;
-    animation-duration: 2s;
+    animation-duration: 1s;
 }
 
 .modal-backdrop{
       opacity: 0 !important;
 }
+
+
+/*QUIZ modal*/
 @media (min-width: 768px){
-    .modal-sm {
+    #quizModal .modal-sm {
           width: 480px;
           margin: 170px auto;
       }
 }
 
-/*modal*/
-#myModal .modal-header h3{
+#quizModal .modal-header h3{
       color: grey;
       text-shadow: 1px 1px 1px black;
       font-weight: bold;
 }
 
-#myModal .modal-footer{
+.modal-footer{
       background-image: url('../images/atention.png');
 }
 
-#myModal a:focus {outline:none;background-color: rgba(4,4,4,.1)}
+#quizModal a:focus {outline:none;background-color: rgba(4,4,4,.1)}
+
+/*splash modal*/
+#splashModal .modal-content{
+  display: none;
+}
+#splash-footer>button{
+  width: 40%;
+  display: block;
+  margin: 0 auto;
+}
