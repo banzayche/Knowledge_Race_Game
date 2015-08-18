@@ -7,14 +7,6 @@ carImageObj.onload = function() {
 	canDrawCar = true;
 };
 carImageObj.src = './images/falcon.png';
-// CAR
-var carImageObj2 = new Image(),
-canDrawCar2 = false;
-carImageObj2.onload = function() {
-	canDrawCar2 = true;
-};
-carImageObj2.src = './images/falcon2.png';
-// --------------------------------------------
 // BAD
 var badImageObj = new Image();
 var canDrawBad = false;
