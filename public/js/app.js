@@ -195,8 +195,8 @@
 				if(drawArray[index].type === 'good'){
 					context.beginPath();
 					context.font = 'bold 25pt Calibri';
-					context.fillStyle = 'red';
-					context.shadowColor = 'grey';
+					context.fillStyle = 'white';
+					context.shadowColor = 'white';
 					context.fillText(drawArray[index].value, drawArray[index].x, drawArray[index].y);
 					context.closePath();
 				} else{

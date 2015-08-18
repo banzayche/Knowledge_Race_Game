@@ -6,6 +6,8 @@
 body{
   min-width: 660px;
   position: relative;
+  background-image: url('./../images/back_stars.jpg');
+  background-size: 100%;
 }
 #volume{
     display: block;
@@ -58,7 +60,7 @@ body{
 
 #myCanvas {
       margin-top: -90px;
-      border: 3px solid #dedede;
+/*      border: 3px solid #dedede;*/
       -webkit-perspective: 100px;
       -moz-perspective: 100px;
       -o-perspective: 100px;

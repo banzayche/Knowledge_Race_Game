@@ -6,7 +6,7 @@ canDrawCar = false;
 carImageObj.onload = function() {
 	canDrawCar = true;
 };
-carImageObj.src = './images/car3.png';
+carImageObj.src = './images/falcon.png';
 // --------------------------------------------
 // BAD
 var badImageObj = new Image();
@@ -14,7 +14,7 @@ var canDrawBad = false;
 carImageObj.onload = function() {
 	canDrawBad = true;
 };
-badImageObj.src = './images/bad.png';
+badImageObj.src = './images/fighter.png';
 // ----------------------------------------------
 // STAR
 var starImageObj = new Image();
@@ -56,8 +56,8 @@ function levelInfo(variablesObj){
 			width: variablesObj.canvas.width/10,
 		},
 		car: {
-			height: variablesObj.canvas.height/15,
-			width: variablesObj.canvas.width/15,
+			height: variablesObj.canvas.height/10,
+			width: variablesObj.canvas.width/6,
 			x: (variablesObj.canvas.width/3)*1.35,
 			y: (variablesObj.canvas.width/6)*7,
 			turnSpeed: 5,
