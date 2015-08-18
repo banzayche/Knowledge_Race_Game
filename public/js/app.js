@@ -13,6 +13,7 @@
 		position_variation = 1,
 		who_behid_line = 0,
 		starFrame,
+		plumeCounter = 0,
 		// For animation frame
 		runAnimation,
 		stop_runing,
@@ -70,7 +71,7 @@
 		});
 
 
-		// ----CONTROLLERS-----------------------------
+		// ----CONTROLLER-----------------------------
 			function Correction(){
 				// adding new value of y position
 				if(game_station === "running"){
@@ -88,6 +89,7 @@
 				} else if (drawArray[0].x >= maxX){
 					drawArray[0].x = maxX;
 				}
+				drawArray[0]
 				//---------------------------
 
 				// rules for boxes--------------
@@ -174,6 +176,7 @@
 
 
 		// -------------------VIEWS-------------------------------------------------------------------
+			// CANVAS VIEW========================================================
 			function starDrawing(obj){
 				// Window wich show to us the star
 					var width = variablesObj.gameRulesObject.star.width,
@@ -194,17 +197,50 @@
 				if(drawArray[index].type === 'good'){
 					context.beginPath();
 					context.font = 'bold 25pt Calibri';
-					context.fillStyle = 'red';
-					context.shadowColor = 'grey';
+					context.fillStyle = 'white';
+					context.shadowColor = '#539FE2';
+					context.shadowBlur = 10;
+				    context.shadowOffsetX = 0;
+				    context.shadowOffsetY = 5;
 					context.fillText(drawArray[index].value, drawArray[index].x, drawArray[index].y);
 					context.closePath();
 				} else{
 				   	context.beginPath();
+				   	context.shadowColor = '#F00';
 				   	context.drawImage(badImageObj, drawArray[index].x, drawArray[index].y, drawArray[index].width, drawArray[index].height);
 				   	context.closePath();
 				}
 			};
+
+
+			// plumeOfEngine===================
+			function plumeOfEngine(){
+				if(plumeCounter < 6){
+					var x = drawArray[0].x+drawArray[0].width/2;
+					var y = drawArray[0].y-8+drawArray[0].height/2;
+					var radius = 30;
+			      	var startAngle = 0.3 * Math.PI;
+			      	var endAngle = 0.7 * Math.PI;
+			      	var counterClockwise = false;
+
+			      	context.beginPath();
+			      	context.arc(x, y, radius, startAngle, endAngle, counterClockwise);
+			      	context.lineWidth = 6;
+
+			      	// line color
+			      	context.strokeStyle = 'rgba(66,245,242,.33)';
+			      	context.shadowColor = 'yellow';
+			      	context.shadowBlur = 20;
+			      	context.stroke();
+				} else if(plumeCounter > 12){
+					plumeCounter = 0;
+				}
+				plumeCounter++;
+			}
+			// / plumeOfEngine=============
 			function drawCar(){
+				plumeOfEngine()
+
 				context.beginPath();
 				context.shadowColor = 'transparent';
 				context.rect(0, 0, canvas.width, canvas.height);
@@ -238,26 +274,6 @@
 				// restart level
 				setTimeout(getStartAttrs, 2000);
 			};
-			function drawStartModals(){
-				if(reading_of_rules === true){
-					drawRulesModal()
-				} else if(reading_of_rules === false){
-					// get music
-					get_document_DOM.trigger("startMusic:play");
-					// stopping of AnimationFrame
-					getFrame("stop");
-
-					var rules_object = {
-						title: variablesObj.gameRulesObject.start_splash.title,
-						content: variablesObj.gameRulesObject.start_splash.content,
-						show: variablesObj.gameRulesObject.start_splash.show,
-						toDo: function(){
-							drawStartCanvas();
-						},
-					}
-					getModalSplash(rules_object);
-				}
-			};
 			function drawStartCanvas(){
 				context.clearRect(0, 0, canvas.width, canvas.height);
 				context.beginPath();
@@ -280,6 +296,28 @@
 				// next game_station
 				game_station = "running";
 			};
+
+			// MODALS VIEW==============================================
+			function drawStartModals(){
+				if(reading_of_rules === true){
+					drawRulesModal()
+				} else if(reading_of_rules === false){
+					// get music
+					get_document_DOM.trigger("startMusic:play");
+					// stopping of AnimationFrame
+					getFrame("stop");
+
+					var rules_object = {
+						title: variablesObj.gameRulesObject.start_splash.title,
+						content: variablesObj.gameRulesObject.start_splash.content,
+						show: variablesObj.gameRulesObject.start_splash.show,
+						toDo: function(){
+							drawStartCanvas();
+						},
+					}
+					getModalSplash(rules_object);
+				}
+			};
 			function drawRulesModal(){
 				var rules_object = {
 					title: variablesObj.gameRulesObject.rules_splash.title,
@@ -291,8 +329,34 @@
 				}
 				getModalSplash(rules_object);
 			}
+
+			// QUIZ====================================================================
+			function showTheQuiz(quizObj){
+				get_document_DOM.trigger("BgMusic:stop");
+				get_document_DOM.trigger("quizStartMusic:play");
+
+				var my_modal_DOM = $('#quizModal'),
+					quiz_question_DOM = $('#quizQuestion'),
+					quiz_answers_DOM = $('#quizAnswers');
+				// canceling drawing of star
+				cancelAnimationFrame(starFrame);
+				// canceling drawing of all game
+				getFrame("stop");
+				quiz_question_DOM.html(variablesObj.gameRulesObject.question);
+				variablesObj.gameRulesObject.answersVariant.map(function(ans, index){
+					var answer = document.createElement('a');
+					answer.setAttribute("class", "list-group-item answers");
+					answer.setAttribute("index", index);
+					answer.setAttribute("href", "#");
+					answer.innerHTML = ans;
+					quiz_answers_DOM.append(answer);
+				});
+				my_modal_DOM.modal('show');
+
+				workingWithAnswers();
+			}
 		// -------------------------------------------------------------------------------------------
-		// Functions---------------------------------------------------------------------------------
+		// Help Functions---------------------------------------------------------------------------------
 		function getModalSplash(obj){
 			if(obj.show == true){
 				var splash_modal = true;
@@ -337,8 +401,6 @@
 			} else{
 				obj.toDo();
 			}
-
-
 		}
 
 		function getStartAttrs(){
@@ -348,30 +410,6 @@
 			    createDrawArray(drawArray, variablesObj.variantsPosition[0])
 			    getFrame("start")
 			}
-		function showTheQuiz(quizObj){
-			get_document_DOM.trigger("BgMusic:stop");
-			get_document_DOM.trigger("quizStartMusic:play");
-
-			var my_modal_DOM = $('#quizModal'),
-				quiz_question_DOM = $('#quizQuestion'),
-				quiz_answers_DOM = $('#quizAnswers');
-			// canceling drawing of star
-			cancelAnimationFrame(starFrame);
-			// canceling drawing of all game
-			getFrame("stop");
-			quiz_question_DOM.html(variablesObj.gameRulesObject.question);
-			variablesObj.gameRulesObject.answersVariant.map(function(ans, index){
-				var answer = document.createElement('a');
-				answer.setAttribute("class", "list-group-item answers");
-				answer.setAttribute("index", index);
-				answer.setAttribute("href", "#");
-				answer.innerHTML = ans;
-				quiz_answers_DOM.append(answer);
-			});
-			my_modal_DOM.modal('show');
-
-			workingWithAnswers();
-		}
 
 		function workingWithAnswers(){
 				var can_answer = true,
@@ -549,21 +587,21 @@
 			    	drawGameOver();
 		        }
 
-		        context.beginPath();
-		        context.font = 'bold 30pt Calibri';
-				context.fillStyle = 'yellow';
-				context.fillText("Total points: "+points, 80, 80);
-				context.lineWidth = 1;
-			    // stroke color
-			    context.strokeStyle = 'orange';
+		  //       context.beginPath();
+		  //       context.font = 'bold 30pt Calibri';
+				// context.fillStyle = 'yellow';
+				// context.fillText("Total points: "+points, 80, 80);
+				// context.lineWidth = 1;
+			 //    // stroke color
+			 //    context.strokeStyle = 'orange';
 
-			    context.fillStyle = 'green';
-			    context.fillText("Level #: "+ (variablesObj.gameRulesObject.currentLevel+1), 80, 130);
+			 //    context.fillStyle = 'green';
+			 //    context.fillText("Level #: "+ (variablesObj.gameRulesObject.currentLevel+1), 80, 130);
 
 
 
-				context.fill();
-				context.closePath();
+				// context.fill();
+				// context.closePath();
 			}
 		// ------------------------------------------------------------------------
 

@@ -6,7 +6,14 @@ canDrawCar = false;
 carImageObj.onload = function() {
 	canDrawCar = true;
 };
-carImageObj.src = './images/car3.png';
+carImageObj.src = './images/falcon.png';
+// CAR
+var carImageObj2 = new Image(),
+canDrawCar2 = false;
+carImageObj2.onload = function() {
+	canDrawCar2 = true;
+};
+carImageObj2.src = './images/falcon2.png';
 // --------------------------------------------
 // BAD
 var badImageObj = new Image();
@@ -14,7 +21,7 @@ var canDrawBad = false;
 carImageObj.onload = function() {
 	canDrawBad = true;
 };
-badImageObj.src = './images/bad.png';
+badImageObj.src = './images/fighter.png';
 // ----------------------------------------------
 // STAR
 var starImageObj = new Image();
@@ -52,12 +59,12 @@ function levelInfo(variablesObj){
 	// current Level object
 	variablesObj.gameRulesObject = {
 		boxes: {
-			height: variablesObj.canvas.height/15,
-			width: variablesObj.canvas.width/10,
+			height: 40,
+			width: 45,
 		},
 		car: {
-			height: variablesObj.canvas.height/15,
-			width: variablesObj.canvas.width/15,
+			height: 45,
+			width: 55,
 			x: (variablesObj.canvas.width/3)*1.35,
 			y: (variablesObj.canvas.width/6)*7,
 			turnSpeed: 5,
@@ -73,12 +80,12 @@ function levelInfo(variablesObj){
 		rules_splash: {
 			title: 'Rules',
 			content: '<p>You have to hit the words and in the end of the level answer on some question.</p><p>Control options:<br /> <--- Press Left Arrow - if you want turn left<br /> ---> Press Right Arrow - if you want turn right<br />Press ENTER - if you want Stop/Play the game <br /><br /><br /> Press ENTER - if you understand all this things</p>',
-			show: true
+			show: false
 		},
 		result_splash: {
 			title: 'You Won This Theme!',
 			content: 'You can close this game and choose another theme. Or click "OK" and try this Theme again.',
-			show: true
+			show: false
 		}
 	};
 	//
@@ -95,12 +102,12 @@ function levelInfo(variablesObj){
 				start_splash: {
 					title: "Welcome to First Level!",
 					content: 'You have to hit all words',
-					show: true
+					show: false
 				},
 				end_splash: {
 					title: "This is the end of the First Level!",
 					content: 'Good job!',
-					show: true
+					show: false
 				}
 			},
 			{
