@@ -85,7 +85,7 @@ function levelInfo(variablesObj){
 	var themesObj = {
 		1: [
 			{
-				sentenseString: "ONE",
+				sentenseString: "PC locking is very important for security policy.",
 				splitAttr: ' ',
 				repeat: 2,
 				question: "What do You do when you step away from your workplace?",

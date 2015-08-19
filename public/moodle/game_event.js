@@ -56,7 +56,7 @@ var ifarameObj = {
 	createFrame: function(number) {
 		var iframe = document.createElement('iframe');
 		iframe.style.width = '100%';
-		iframe.style.height = '700px';
+		iframe.style.height = '770px';
 		iframe.style.margin = '0 auto';
 		iframe.style.display = 'block';
 		iframe.style.border = 'none';
@@ -73,7 +73,7 @@ var ifarameObj = {
 			button.style.position = 'absolute';
 			button.style.bottom = '0';
 			button.style.right = '0';
-			button.style.zIndex = '9999999999999999999';
+			button.style.zIndex = '999999';
 
 		if(action === 'stop_game'){
 			button.innerHTML = 'Close Game';

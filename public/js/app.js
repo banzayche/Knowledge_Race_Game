@@ -41,6 +41,7 @@
 		// --------------FOR ANIMATION FRAME------------------------
 		// function which calls requestAnimationFrame
 		function getFrame(value){
+			playButtonDecor(value);
 			if(value === "start"){
 				runAnimation = requestAnimationFrame(drawCanvas);
 				stop_runing = false;
@@ -60,6 +61,26 @@
 			}
 		});
 		$("#myCanvas").click(function(e){
+			playOnClick();
+		});
+
+		$("#play").click(function(e){
+			playOnClick();
+		});
+		function playButtonDecor(value){
+			var play_button_DOM = $('#play'),
+			get_document_DOM = $(document);
+			if(value === 'stop'){
+				play_button_DOM.removeClass("play-on");
+				play_button_DOM.html('<span class="glyphicon glyphicon-play"></span>');
+				get_document_DOM.focus();
+			} else{
+				play_button_DOM.addClass("play-on");
+				play_button_DOM.html('<span class="glyphicon glyphicon-pause"></span>');
+				get_document_DOM.focus();
+			}
+		}
+		function playOnClick(){
 			if(stop_runing === true && game_station === "running"){
 				getFrame("start");
 				get_document_DOM.trigger("BgMusic:play");
@@ -68,8 +89,7 @@
 				get_document_DOM.trigger("BgMusic:stop");
 				get_document_DOM.trigger("startMusic:play");
 			}
-		});
-
+		};
 
 		// ----CONTROLLER-----------------------------
 			function Correction(){
@@ -109,8 +129,19 @@
 							// GoodHit - столкновение с положительным обьектом
 							if (distance <= drawArray[0].get_box_radius()+obj.get_box_radius() && obj.type === "good" && obj.hit === true){
 							    points ++;
-
 							   starDrawing(obj);
+
+							   // add word to line
+							   var sentenseInfo = {
+							   	line: $('#current-sentense'),
+							   	new_word: obj.value,
+							   	quantity_word: variablesObj.gameRulesObject.arr.length,
+							   };
+							   createSentese.addWord(sentenseInfo);
+
+
+
+
 
 							   obj.hit = false;
 
@@ -145,7 +176,7 @@
 							}
 
 
-							// variationPositionsQuantity - quantity of changing posirions
+							// variationPositionsQuantity - quantity of changing positions
 							who_behid_line++;
 							for(var j = 1; j <= variationPositionsQuantity; j++){
 								if(j < variationPositionsQuantity && position_variation === j){
@@ -292,6 +323,18 @@
 				context.shadowColor = 'black';
 
 				context.closePath();
+
+				// Level and stars
+				$('#current-level').html("Level "+(variablesObj.gameRulesObject.currentLevel+1));
+				var info_star = {
+					container: document.getElementById('stars-container'),
+					quantity: variablesObj.enteredDATA.length,
+					color_quantity: variablesObj.gameRulesObject.currentLevel+1
+				}
+				createStar.addStars(info_star);
+				// Clear line
+				var line = $('#current-sentense');
+				createSentese.clearLine(line);
 
 				// next game_station
 				game_station = "running";

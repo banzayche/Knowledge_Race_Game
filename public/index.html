@@ -16,10 +16,10 @@
 		<script type="text/javascript" src="js/positions.js"></script>
 		<script type="text/javascript" src="js/eventFunctions.js"></script>
 		<script type="text/javascript" src="js/functions_from_app/helperFunctions.js"></script>
+		<script type="text/javascript" src="js/functions_from_app/drawFunctions.js"></script>
 		<script type="text/javascript" src="js/app.js"></script>
 	</head>
 	<body>
-		<div id="volume" class="volume-on"><span class="glyphicon glyphicon-volume-up"></span></div>
 		<!-- quiz modal -->
 		<div class="modal fade" id="quizModal" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
 		  <div class="modal-dialog modal-sm">
@@ -55,8 +55,29 @@
 		  </div>
 		</div>
 		<!-- // rules modal -->
+		<header>
+			<h2 class="text-center">
+				<span class="header-text-shadow">Knowlege Race</span><br />
+				<span class="small">The force will be with you...</span>
+				<div id="volume" class="volume-on btn-game"><span class="glyphicon glyphicon-volume-up"></span></div>
+			</h2>
+			<h3 id="current-level" class="text-center current-level">Level 1</h3>
+		</header>
 		<div id="frame">
-			<canvas id="myCanvas" width="420px" height="580px"></canvas>
+			<canvas id="myCanvas" width="420px" height="560px"></canvas>
 		</div>
+		<footer>
+			<div class="col-sm-1 col-md-1 col-xs-1">
+				<div id="play" class="play-on btn-game"><span class="glyphicon glyphicon-play"></span></div>
+			</div>
+			<div class="col-sm-6 col-md-6 col-xs-6">
+				<div id="current-sentense" class="current-sentense pull-left"></div>
+			</div>
+			<div class="col-sm-1 col-md-1 col-xs-1">
+				<h4 class="text-white">Progress: </h4>
+			</div>
+			<div class="col-sm-4 col-md-4 col-xs-4" id="stars-container">
+			</div>
+		</footer>
 	</body>
 </html>
