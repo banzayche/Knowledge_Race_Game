@@ -1,5 +1,5 @@
 var createStar = {
-	star: '<span class="glyphicon glyphicon-star"></span>',
+	star: '<span class="glyphicon glyphicon-star creating-star"></span>',
 	empty_star: '<span class="glyphicon glyphicon-star-empty"></span>',
 	createStar: function(value){
 		var item_star_container = document.createElement('div');

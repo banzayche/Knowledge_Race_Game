@@ -66,7 +66,7 @@ function levelInfo(variablesObj){
 			addWidth: 5,
 			addY: 20,
 		},
-		gameSpeed: 5,
+		gameSpeed: 3,
 		rules_splash: {
 			title: 'Rules',
 			content: '<p>You have to hit the words and in the end of the level answer on some question.</p><p>Control options:<br /> <--- Press Left Arrow - if you want turn left<br /> ---> Press Right Arrow - if you want turn right<br />Press ENTER - if you want Stop/Play the game <br /><br /><br /> Press ENTER - if you understand all this things</p>',
@@ -83,7 +83,7 @@ function levelInfo(variablesObj){
 	var themesObj = {
 		1: [
 			{
-				sentenseString: "PC",
+				sentenseString: "PC locikng",
 				splitAttr: ' ',
 				repeat: 2,
 				question: "What do You do when you step away from your workplace?",
@@ -326,6 +326,7 @@ function addDataLevel(numberLevel, variablesObj){
 	variablesObj.gameRulesObject.question = gameRules.question;
 	variablesObj.gameRulesObject.answersVariant = gameRules.answersVariant;
 	variablesObj.gameRulesObject.rightIndex = gameRules.rightIndex;
+	variablesObj.gameRulesObject.sentenseString = gameRules.sentenseString;
 	// splashes
 	variablesObj.gameRulesObject.start_splash = gameRules.start_splash;
 	variablesObj.gameRulesObject.end_splash = gameRules.end_splash;

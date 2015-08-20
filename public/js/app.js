@@ -4,6 +4,13 @@
 		// game_station = "starting" --> start of the game
 		// game_station = "running" --> gaming process
 		// game_station = "game_over" --> end of the game
+		info_star = function (){
+			return {
+				container: document.getElementById('stars-container'),
+				quantity: variablesObj.gameRulesObject.starsQuantity,
+				color_quantity: stars_counter
+			}
+		},
 		reading_of_rules = true,
 		game_station = "starting",
 		get_document_DOM = $(document),
@@ -12,12 +19,13 @@
 		who_behid_line = 0,
 		starFrame,
 		plumeCounter = 0,
+		stars_counter = 0,
 		// For animation frame
 		runAnimation,
 		stop_runing,
 		//
 		keyState = {},
-		points = 0,
+		points_counter = 0,
 		car = new Game.gameObjConstructor.car(variablesObj.gameRulesObject.car.x, variablesObj.gameRulesObject.car.y, variablesObj.gameRulesObject.car.width, variablesObj.gameRulesObject.car.height, "car"),
 		drawArray = [car];
 
@@ -126,7 +134,8 @@
 
 							// GoodHit - столкновение с положительным обьектом
 							if (distance <= drawArray[0].get_box_radius()+obj.get_box_radius() && obj.type === "good" && obj.hit === true){
-							    points ++;
+							   points_counter++;
+
 							   starDrawing(obj);
 
 							   // add word to line
@@ -137,13 +146,21 @@
 							   };
 							   createSentese.addWord(sentenseInfo);
 
-
-
-
-
 							   obj.hit = false;
 
-							   if(points === variablesObj.gameRulesObject.pointsAtAll){
+							   // when quiz run
+							   // если собранных слов столько же, сколько в начальном массиве - сравниваем предложения.
+							   var sentense_from_Dom = $('#current-sentense').html();
+							   if(points_counter >= variablesObj.gameRulesObject.lengthSentense){
+							   		// строки верны - +звезда
+							   		if(sentense_from_Dom === ' '+variablesObj.gameRulesObject.sentenseString){
+							   			stars_counter++;
+							   			createStar.addStars(info_star());
+							   		}
+							   		points_counter = 0;
+							   }
+
+							   if(stars_counter >= variablesObj.gameRulesObject.starsQuantity){
 							   		game_station = "quiz";
 							   }
 
@@ -324,12 +341,8 @@
 
 				// Level and stars
 				$('#current-level').html("Level "+(variablesObj.gameRulesObject.currentLevel+1));
-				var info_star = {
-					container: document.getElementById('stars-container'),
-					quantity: variablesObj.enteredDATA.length,
-					color_quantity: variablesObj.gameRulesObject.currentLevel+1
-				}
-				createStar.addStars(info_star);
+
+				createStar.addStars(info_star());
 				// Clear line
 				var line = $('#current-sentense');
 				createSentese.clearLine(line);
@@ -446,7 +459,8 @@
 
 		function getStartAttrs(){
 				game_station = "starting";
-			    points = 0;
+			    points_counter = 0;
+			    stars_counter = 0;
 			    drawArray=[car];
 			    createDrawArray(drawArray, variablesObj.variantsPosition[0])
 			    getFrame("start")

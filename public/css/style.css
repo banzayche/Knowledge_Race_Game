@@ -226,9 +226,26 @@ footer{
   border: 1px solid rgba(245,245,245,.3);
   margin: 0 15px;
 }
+
+
+.star .creating-star{
+  color: rgba(73, 142, 218, 1);
+}
+.creating-star{
+    animation-name: creatingStar;
+    animation-duration: 1s;
+}
+@keyframes creatingStar {
+    25%  {color: rgba(73, 142, 218, 1);}
+    50% {color: transparent;}
+    75% {color: rgba(73, 142, 218, 1);}
+    100% {color: transparent;}
+}
 /* / footer*/
 
 /*QUIZ*/
+
+
 #quizAnswers{
       cursor: pointer;
 }
