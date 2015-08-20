@@ -291,19 +291,19 @@
 				setTimeout(function(){
 					context.beginPath();
 					context.shadowColor = 'transparent';
-					context.drawImage(burstImageObj, obj.x, obj.y, obj.width, obj.height);
+					context.drawImage(burst1ImageObj, obj.x, obj.y, obj.width, obj.height);
 					context.closePath();
 				}, step[0])
 				setTimeout(function(){
 					context.beginPath();
 					context.shadowColor = 'transparent';
-					context.drawImage(burstImageObj, obj.x, obj.y, obj.width+20, obj.height+20);
+					context.drawImage(burst2ImageObj, obj.x, obj.y, obj.width+20, obj.height+20);
 					context.closePath();
 				}, step[1])
 				setTimeout(function(){
 					context.beginPath();
 					context.shadowColor = 'transparent';
-					context.drawImage(burstImageObj, obj.x, obj.y, obj.width+30, obj.height+30);
+					context.drawImage(burst3ImageObj, obj.x, obj.y, obj.width+30, obj.height+30);
 					context.closePath();
 				}, step[2])
 

@@ -14,12 +14,12 @@ carImageObj.onload = function() {
 badImageObj.src = './images/fighter.png';
 // ----------------------------------------------
 // burst
-var burstImageObj = new Image();
-var canDrawBurst = false;
-burstImageObj.onload = function() {
-	canDrawBurst = true;
-};
-burstImageObj.src = './images/burst.png';
+var burst1ImageObj = new Image();
+burst1ImageObj.src = './images/burst1.png';
+var burst2ImageObj = new Image();
+burst2ImageObj.src = './images/burst2.png';
+var burst3ImageObj = new Image();
+burst3ImageObj.src = './images/burst3.png';
 // ----------------------------------------------
 // STAR
 var starImageObj = new Image();
