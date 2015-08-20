@@ -1,5 +1,3 @@
-'use strict'
-
 // CAR
 var carImageObj = new Image(),
 canDrawCar = false;
@@ -85,7 +83,7 @@ function levelInfo(variablesObj){
 	var themesObj = {
 		1: [
 			{
-				sentenseString: "PC locking is very important for security policy.",
+				sentenseString: "PC",
 				splitAttr: ' ',
 				repeat: 2,
 				question: "What do You do when you step away from your workplace?",
@@ -323,7 +321,8 @@ function addDataLevel(numberLevel, variablesObj){
 	}
 	variablesObj.gameRulesObject.arr = detect_words(wordsArr);
 
-	variablesObj.gameRulesObject.pointsAtAll = variablesObj.gameRulesObject.arr.length*gameRules.repeat;
+	variablesObj.gameRulesObject.lengthSentense = variablesObj.gameRulesObject.arr.length;
+	variablesObj.gameRulesObject.starsQuantity = gameRules.repeat;
 	variablesObj.gameRulesObject.question = gameRules.question;
 	variablesObj.gameRulesObject.answersVariant = gameRules.answersVariant;
 	variablesObj.gameRulesObject.rightIndex = gameRules.rightIndex;

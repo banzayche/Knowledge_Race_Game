@@ -19,3 +19,25 @@ $(document).ready(function(){
 	});
 	// =============
 });
+
+var calcWinning = {
+	counter: 0,
+	addWord: function(obj){
+		this.current_sentense = obj.line.html();
+		this.line = obj.line;
+
+		if(this.counter < obj.quantity_word){
+			this.counter += 1;
+			this.line.html(this.current_sentense + ' ' + obj.new_word);
+		};
+
+		if(this.counter >= obj.quantity_word){
+			this.line.html(this.current_sentense + ' ' + obj.new_word);
+			var those = this;
+			setTimeout(function(){
+				those.line.html('');
+				those.counter = 0;
+			}, 700);
+		}
+	},
+}

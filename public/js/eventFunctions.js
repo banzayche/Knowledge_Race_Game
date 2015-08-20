@@ -1,5 +1,3 @@
-'use strict'
-
 function soundConfigurator(engineMusic){
 	$(document).on( "volume:off", volumeOff).
 				on( "volume:on", volumeOn).

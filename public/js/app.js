@@ -1,5 +1,3 @@
-'use strict'
-
 	function GameProcess(variablesObj){
 		var canvas = variablesObj.canvas,
 		context = canvas.getContext('2d'),
@@ -230,14 +228,14 @@
 					context.font = 'bold 25pt Calibri';
 					context.fillStyle = 'white';
 					context.shadowColor = '#539FE2';
-					context.shadowBlur = 10;
+					context.shadowBlur = 3;
 				    context.shadowOffsetX = 0;
-				    context.shadowOffsetY = 5;
+				    context.shadowOffsetY = 1;
 					context.fillText(drawArray[index].value, drawArray[index].x, drawArray[index].y);
 					context.closePath();
 				} else{
 				   	context.beginPath();
-				   	context.shadowColor = '#F00';
+				   	// context.shadowColor = '#F00';
 				   	context.drawImage(badImageObj, drawArray[index].x, drawArray[index].y, drawArray[index].width, drawArray[index].height);
 				   	context.closePath();
 				}
@@ -283,17 +281,17 @@
 			    context.beginPath();
 				context.rect(0, 0, canvas.width, canvas.height);
 
-				context.fillStyle = 'rgba(4,4,4,0.8)';
+				context.fillStyle = 'transparent';
 				context.fill();
 
-				context.font = 'bold 25pt Calibri';
+				context.font = 'bold 35pt Calibri';
 				context.fillStyle = 'red';
-				context.fillText('Game Over!', 120, 280);
+				context.fillText('Game Over!', 90, 280);
 
 				context = canvas.getContext('2d');
-				context.font = 'bold 40pt Calibri';
+				context.font = 'bold 20pt Calibri';
 				context.fillStyle = 'white';
-				context.fillText("Your's points: "+points, 30, 550);
+				context.fillText("Try this level again!", 100, 350);
 
 				context.closePath();
 				// stopping of AnimationFrame
@@ -317,8 +315,8 @@
 			    context.shadowOffsetY = 10;
 
 				context.font = 'bold 25pt Calibri';
-				context.fillStyle = 'green';
-				context.fillText('Press Enter!', 120, 280);
+				context.fillStyle = '#008EFF';
+				context.fillText('Click to start!', 120, 280);
 				context.shadowColor = 'black';
 				context.shadowColor = 'black';
 
