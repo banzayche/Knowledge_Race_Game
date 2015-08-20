@@ -159,7 +159,6 @@
 							   		}
 							   		points_counter = 0;
 							   }
-
 							   if(stars_counter >= variablesObj.gameRulesObject.starsQuantity){
 							   		game_station = "quiz";
 							   }
@@ -167,7 +166,8 @@
 							   get_document_DOM.trigger("hitWordMusic:play");
 							}
 							if (distance <= drawArray[0].get_box_radius()+obj.get_box_radius() && obj.type === "bad"){
-							    	game_station = "game_over";
+							    	getSecondChance(obj);
+
 							    	get_document_DOM.trigger("badHitMusic:play");
 							}
 						// --------------------------------
@@ -284,6 +284,31 @@
 				plumeCounter++;
 			}
 			// / plumeOfEngine=============
+			function getBurst(obj){
+				get_document_DOM.trigger("BgMusic:stop");
+				get_document_DOM.trigger("gameOverMusic:play");
+				var step = [200, 400, 600];
+				setTimeout(function(){
+					context.beginPath();
+					context.shadowColor = 'transparent';
+					context.drawImage(burstImageObj, obj.x, obj.y, obj.width, obj.height);
+					context.closePath();
+				}, step[0])
+				setTimeout(function(){
+					context.beginPath();
+					context.shadowColor = 'transparent';
+					context.drawImage(burstImageObj, obj.x, obj.y, obj.width+20, obj.height+20);
+					context.closePath();
+				}, step[1])
+				setTimeout(function(){
+					context.beginPath();
+					context.shadowColor = 'transparent';
+					context.drawImage(burstImageObj, obj.x, obj.y, obj.width+30, obj.height+30);
+					context.closePath();
+				}, step[2])
+
+				return step[2];
+			}
 			function drawCar(){
 				plumeOfEngine()
 
@@ -294,29 +319,12 @@
 				context.closePath();
 			};
 			function drawGameOver(){
-				context.clearRect(0, 0, canvas.width, canvas.height);
-			    context.beginPath();
-				context.rect(0, 0, canvas.width, canvas.height);
-
-				context.fillStyle = 'transparent';
-				context.fill();
-
-				context.font = 'bold 35pt Calibri';
-				context.fillStyle = 'red';
-				context.fillText('Game Over!', 90, 280);
-
-				context = canvas.getContext('2d');
-				context.font = 'bold 20pt Calibri';
-				context.fillStyle = 'white';
-				context.fillText("Try this level again!", 100, 350);
-
-				context.closePath();
+				$(".game-over").show(500);
 				// stopping of AnimationFrame
 				getFrame("stop")
 
-				get_document_DOM.trigger("BgMusic:stop");
-				get_document_DOM.trigger("gameOverMusic:play");
-
+				// 600 ms
+				getBurst(drawArray[0]);
 				// restart level
 				setTimeout(getStartAttrs, 2000);
 			};
@@ -353,6 +361,7 @@
 
 			// MODALS VIEW==============================================
 			function drawStartModals(){
+				$(".game-over").hide(500);
 				if(reading_of_rules === true){
 					drawRulesModal()
 				} else if(reading_of_rules === false){
@@ -464,7 +473,29 @@
 			    drawArray=[car];
 			    createDrawArray(drawArray, variablesObj.variantsPosition[0])
 			    getFrame("start")
+		}
+		function getSecondChance(obj){
+			if(stars_counter > 0){
+				stars_counter--;
+
+				createStar.addStars(info_star());
+				points_counter = 0;
+
+				// Clear line
+				var line = $('#current-sentense');
+				createSentese.clearLine(line);
+
+				drawArray=[car];
+				createDrawArray(drawArray, variablesObj.variantsPosition[0]);
+
+				getFrame('stop');
+				getBurst(obj);
+
+				setTimeout(function(){getFrame('start');get_document_DOM.trigger("BgMusic:play");}, 2000);
+			} else{
+				game_station = "game_over";
 			}
+		}
 
 		function workingWithAnswers(){
 				var can_answer = true,

@@ -13,6 +13,14 @@ carImageObj.onload = function() {
 };
 badImageObj.src = './images/fighter.png';
 // ----------------------------------------------
+// burst
+var burstImageObj = new Image();
+var canDrawBurst = false;
+burstImageObj.onload = function() {
+	canDrawBurst = true;
+};
+burstImageObj.src = './images/burst.png';
+// ----------------------------------------------
 // STAR
 var starImageObj = new Image();
 var canDrawStar = false;
@@ -70,12 +78,12 @@ function levelInfo(variablesObj){
 		rules_splash: {
 			title: 'Rules',
 			content: '<p>You have to hit the words and in the end of the level answer on some question.</p><p>Control options:<br /> <--- Press Left Arrow - if you want turn left<br /> ---> Press Right Arrow - if you want turn right<br />Press ENTER - if you want Stop/Play the game <br /><br /><br /> Press ENTER - if you understand all this things</p>',
-			show: false
+			show: true
 		},
 		result_splash: {
 			title: 'You Won This Theme!',
 			content: 'You can close this game and choose another theme. Or click "OK" and try this Theme again.',
-			show: false
+			show: true
 		}
 	};
 	//
@@ -85,25 +93,25 @@ function levelInfo(variablesObj){
 			{
 				sentenseString: "PC locikng",
 				splitAttr: ' ',
-				repeat: 2,
+				repeat: 8,
 				question: "What do You do when you step away from your workplace?",
 				answersVariant : ["1. Make some coffee!", "2. I lock my PC.", "3. I'm calling my mom."],
 				rightIndex : 1,
 				start_splash: {
 					title: "Welcome to First Level!",
 					content: 'You have to hit all words',
-					show: false
+					show: true
 				},
 				end_splash: {
 					title: "This is the end of the First Level!",
 					content: 'Good job!',
-					show: false
+					show: true
 				}
 			},
 			{
 				sentenseString: "PC locking is very important for security policy.",
 				splitAttr: ' ',
-				repeat: 1,
+				repeat: 3,
 				question: "What is so important for security policy?",
 				answersVariant : ["1. To lock my PC Locking.", "2. Security Guard", "3. None of the above"],
 				rightIndex : 0,
@@ -121,7 +129,7 @@ function levelInfo(variablesObj){
 			{
 				sentenseString: "After work day I have to check if I locked my PC before going home.",
 				splitAttr: ' ',
-				repeat: 1,
+				repeat: 5,
 				question: "What do You do when you work day is over?",
 				answersVariant : ["Dancing! We have a class.", "2. Listen to the music (Serj Tankain - Sky is over).", "3. First, I check is my PC locked."],
 				rightIndex : 2,

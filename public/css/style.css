@@ -19,6 +19,15 @@ body{
   background-attachment: fixed;
 }
 /*Header*/
+.game-over{
+  position: fixed;
+  width: 100%;
+  background-color: rgba(4,4,4,.6);
+  padding: 60px 0;
+  margin-top: 200px;
+  z-index: 9999999999999999999999999999;
+  display: none;
+}
 header{
   color: rgba(245,245,245,.9);
 }
