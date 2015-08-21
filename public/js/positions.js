@@ -65,7 +65,7 @@ function levelInfo(variablesObj){
 		gameSpeed: 3,
 		rules_splash: {
 			title: 'Rules',
-			content: '<p>You have to hit the words and in the end of the level answer on some question.</p><p>Control options:<br /> <--- Press Left Arrow - if you want turn left<br /> ---> Press Right Arrow - if you want turn right<br />Press ENTER - if you want Stop/Play the game <br /><br /><br /> Press ENTER - if you understand all this things</p>',
+			content: '<p>You have to hit the words in the right order and in the end of the level answer on some question.</p><p>Control options:<br /> <--- Press Left Arrow - if you want turn left<br /> ---> Press Right Arrow - if you want turn right<br />Press ENTER - if you want Stop/Play the game <br />Press Ctrl - if you want to clear line with sentense<br /><br /> Press ENTER - if you understand all this things</p>',
 			show: true
 		},
 		result_splash: {
