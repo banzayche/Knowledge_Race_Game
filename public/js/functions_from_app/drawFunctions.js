@@ -47,11 +47,15 @@ var createSentese = {
 			setTimeout(function(){
 				those.line.html('');
 				those.counter = 0;
+				obj.info.html(0+'/'+obj.quantity);
 			}, 700);
 		}
+
+		obj.info.html(obj.catch_quantity+'/'+obj.quantity);
 	},
-	clearLine: function(value){
-		value.html('');
+	clearLine: function(obj){
+		obj.line.html('');
+		obj.info.html(obj.catch_quantity+'/'+obj.quantity);
 		this.counter = 0;
 	}
 };

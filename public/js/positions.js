@@ -1,16 +1,8 @@
 // CAR
-var carImageObj = new Image(),
-canDrawCar = false;
-carImageObj.onload = function() {
-	canDrawCar = true;
-};
+var carImageObj = new Image();
 carImageObj.src = './images/falcon.png';
 // BAD
 var badImageObj = new Image();
-var canDrawBad = false;
-carImageObj.onload = function() {
-	canDrawBad = true;
-};
 badImageObj.src = './images/fighter.png';
 // ----------------------------------------------
 // burst
@@ -23,10 +15,6 @@ burst3ImageObj.src = './images/burst3.png';
 // ----------------------------------------------
 // STAR
 var starImageObj = new Image();
-var canDrawStar = false;
-carImageObj.onload = function() {
-	canDrawStar = true;
-};
 starImageObj.src = './images/star.png';
 // --------------------------------------
 
@@ -77,7 +65,7 @@ function levelInfo(variablesObj){
 		gameSpeed: 3,
 		rules_splash: {
 			title: 'Rules',
-			content: '<p>You have to hit the words and in the end of the level answer on some question.</p><p>Control options:<br /> <--- Press Left Arrow - if you want turn left<br /> ---> Press Right Arrow - if you want turn right<br />Press ENTER - if you want Stop/Play the game <br /><br /><br /> Press ENTER - if you understand all this things</p>',
+			content: '<p>You have to hit the words in the right order and in the end of the level answer on some question.</p><p>Control options:<br /> <--- Press Left Arrow - if you want turn left<br /> ---> Press Right Arrow - if you want turn right<br />Press ENTER - if you want Stop/Play the game <br />Press Ctrl - if you want to clear line with sentense<br /><br /> Press ENTER - if you understand all this things</p>',
 			show: true
 		},
 		result_splash: {
@@ -93,7 +81,7 @@ function levelInfo(variablesObj){
 			{
 				sentenseString: "PC locikng",
 				splitAttr: ' ',
-				repeat: 8,
+				repeat: 4,
 				question: "What do You do when you step away from your workplace?",
 				answersVariant : ["1. Make some coffee!", "2. I lock my PC.", "3. I'm calling my mom."],
 				rightIndex : 1,

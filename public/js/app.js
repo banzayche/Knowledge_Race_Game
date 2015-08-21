@@ -20,6 +20,7 @@
 		starFrame,
 		plumeCounter = 0,
 		stars_counter = 0,
+		frame_counter = 0,
 		// For animation frame
 		runAnimation,
 		stop_runing,
@@ -49,12 +50,19 @@
 		function getFrame(value){
 			playButtonDecor(value);
 			if(value === "start"){
+				frame_counter ++;
 				runAnimation = requestAnimationFrame(drawCanvas);
 				stop_runing = false;
+				if(frame_counter > 1){
+					cancelAnimationFrame(runAnimation);
+					frame_counter = 1;
+				}
 			} else{
 				cancelAnimationFrame(runAnimation);
 				stop_runing = true;
+				frame_counter --;
 			}
+
 		}
 		$("body").keyup(function(e){
 			if(e.keyCode === 13 && stop_runing === true && game_station === "running"){
@@ -65,7 +73,26 @@
 				get_document_DOM.trigger("BgMusic:stop");
 				get_document_DOM.trigger("startMusic:play");
 			}
+
+			if(e.keyCode === 17){
+				clearWords()
+			}
 		});
+
+		$("#reset-words").click(function(){
+			clearWords()
+		});
+		function clearWords(){
+			points_counter = 0;
+			var lineObj = {
+					line: $('#current-sentense'),
+					info: $('#info-words'),
+					quantity: variablesObj.gameRulesObject.lengthSentense,
+					catch_quantity: 0,
+				}
+			createSentese.clearLine(lineObj);
+		}
+
 		$("#myCanvas").click(function(e){
 			playOnClick();
 		});
@@ -140,9 +167,13 @@
 
 							   // add word to line
 							   var sentenseInfo = {
-							   	line: $('#current-sentense'),
-							   	new_word: obj.value,
-							   	quantity_word: variablesObj.gameRulesObject.arr.length,
+								   	line: $('#current-sentense'),
+								   	new_word: obj.value,
+								   	quantity_word: variablesObj.gameRulesObject.arr.length,
+
+								   	info: $('#info-words'),
+									quantity: variablesObj.gameRulesObject.lengthSentense,
+									catch_quantity: points_counter,
 							   };
 							   createSentese.addWord(sentenseInfo);
 
@@ -352,8 +383,13 @@
 
 				createStar.addStars(info_star());
 				// Clear line
-				var line = $('#current-sentense');
-				createSentese.clearLine(line);
+				var lineObj = {
+					line: $('#current-sentense'),
+					info: $('#info-words'),
+					quantity: variablesObj.gameRulesObject.lengthSentense,
+					catch_quantity: 0,
+				}
+				createSentese.clearLine(lineObj);
 
 				// next game_station
 				game_station = "running";
@@ -482,8 +518,13 @@
 				points_counter = 0;
 
 				// Clear line
-				var line = $('#current-sentense');
-				createSentese.clearLine(line);
+				var lineObj = {
+					line: $('#current-sentense'),
+					info: $('#info-words'),
+					quantity: variablesObj.gameRulesObject.lengthSentense,
+					catch_quantity: 0,
+				}
+				createSentese.clearLine(lineObj);
 
 				drawArray=[car];
 				createDrawArray(drawArray, variablesObj.variantsPosition[0]);

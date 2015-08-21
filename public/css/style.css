@@ -184,7 +184,8 @@ footer{
   min-height: 60px;
   overflow: auto;
 }
-#play.btn-game:hover{
+
+#play.btn-game:hover, #reset-words.btn-game:hover{
   background: -moz-linear-gradient(top,  rgba(255,255,255,0) 0%, rgba(179,204,244,0) 26%, rgba(114,160,234,0.48) 48%, rgba(117,162,234,0.5) 49%, rgba(182,206,244,0) 73%, rgba(255,255,255,0) 100%);
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0)), color-stop(26%,rgba(179,204,244,0)), color-stop(48%,rgba(114,160,234,0.48)), color-stop(49%,rgba(117,162,234,0.5)), color-stop(73%,rgba(182,206,244,0)), color-stop(100%,rgba(255,255,255,0)));
   background: -webkit-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(179,204,244,0) 26%,rgba(114,160,234,0.48) 48%,rgba(117,162,234,0.5) 49%,rgba(182,206,244,0) 73%,rgba(255,255,255,0) 100%);
@@ -193,7 +194,7 @@ footer{
   background: linear-gradient(to bottom,  rgba(255,255,255,0) 0%,rgba(179,204,244,0) 26%,rgba(114,160,234,0.48) 48%,rgba(117,162,234,0.5) 49%,rgba(182,206,244,0) 73%,rgba(255,255,255,0) 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#00ffffff',GradientType=0 );
 }
-#play.btn-game{
+#play.btn-game, #reset-words.btn-game{
   margin-top: 0;
   padding: 4px 18px;
   background: -moz-linear-gradient(top,  rgba(255,255,255,0) 0%, rgba(195,215,246,0) 22%, rgba(117,162,234,0.5) 51%, rgba(114,160,234,0.42) 52%, rgba(129,170,236,0) 57%, rgba(255,255,255,0) 100%);
@@ -205,6 +206,9 @@ footer{
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#00ffffff',GradientType=0 );
 
   border: 1px solid rgba(53, 162, 226, 0.35);
+}
+#reset-words.btn-game{
+  padding: 4px 16px;
 }
 .star{
   height: 40px;
