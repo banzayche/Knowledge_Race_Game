@@ -1,11 +1,16 @@
-'use strict'
-
 	function GameProcess(variablesObj){
 		var canvas = variablesObj.canvas,
 		context = canvas.getContext('2d'),
 		// game_station = "starting" --> start of the game
 		// game_station = "running" --> gaming process
 		// game_station = "game_over" --> end of the game
+		info_star = function (){
+			return {
+				container: document.getElementById('stars-container'),
+				quantity: variablesObj.gameRulesObject.starsQuantity,
+				color_quantity: stars_counter
+			}
+		},
 		reading_of_rules = true,
 		game_station = "starting",
 		get_document_DOM = $(document),
@@ -13,12 +18,15 @@
 		position_variation = 1,
 		who_behid_line = 0,
 		starFrame,
+		plumeCounter = 0,
+		stars_counter = 0,
+		frame_counter = 0,
 		// For animation frame
 		runAnimation,
 		stop_runing,
 		//
 		keyState = {},
-		points = 0,
+		points_counter = 0,
 		car = new Game.gameObjConstructor.car(variablesObj.gameRulesObject.car.x, variablesObj.gameRulesObject.car.y, variablesObj.gameRulesObject.car.width, variablesObj.gameRulesObject.car.height, "car"),
 		drawArray = [car];
 
@@ -40,13 +48,21 @@
 		// --------------FOR ANIMATION FRAME------------------------
 		// function which calls requestAnimationFrame
 		function getFrame(value){
+			playButtonDecor(value);
 			if(value === "start"){
+				frame_counter ++;
 				runAnimation = requestAnimationFrame(drawCanvas);
 				stop_runing = false;
+				if(frame_counter > 1){
+					cancelAnimationFrame(runAnimation);
+					frame_counter = 1;
+				}
 			} else{
 				cancelAnimationFrame(runAnimation);
 				stop_runing = true;
+				frame_counter --;
 			}
+
 		}
 		$("body").keyup(function(e){
 			if(e.keyCode === 13 && stop_runing === true && game_station === "running"){
@@ -57,8 +73,47 @@
 				get_document_DOM.trigger("BgMusic:stop");
 				get_document_DOM.trigger("startMusic:play");
 			}
+
+			if(e.keyCode === 17){
+				clearWords()
+			}
 		});
+
+		$("#reset-words").click(function(){
+			clearWords()
+		});
+		function clearWords(){
+			points_counter = 0;
+			var lineObj = {
+					line: $('#current-sentense'),
+					info: $('#info-words'),
+					quantity: variablesObj.gameRulesObject.lengthSentense,
+					catch_quantity: 0,
+				}
+			createSentese.clearLine(lineObj);
+		}
+
 		$("#myCanvas").click(function(e){
+			playOnClick();
+		});
+
+		$("#play").click(function(e){
+			playOnClick();
+		});
+		function playButtonDecor(value){
+			var play_button_DOM = $('#play'),
+			get_document_DOM = $(document);
+			if(value === 'stop'){
+				play_button_DOM.removeClass("play-on");
+				play_button_DOM.html('<span class="glyphicon glyphicon-play"></span>');
+				get_document_DOM.focus();
+			} else{
+				play_button_DOM.addClass("play-on");
+				play_button_DOM.html('<span class="glyphicon glyphicon-pause"></span>');
+				get_document_DOM.focus();
+			}
+		}
+		function playOnClick(){
 			if(stop_runing === true && game_station === "running"){
 				getFrame("start");
 				get_document_DOM.trigger("BgMusic:play");
@@ -67,8 +122,7 @@
 				get_document_DOM.trigger("BgMusic:stop");
 				get_document_DOM.trigger("startMusic:play");
 			}
-		});
-
+		};
 
 		// ----CONTROLLER-----------------------------
 			function Correction(){
@@ -88,6 +142,7 @@
 				} else if (drawArray[0].x >= maxX){
 					drawArray[0].x = maxX;
 				}
+				drawArray[0]
 				//---------------------------
 
 				// rules for boxes--------------
@@ -106,20 +161,44 @@
 
 							// GoodHit - столкновение с положительным обьектом
 							if (distance <= drawArray[0].get_box_radius()+obj.get_box_radius() && obj.type === "good" && obj.hit === true){
-							    points ++;
+							   points_counter++;
 
 							   starDrawing(obj);
 
+							   // add word to line
+							   var sentenseInfo = {
+								   	line: $('#current-sentense'),
+								   	new_word: obj.value,
+								   	quantity_word: variablesObj.gameRulesObject.arr.length,
+
+								   	info: $('#info-words'),
+									quantity: variablesObj.gameRulesObject.lengthSentense,
+									catch_quantity: points_counter,
+							   };
+							   createSentese.addWord(sentenseInfo);
+
 							   obj.hit = false;
 
-							   if(points === variablesObj.gameRulesObject.pointsAtAll){
+							   // when quiz run
+							   // если собранных слов столько же, сколько в начальном массиве - сравниваем предложения.
+							   var sentense_from_Dom = $('#current-sentense').html();
+							   if(points_counter >= variablesObj.gameRulesObject.lengthSentense){
+							   		// строки верны - +звезда
+							   		if(sentense_from_Dom === ' '+variablesObj.gameRulesObject.sentenseString){
+							   			stars_counter++;
+							   			createStar.addStars(info_star());
+							   		}
+							   		points_counter = 0;
+							   }
+							   if(stars_counter >= variablesObj.gameRulesObject.starsQuantity){
 							   		game_station = "quiz";
 							   }
 
 							   get_document_DOM.trigger("hitWordMusic:play");
 							}
 							if (distance <= drawArray[0].get_box_radius()+obj.get_box_radius() && obj.type === "bad"){
-							    	game_station = "game_over";
+							    	getSecondChance(obj);
+
 							    	get_document_DOM.trigger("badHitMusic:play");
 							}
 						// --------------------------------
@@ -143,7 +222,7 @@
 							}
 
 
-							// variationPositionsQuantity - quantity of changing posirions
+							// variationPositionsQuantity - quantity of changing positions
 							who_behid_line++;
 							for(var j = 1; j <= variationPositionsQuantity; j++){
 								if(j < variationPositionsQuantity && position_variation === j){
@@ -196,16 +275,74 @@
 					context.beginPath();
 					context.font = 'bold 25pt Calibri';
 					context.fillStyle = 'white';
-					context.shadowColor = 'white';
+					context.shadowColor = '#539FE2';
+					context.shadowBlur = 3;
+				    context.shadowOffsetX = 0;
+				    context.shadowOffsetY = 1;
 					context.fillText(drawArray[index].value, drawArray[index].x, drawArray[index].y);
 					context.closePath();
 				} else{
 				   	context.beginPath();
+				   	// context.shadowColor = '#F00';
 				   	context.drawImage(badImageObj, drawArray[index].x, drawArray[index].y, drawArray[index].width, drawArray[index].height);
 				   	context.closePath();
 				}
 			};
+
+
+			// plumeOfEngine===================
+			function plumeOfEngine(){
+				if(plumeCounter < 6){
+					var x = drawArray[0].x+drawArray[0].width/2;
+					var y = drawArray[0].y-8+drawArray[0].height/2;
+					var radius = 30;
+			      	var startAngle = 0.3 * Math.PI;
+			      	var endAngle = 0.7 * Math.PI;
+			      	var counterClockwise = false;
+
+			      	context.beginPath();
+			      	context.arc(x, y, radius, startAngle, endAngle, counterClockwise);
+			      	context.lineWidth = 6;
+
+			      	// line color
+			      	context.strokeStyle = 'rgba(66,245,242,.33)';
+			      	context.shadowColor = 'yellow';
+			      	context.shadowBlur = 20;
+			      	context.stroke();
+				} else if(plumeCounter > 12){
+					plumeCounter = 0;
+				}
+				plumeCounter++;
+			}
+			// / plumeOfEngine=============
+			function getBurst(obj){
+				get_document_DOM.trigger("BgMusic:stop");
+				get_document_DOM.trigger("gameOverMusic:play");
+				var step = [200, 400, 600];
+				setTimeout(function(){
+					context.beginPath();
+					context.shadowColor = 'transparent';
+					context.drawImage(burst1ImageObj, obj.x, obj.y, obj.width, obj.height);
+					context.closePath();
+				}, step[0])
+				setTimeout(function(){
+					context.beginPath();
+					context.shadowColor = 'transparent';
+					context.drawImage(burst2ImageObj, obj.x, obj.y, obj.width+20, obj.height+20);
+					context.closePath();
+				}, step[1])
+				setTimeout(function(){
+					context.beginPath();
+					context.shadowColor = 'transparent';
+					context.drawImage(burst3ImageObj, obj.x, obj.y, obj.width+30, obj.height+30);
+					context.closePath();
+				}, step[2])
+
+				return step[2];
+			}
 			function drawCar(){
+				plumeOfEngine()
+
 				context.beginPath();
 				context.shadowColor = 'transparent';
 				context.rect(0, 0, canvas.width, canvas.height);
@@ -213,29 +350,12 @@
 				context.closePath();
 			};
 			function drawGameOver(){
-				context.clearRect(0, 0, canvas.width, canvas.height);
-			    context.beginPath();
-				context.rect(0, 0, canvas.width, canvas.height);
-
-				context.fillStyle = 'rgba(4,4,4,0.8)';
-				context.fill();
-
-				context.font = 'bold 25pt Calibri';
-				context.fillStyle = 'red';
-				context.fillText('Game Over!', 120, 280);
-
-				context = canvas.getContext('2d');
-				context.font = 'bold 40pt Calibri';
-				context.fillStyle = 'white';
-				context.fillText("Your's points: "+points, 30, 550);
-
-				context.closePath();
+				$(".game-over").show(500);
 				// stopping of AnimationFrame
 				getFrame("stop")
 
-				get_document_DOM.trigger("BgMusic:stop");
-				get_document_DOM.trigger("gameOverMusic:play");
-
+				// 600 ms
+				getBurst(drawArray[0]);
 				// restart level
 				setTimeout(getStartAttrs, 2000);
 			};
@@ -251,12 +371,25 @@
 			    context.shadowOffsetY = 10;
 
 				context.font = 'bold 25pt Calibri';
-				context.fillStyle = 'green';
-				context.fillText('Press Enter!', 120, 280);
+				context.fillStyle = '#008EFF';
+				context.fillText('Click to start!', 120, 280);
 				context.shadowColor = 'black';
 				context.shadowColor = 'black';
 
 				context.closePath();
+
+				// Level and stars
+				$('#current-level').html("Level "+(variablesObj.gameRulesObject.currentLevel+1));
+
+				createStar.addStars(info_star());
+				// Clear line
+				var lineObj = {
+					line: $('#current-sentense'),
+					info: $('#info-words'),
+					quantity: variablesObj.gameRulesObject.lengthSentense,
+					catch_quantity: 0,
+				}
+				createSentese.clearLine(lineObj);
 
 				// next game_station
 				game_station = "running";
@@ -264,6 +397,7 @@
 
 			// MODALS VIEW==============================================
 			function drawStartModals(){
+				$(".game-over").hide(500);
 				if(reading_of_rules === true){
 					drawRulesModal()
 				} else if(reading_of_rules === false){
@@ -370,11 +504,39 @@
 
 		function getStartAttrs(){
 				game_station = "starting";
-			    points = 0;
+			    points_counter = 0;
+			    stars_counter = 0;
 			    drawArray=[car];
 			    createDrawArray(drawArray, variablesObj.variantsPosition[0])
 			    getFrame("start")
+		}
+		function getSecondChance(obj){
+			if(stars_counter > 0){
+				stars_counter--;
+
+				createStar.addStars(info_star());
+				points_counter = 0;
+
+				// Clear line
+				var lineObj = {
+					line: $('#current-sentense'),
+					info: $('#info-words'),
+					quantity: variablesObj.gameRulesObject.lengthSentense,
+					catch_quantity: 0,
+				}
+				createSentese.clearLine(lineObj);
+
+				drawArray=[car];
+				createDrawArray(drawArray, variablesObj.variantsPosition[0]);
+
+				getFrame('stop');
+				getBurst(obj);
+
+				setTimeout(function(){getFrame('start');get_document_DOM.trigger("BgMusic:play");}, 2000);
+			} else{
+				game_station = "game_over";
 			}
+		}
 
 		function workingWithAnswers(){
 				var can_answer = true,
@@ -552,21 +714,21 @@
 			    	drawGameOver();
 		        }
 
-		        context.beginPath();
-		        context.font = 'bold 30pt Calibri';
-				context.fillStyle = 'yellow';
-				context.fillText("Total points: "+points, 80, 80);
-				context.lineWidth = 1;
-			    // stroke color
-			    context.strokeStyle = 'orange';
+		  //       context.beginPath();
+		  //       context.font = 'bold 30pt Calibri';
+				// context.fillStyle = 'yellow';
+				// context.fillText("Total points: "+points, 80, 80);
+				// context.lineWidth = 1;
+			 //    // stroke color
+			 //    context.strokeStyle = 'orange';
 
-			    context.fillStyle = 'green';
-			    context.fillText("Level #: "+ (variablesObj.gameRulesObject.currentLevel+1), 80, 130);
+			 //    context.fillStyle = 'green';
+			 //    context.fillText("Level #: "+ (variablesObj.gameRulesObject.currentLevel+1), 80, 130);
 
 
 
-				context.fill();
-				context.closePath();
+				// context.fill();
+				// context.closePath();
 			}
 		// ------------------------------------------------------------------------
 

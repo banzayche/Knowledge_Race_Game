@@ -1,27 +1,20 @@
-'use strict'
-
 // CAR
-var carImageObj = new Image(),
-canDrawCar = false;
-carImageObj.onload = function() {
-	canDrawCar = true;
-};
+var carImageObj = new Image();
 carImageObj.src = './images/falcon.png';
-// --------------------------------------------
 // BAD
 var badImageObj = new Image();
-var canDrawBad = false;
-carImageObj.onload = function() {
-	canDrawBad = true;
-};
 badImageObj.src = './images/fighter.png';
+// ----------------------------------------------
+// burst
+var burst1ImageObj = new Image();
+burst1ImageObj.src = './images/burst1.png';
+var burst2ImageObj = new Image();
+burst2ImageObj.src = './images/burst2.png';
+var burst3ImageObj = new Image();
+burst3ImageObj.src = './images/burst3.png';
 // ----------------------------------------------
 // STAR
 var starImageObj = new Image();
-var canDrawStar = false;
-carImageObj.onload = function() {
-	canDrawStar = true;
-};
 starImageObj.src = './images/star.png';
 // --------------------------------------
 
@@ -52,12 +45,12 @@ function levelInfo(variablesObj){
 	// current Level object
 	variablesObj.gameRulesObject = {
 		boxes: {
-			height: variablesObj.canvas.height/15,
-			width: variablesObj.canvas.width/10,
+			height: 40,
+			width: 45,
 		},
 		car: {
-			height: variablesObj.canvas.height/10,
-			width: variablesObj.canvas.width/6,
+			height: 45,
+			width: 55,
 			x: (variablesObj.canvas.width/3)*1.35,
 			y: (variablesObj.canvas.width/6)*7,
 			turnSpeed: 5,
@@ -69,7 +62,7 @@ function levelInfo(variablesObj){
 			addWidth: 5,
 			addY: 20,
 		},
-		gameSpeed: 5,
+		gameSpeed: 3,
 		rules_splash: {
 			title: 'Rules',
 			content: '<p>You have to hit the words and in the end of the level answer on some question.</p><p>Control options:<br /> <--- Press Left Arrow - if you want turn left<br /> ---> Press Right Arrow - if you want turn right<br />Press ENTER - if you want Stop/Play the game <br /><br /><br /> Press ENTER - if you understand all this things</p>',
@@ -86,9 +79,9 @@ function levelInfo(variablesObj){
 	var themesObj = {
 		1: [
 			{
-				sentenseString: "ONE",
+				sentenseString: "PC locikng",
 				splitAttr: ' ',
-				repeat: 2,
+				repeat: 4,
 				question: "What do You do when you step away from your workplace?",
 				answersVariant : ["1. Make some coffee!", "2. I lock my PC.", "3. I'm calling my mom."],
 				rightIndex : 1,
@@ -106,7 +99,7 @@ function levelInfo(variablesObj){
 			{
 				sentenseString: "PC locking is very important for security policy.",
 				splitAttr: ' ',
-				repeat: 1,
+				repeat: 3,
 				question: "What is so important for security policy?",
 				answersVariant : ["1. To lock my PC Locking.", "2. Security Guard", "3. None of the above"],
 				rightIndex : 0,
@@ -124,7 +117,7 @@ function levelInfo(variablesObj){
 			{
 				sentenseString: "After work day I have to check if I locked my PC before going home.",
 				splitAttr: ' ',
-				repeat: 1,
+				repeat: 5,
 				question: "What do You do when you work day is over?",
 				answersVariant : ["Dancing! We have a class.", "2. Listen to the music (Serj Tankain - Sky is over).", "3. First, I check is my PC locked."],
 				rightIndex : 2,
@@ -324,10 +317,12 @@ function addDataLevel(numberLevel, variablesObj){
 	}
 	variablesObj.gameRulesObject.arr = detect_words(wordsArr);
 
-	variablesObj.gameRulesObject.pointsAtAll = variablesObj.gameRulesObject.arr.length*gameRules.repeat;
+	variablesObj.gameRulesObject.lengthSentense = variablesObj.gameRulesObject.arr.length;
+	variablesObj.gameRulesObject.starsQuantity = gameRules.repeat;
 	variablesObj.gameRulesObject.question = gameRules.question;
 	variablesObj.gameRulesObject.answersVariant = gameRules.answersVariant;
 	variablesObj.gameRulesObject.rightIndex = gameRules.rightIndex;
+	variablesObj.gameRulesObject.sentenseString = gameRules.sentenseString;
 	// splashes
 	variablesObj.gameRulesObject.start_splash = gameRules.start_splash;
 	variablesObj.gameRulesObject.end_splash = gameRules.end_splash;

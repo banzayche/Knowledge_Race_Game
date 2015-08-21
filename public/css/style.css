@@ -3,39 +3,135 @@
   display: block;
   margin: 0 auto;
 }*/
+html{
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
 body{
+  padding: 0;
+  margin: 0;
   min-width: 660px;
+  height: 100%;
   position: relative;
   background-image: url('./../images/back_stars.jpg');
-  background-size: 100%;
+  background-size: 100% 100%;
+  background-attachment: fixed;
+}
+/*Header*/
+.game-over{
+  position: fixed;
+  width: 100%;
+  background-color: rgba(4,4,4,.6);
+  padding: 60px 0;
+  margin-top: 200px;
+  z-index: 9999999999999999999999999999;
+  display: none;
+}
+header{
+  color: rgba(245,245,245,.9);
+}
+header h2{
+  position: relative;
+  display: block;
+  margin: 0;
+  background-color: rgba(0, 106, 255, 0.24);
+  padding: 15px;
+}
+header h3{
+  margin-top: 10px;
+}
+header h2:before{
+  content: '';
+  display: block;
+  position: absolute;
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,a4edf9+48,ffffff+100&amp;0+0,0.77+20,1+48,0.77+78,0+100 */
+  background: -moz-linear-gradient(left,  rgba(255,255,255,0) 0%, rgba(217,247,252,0.77) 20%, rgba(164,237,249,1) 48%, rgba(217,247,252,0.77) 78%, rgba(255,255,255,0) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(255,255,255,0)), color-stop(20%,rgba(217,247,252,0.77)), color-stop(48%,rgba(164,237,249,1)), color-stop(78%,rgba(217,247,252,0.77)), color-stop(100%,rgba(255,255,255,0))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(left,  rgba(255,255,255,0) 0%,rgba(217,247,252,0.77) 20%,rgba(164,237,249,1) 48%,rgba(217,247,252,0.77) 78%,rgba(255,255,255,0) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(left,  rgba(255,255,255,0) 0%,rgba(217,247,252,0.77) 20%,rgba(164,237,249,1) 48%,rgba(217,247,252,0.77) 78%,rgba(255,255,255,0) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(left,  rgba(255,255,255,0) 0%,rgba(217,247,252,0.77) 20%,rgba(164,237,249,1) 48%,rgba(217,247,252,0.77) 78%,rgba(255,255,255,0) 100%); /* IE10+ */
+  background: linear-gradient(to right,  rgba(255,255,255,0) 0%,rgba(217,247,252,0.77) 20%,rgba(164,237,249,1) 48%,rgba(217,247,252,0.77) 78%,rgba(255,255,255,0) 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#00ffffff',GradientType=1 ); /* IE6-9 */
+
+  box-shadow: 0px 0px 20px 7px rgba(135,163,232,.9);
+  -moz-box-shadow: 0px 0px 20px 7px rgba(135,163,232,.9);
+  -ms-box-shadow: 0px 0px 20px 7px rgba(135,163,232,.9);
+  -webkit-box-shadow: 0px 0px 20px 7px rgba(135,163,232,.9);
+  width: 50%;
+  height: 3px;
+  border-radius: 50%;
+  left: 0;
+  right: 0;
+  margin: 17px auto;
+  z-index: -1;
+  opacity: .7;
+}
+header .header-text-shadow{
+  z-index: 1;
+  text-shadow: 1px 1px 3px #008EFF;
+  -moz-text-shadow: 1px 1px 3px #008EFF;
+  -ms-text-shadow: 1px 1px 3px #008EFF;
+  -webkit-text-shadow: 1px 1px 3px #008EFF;
+}
+header .small{
+    font-size: 14px;
+    color: rgba(212, 231, 253, 0.75);;
+}
+header h3{
+  margin:0;
 }
 #volume{
+  float: right;
+}
+/*header*/
+
+.btn-game:hover{
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,d9f3f7+51,ffffff+100&amp;0+22,0.39+45,0.5+51,0.35+58,0+81 */
+  background: -moz-linear-gradient(top,  rgba(255,255,255,0) 0%, rgba(239,250,252,0) 22%, rgba(222,244,248,0.39) 45%, rgba(217,243,247,0.5) 51%, rgba(222,245,248,0.35) 58%, rgba(240,250,252,0) 81%, rgba(255,255,255,0) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0)), color-stop(22%,rgba(239,250,252,0)), color-stop(45%,rgba(222,244,248,0.39)), color-stop(51%,rgba(217,243,247,0.5)), color-stop(58%,rgba(222,245,248,0.35)), color-stop(81%,rgba(240,250,252,0)), color-stop(100%,rgba(255,255,255,0))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(239,250,252,0) 22%,rgba(222,244,248,0.39) 45%,rgba(217,243,247,0.5) 51%,rgba(222,245,248,0.35) 58%,rgba(240,250,252,0) 81%,rgba(255,255,255,0) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(239,250,252,0) 22%,rgba(222,244,248,0.39) 45%,rgba(217,243,247,0.5) 51%,rgba(222,245,248,0.35) 58%,rgba(240,250,252,0) 81%,rgba(255,255,255,0) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(239,250,252,0) 22%,rgba(222,244,248,0.39) 45%,rgba(217,243,247,0.5) 51%,rgba(222,245,248,0.35) 58%,rgba(240,250,252,0) 81%,rgba(255,255,255,0) 100%); /* IE10+ */
+  background: linear-gradient(to bottom,  rgba(255,255,255,0) 0%,rgba(239,250,252,0) 22%,rgba(222,244,248,0.39) 45%,rgba(217,243,247,0.5) 51%,rgba(222,245,248,0.35) 58%,rgba(240,250,252,0) 81%,rgba(255,255,255,0) 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#00ffffff',GradientType=0 ); /* IE6-9 */
+
+  color: rgba(182,214,255,1);
+}
+.btn-game{
     display: block;
-    position: absolute;
-    top: 5%;
-    right: 5%;
     width: 60px;
-    height: 60px;
-    z-index: 999999999999999999999999999999999999999999999999999999999999999999999999999999999999999;
-    padding: 15px 20px;
-    border: 1px solid orange;
-    border-radius: 50%;
+    height: 40px;
+    z-index: 9999;
+    padding: 8px 20px;
+    box-shadow: 0px 1px 5px 1px rgba(89, 105, 189, 0.73) inset;
+    -moz-box-shadow: 0px 1px 5px 1px rgba(89, 105, 189, 0.73) inset;
+    -ms-box-shadow: 0px 1px 5px 1px rgba(89, 105, 189, 0.73) inset;
+    -webkit-box-shadow: 0px 1px 5px 1px rgba(89, 105, 189, 0.73) inset;
+    border: 1px solid rgba(245,245,245,.3);
     -webkit-transition: all .6s;
     -moz-transition: all .6s;
     -o-transition: all .6s;
     -ms-transition: all .6s;
     transition: all .6s;
     cursor: pointer;
-    color: orange;
+    color: rgba(182,214,255,.7);
     font-size: 25px;
+    margin: -30px 0;
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,d9f3f7+51,ffffff+100&amp;0+22,0.39+45,0.5+51,0+57,0+100 */
+    background: -moz-linear-gradient(top,  rgba(255,255,255,0) 0%, rgba(239,250,252,0) 22%, rgba(222,244,248,0.39) 45%, rgba(217,243,247,0.5) 51%, rgba(222,244,248,0) 57%, rgba(255,255,255,0) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0)), color-stop(22%,rgba(239,250,252,0)), color-stop(45%,rgba(222,244,248,0.39)), color-stop(51%,rgba(217,243,247,0.5)), color-stop(57%,rgba(222,244,248,0)), color-stop(100%,rgba(255,255,255,0))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(239,250,252,0) 22%,rgba(222,244,248,0.39) 45%,rgba(217,243,247,0.5) 51%,rgba(222,244,248,0) 57%,rgba(255,255,255,0) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(239,250,252,0) 22%,rgba(222,244,248,0.39) 45%,rgba(217,243,247,0.5) 51%,rgba(222,244,248,0) 57%,rgba(255,255,255,0) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(239,250,252,0) 22%,rgba(222,244,248,0.39) 45%,rgba(217,243,247,0.5) 51%,rgba(222,244,248,0) 57%,rgba(255,255,255,0) 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  rgba(255,255,255,0) 0%,rgba(239,250,252,0) 22%,rgba(222,244,248,0.39) 45%,rgba(217,243,247,0.5) 51%,rgba(222,244,248,0) 57%,rgba(255,255,255,0) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#00ffffff',GradientType=0 ); /* IE6-9 */
 }
-#volume:hover{
-      background-color: rgba(4,4,4,.1);
-}
+
 
 #frame {
       width: 425px;
-      height: 600px;
+      height: 560px;
       left: 0;
       right: 0;
       top: 0;
@@ -59,8 +155,8 @@ body{
 }
 
 #myCanvas {
-      margin-top: -90px;
-/*      border: 3px solid #dedede;*/
+      margin-top: -100px;
+      /*border: 3px solid #dedede;*/
       -webkit-perspective: 100px;
       -moz-perspective: 100px;
       -o-perspective: 100px;
@@ -78,16 +174,100 @@ body{
       transform: rotateX(7deg) rotateY(0deg) rotateZ(0deg);
 }
 
+/*Footer*/
+footer{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: rgba(4,4,4,.6);
+  padding: 10px 15px;
+  min-height: 60px;
+  overflow: auto;
+}
+
+#play.btn-game:hover, #reset-words.btn-game:hover{
+  background: -moz-linear-gradient(top,  rgba(255,255,255,0) 0%, rgba(179,204,244,0) 26%, rgba(114,160,234,0.48) 48%, rgba(117,162,234,0.5) 49%, rgba(182,206,244,0) 73%, rgba(255,255,255,0) 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0)), color-stop(26%,rgba(179,204,244,0)), color-stop(48%,rgba(114,160,234,0.48)), color-stop(49%,rgba(117,162,234,0.5)), color-stop(73%,rgba(182,206,244,0)), color-stop(100%,rgba(255,255,255,0)));
+  background: -webkit-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(179,204,244,0) 26%,rgba(114,160,234,0.48) 48%,rgba(117,162,234,0.5) 49%,rgba(182,206,244,0) 73%,rgba(255,255,255,0) 100%);
+  background: -o-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(179,204,244,0) 26%,rgba(114,160,234,0.48) 48%,rgba(117,162,234,0.5) 49%,rgba(182,206,244,0) 73%,rgba(255,255,255,0) 100%);
+  background: -ms-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(179,204,244,0) 26%,rgba(114,160,234,0.48) 48%,rgba(117,162,234,0.5) 49%,rgba(182,206,244,0) 73%,rgba(255,255,255,0) 100%);
+  background: linear-gradient(to bottom,  rgba(255,255,255,0) 0%,rgba(179,204,244,0) 26%,rgba(114,160,234,0.48) 48%,rgba(117,162,234,0.5) 49%,rgba(182,206,244,0) 73%,rgba(255,255,255,0) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#00ffffff',GradientType=0 );
+}
+#play.btn-game, #reset-words.btn-game{
+  margin-top: 0;
+  padding: 4px 18px;
+  background: -moz-linear-gradient(top,  rgba(255,255,255,0) 0%, rgba(195,215,246,0) 22%, rgba(117,162,234,0.5) 51%, rgba(114,160,234,0.42) 52%, rgba(129,170,236,0) 57%, rgba(255,255,255,0) 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0)), color-stop(22%,rgba(195,215,246,0)), color-stop(51%,rgba(117,162,234,0.5)), color-stop(52%,rgba(114,160,234,0.42)), color-stop(57%,rgba(129,170,236,0)), color-stop(100%,rgba(255,255,255,0)));
+  background: -webkit-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(195,215,246,0) 22%,rgba(117,162,234,0.5) 51%,rgba(114,160,234,0.42) 52%,rgba(129,170,236,0) 57%,rgba(255,255,255,0) 100%);
+  background: -o-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(195,215,246,0) 22%,rgba(117,162,234,0.5) 51%,rgba(114,160,234,0.42) 52%,rgba(129,170,236,0) 57%,rgba(255,255,255,0) 100%);
+  background: -ms-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(195,215,246,0) 22%,rgba(117,162,234,0.5) 51%,rgba(114,160,234,0.42) 52%,rgba(129,170,236,0) 57%,rgba(255,255,255,0) 100%);
+  background: linear-gradient(to bottom,  rgba(255,255,255,0) 0%,rgba(195,215,246,0) 22%,rgba(117,162,234,0.5) 51%,rgba(114,160,234,0.42) 52%,rgba(129,170,236,0) 57%,rgba(255,255,255,0) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#00ffffff',GradientType=0 );
+
+  border: 1px solid rgba(53, 162, 226, 0.35);
+}
+#reset-words.btn-game{
+  padding: 4px 16px;
+}
+.star{
+  height: 40px;
+  font-size: 35px;
+  color: rgba(70,88,152,.9);
+}
+.text-white{
+  color: rgba(245,245,245,.5);
+}
+.current-sentense{
+  width: 100%;
+  height: 40px;
+  box-shadow: 0px 1px 5px 1px rgba(89, 105, 189, 0.73) inset;
+  -moz-box-shadow: 0px 1px 5px 1px rgba(89, 105, 189, 0.73) inset;
+  -ms-box-shadow: 0px 1px 5px 1px rgba(89, 105, 189, 0.73) inset;
+  -webkit-box-shadow: 0px 1px 5px 1px rgba(89, 105, 189, 0.73) inset;
+  background: -moz-linear-gradient(left,  rgba(24,59,155,0.74) 0%, rgba(26,61,156,0.74) 1%, rgba(98,122,187,0.25) 32%, rgba(255,255,255,0) 100%);
+  background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(24,59,155,0.74)), color-stop(1%,rgba(26,61,156,0.74)), color-stop(32%,rgba(98,122,187,0.25)), color-stop(100%,rgba(255,255,255,0)));
+  background: -webkit-linear-gradient(left,  rgba(24,59,155,0.74) 0%,rgba(26,61,156,0.74) 1%,rgba(98,122,187,0.25) 32%,rgba(255,255,255,0) 100%);
+  background: -o-linear-gradient(left,  rgba(24,59,155,0.74) 0%,rgba(26,61,156,0.74) 1%,rgba(98,122,187,0.25) 32%,rgba(255,255,255,0) 100%);
+  background: -ms-linear-gradient(left,  rgba(24,59,155,0.74) 0%,rgba(26,61,156,0.74) 1%,rgba(98,122,187,0.25) 32%,rgba(255,255,255,0) 100%);
+  background: linear-gradient(to right,  rgba(24,59,155,0.74) 0%,rgba(26,61,156,0.74) 1%,rgba(98,122,187,0.25) 32%,rgba(255,255,255,0) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#bd183b9b', endColorstr='#00ffffff',GradientType=1 );
+  color: white;
+  line-height: 35px;
+  padding: 0 15px;
+  overflow: auto;
+  border: 1px solid rgba(245,245,245,.3);
+  margin: 0 15px;
+}
+
+
+.star .creating-star{
+  color: rgba(73, 142, 218, 1);
+}
+.creating-star{
+    animation-name: creatingStar;
+    animation-duration: 1s;
+}
+@keyframes creatingStar {
+    25%  {color: rgba(73, 142, 218, 1);}
+    50% {color: transparent;}
+    75% {color: rgba(73, 142, 218, 1);}
+    100% {color: transparent;}
+}
+/* / footer*/
+
 /*QUIZ*/
+
+
 #quizAnswers{
       cursor: pointer;
 }
 
 @keyframes pressedAnswer {
-    25%  {background-color: white;}
-    50% {background-color: rgba(4,4,4,.2);}
-    75% {background-color: white;}
-    100% {background-color: rgba(4,4,4,.2);}
+    25%  {opacity: 1;}
+    50% {opacity: .5;}
+    75% {opacity: 1;}
+    100% {opacity: .5;}
 }
 
 .pressedAnswer {
@@ -96,12 +276,14 @@ body{
     animation-duration: 1s;
 }
 .wrongAnswers{
-      transition: background-color 0.5s;
-      background-color: #F56464 !important;
+      transition: all 0.5s;
+      text-decoration: line-through !important;
+      opacity: 0.5 !important;
 }
 .trueAnswers{
-      transition: background-color 0.5s;
-      background-color: #8BE093 !important;
+      transition: all 0.5s;
+      text-decoration: none;
+      font-size: 18px !important;
 }
 
 @keyframes bodyGood {
@@ -125,10 +307,31 @@ body{
     animation-duration: 1s;
 }
 
+/*Modals*/
 .modal-backdrop{
       opacity: 0 !important;
 }
-
+.modal-header h3{
+    padding: 15px;
+    background-color: rgba(26,77,182,.9);
+    color: #9EC4FF;
+    background-image: url('../images/quiz_question_bg.png');
+    background-size: 100% 100%;
+    background-position: 0;
+}
+.modal-content{
+  background-color: rgba(0, 60, 224, 0.53);
+  border-radius: 0px;
+  color: white;
+  font-size: 16px;
+  box-shadow: 0px 0px 15px 1px #246BFF inset;
+  -ms-box-shadow: 0px 0px 15px 1px #246BFF inset;
+  -moz-box-shadow: 0px 0px 15px 1px #246BFF inset;
+  -webkit-box-shadow: 0px 0px 15px 1px #246BFF inset;
+}
+.modal-header, .modal-footer{
+  border: none;
+}
 
 /*QUIZ modal*/
 @media (min-width: 768px){
@@ -137,23 +340,69 @@ body{
           margin: 170px auto;
       }
 }
-
-#quizModal .modal-header h3{
-      color: grey;
-      text-shadow: 1px 1px 1px black;
-      font-weight: bold;
+#quizModal .list-group-item{
+  background-color: transparent;
+  border: none;
+  color: white;
+  text-align: center;
+  font-size: 16px;
+}
+.blue-block{
+  width: 100%;
+  height: 20px;
+  box-shadow: 0px 1px 5px 1px rgba(89, 105, 189, 0.73) inset;
+  -moz-box-shadow: 0px 1px 5px 1px rgba(89, 105, 189, 0.73) inset;
+  -ms-box-shadow: 0px 1px 5px 1px rgba(89, 105, 189, 0.73) inset;
+  -webkit-box-shadow: 0px 1px 5px 1px rgba(89, 105, 189, 0.73) inset;
+  background: -moz-linear-gradient(left,  rgba(55,103,255,0.74) 0%, rgba(213,223,255,0.25) 79%, rgba(255,255,255,0) 100%);
+  background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(55,103,255,0.74)), color-stop(79%,rgba(213,223,255,0.25)), color-stop(100%,rgba(255,255,255,0)));
+  background: -webkit-linear-gradient(left,  rgba(55,103,255,0.74) 0%,rgba(213,223,255,0.25) 79%,rgba(255,255,255,0) 100%);
+  background: -o-linear-gradient(left,  rgba(55,103,255,0.74) 0%,rgba(213,223,255,0.25) 79%,rgba(255,255,255,0) 100%);
+  background: -ms-linear-gradient(left,  rgba(55,103,255,0.74) 0%,rgba(213,223,255,0.25) 79%,rgba(255,255,255,0) 100%);
+  background: linear-gradient(to right,  rgba(55,103,255,0.74) 0%,rgba(213,223,255,0.25) 79%,rgba(255,255,255,0) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#bd3767ff', endColorstr='#00ffffff',GradientType=1 );
+  border: 1px solid rgba(245,245,245,.3);
+}
+#quizModal .modal-footer{
+  padding: 0;
 }
 
-.modal-footer{
-      background-image: url('../images/atention.png');
+#quizModal a:focus, #quizModal a:hover {
+  outline:none;
+  position: relative;
 }
 
-#quizModal a:focus {outline:none;background-color: rgba(4,4,4,.1)}
+#quizModal a:focus:before, #quizModal a:hover:before{
+    content: '';
+    display: block;
+    position: absolute;
+    background: -moz-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(217,247,252,0.77) 20%, rgba(164,237,249,1) 48%, rgba(217,247,252,0.77) 78%, rgba(255,255,255,0) 100%);
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(255,255,255,0)), color-stop(20%,rgba(217,247,252,0.77)), color-stop(48%,rgba(164,237,249,1)), color-stop(78%,rgba(217,247,252,0.77)), color-stop(100%,rgba(255,255,255,0)));
+    background: -webkit-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(217,247,252,0.77) 20%,rgba(164,237,249,1) 48%,rgba(217,247,252,0.77) 78%,rgba(255,255,255,0) 100%);
+    background: -o-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(217,247,252,0.77) 20%,rgba(164,237,249,1) 48%,rgba(217,247,252,0.77) 78%,rgba(255,255,255,0) 100%);
+    background: -ms-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(217,247,252,0.77) 20%,rgba(164,237,249,1) 48%,rgba(217,247,252,0.77) 78%,rgba(255,255,255,0) 100%);
+    background: linear-gradient(to right, rgba(255,255,255,0) 0%,rgba(217,247,252,0.77) 20%,rgba(164,237,249,1) 48%,rgba(217,247,252,0.77) 78%,rgba(255,255,255,0) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#00ffffff',GradientType=1 );
+    box-shadow: 0px 0px 40px 12px rgba(135,163,232,.9);
+    -moz-box-shadow: 0px 0px 40px 12px rgba(135,163,232,.9);
+    -ms-box-shadow: 0px 0px 40px 12px rgba(135,163,232,.9);
+    -webkit-box-shadow: 0px 0px 40px 12px rgba(135,163,232,.9);
+    width: 70%;
+    height: 0px;
+    border-radius: 50%;
+    left: 0;
+    right: 0;
+    margin: 11px auto;
+    z-index: -1;
+    opacity: .7;
+}
 
 /*splash modal*/
 #splashModal .modal-content{
   display: none;
+  margin-top: 200px;
 }
+
 #splash-footer>button{
   width: 40%;
   display: block;
