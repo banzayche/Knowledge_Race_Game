@@ -76,6 +76,7 @@ function soundConfigurator(engineMusic){
 		console.log("playing bg music");
 		backgroundMusic = bg_car_engine;
 		backgroundMusic.loop = true;
+		backgroundMusic.currentTime="0";
 		backgroundMusic.play();
 	}
 	function stopBgMusic(){
@@ -94,6 +95,7 @@ function soundConfigurator(engineMusic){
 		secondPlanMusic.pause();
 		console.log("playing hit words music");
 		secondPlanMusic = word_hit;
+		secondPlanMusic.currentTime="0";
 		secondPlanMusic.play();
 	}
 	// bad hit music. For future functionality
@@ -106,6 +108,7 @@ function soundConfigurator(engineMusic){
 		console.log("playing start music");
 		backgroundMusic = start_music;
 		backgroundMusic.loop = true;
+		backgroundMusic.currentTime="0";
 		backgroundMusic.play();
 	}
 	// game over music
@@ -114,6 +117,7 @@ function soundConfigurator(engineMusic){
 		console.log("playing game over music");
 		backgroundMusic = game_over;
 		backgroundMusic.loop = false;
+		backgroundMusic.currentTime="0";
 		backgroundMusic.play();
 	}
 	// Clicking answer music
@@ -121,6 +125,7 @@ function soundConfigurator(engineMusic){
 		secondPlanMusic.pause();
 		console.log("playing Clicking answer music");
 		secondPlanMusic = clicking_answer;
+		secondPlanMusic.currentTime="0";
 		secondPlanMusic.play();
 	}
 	// Quiz result music
@@ -128,12 +133,14 @@ function soundConfigurator(engineMusic){
 		secondPlanMusic.pause();
 		console.log("playing Quiz good result music");
 		secondPlanMusic = good_result_quiz;
+		secondPlanMusic.currentTime="0";
 		secondPlanMusic.play();
 	}
 	function playQuizBadResultMusic(){
 		backgroundMusic.pause();
 		console.log("playing Quiz bad result music");
 		secondPlanMusic = bad_result_quiz;
+		secondPlanMusic.currentTime="0";
 		secondPlanMusic.play();
 	}
 };

@@ -18,11 +18,30 @@ body{
   background-size: 100% 100%;
   background-attachment: fixed;
 }
+
+.burst-animation{
+    animation-name: burstAnimation;
+    animation-duration: 0.5s;
+}
+@keyframes burstAnimation {
+    0%  {transform: rotate(-0.7deg);}
+    10% {transform: rotate(0.7deg);}
+    20% {transform: rotate(-0.7deg);}
+    30% {transform: rotate(0.7deg);}
+    40%  {transform: rotate(-0.7deg);}
+    50% {transform: rotate(0.7deg);}
+    60% {transform: rotate(-0.7deg);}
+    70% {transform: rotate(0.7deg);}
+    80% {transform: rotate(-0.7deg);}
+    90% {transform: rotate(0.7deg);}
+    100% {transform: rotate(-0.7deg);}
+}
+
 /*Header*/
 .game-over{
   position: fixed;
   width: 100%;
-  background-color: rgba(4,4,4,.6);
+  background-color: rgba(4,4,4,.8);
   padding: 60px 0;
   margin-top: 200px;
   z-index: 9999999999999999999999999999;
@@ -367,12 +386,12 @@ footer{
   padding: 0;
 }
 
-#quizModal a:focus, #quizModal a:hover {
+#quizModal a:focus {
   outline:none;
   position: relative;
 }
 
-#quizModal a:focus:before, #quizModal a:hover:before{
+#quizModal a:focus:before{
     content: '';
     display: block;
     position: absolute;
