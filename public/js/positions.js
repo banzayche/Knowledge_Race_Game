@@ -53,7 +53,7 @@ function levelInfo(variablesObj){
 			width: 55,
 			x: (variablesObj.canvas.width/3)*1.35,
 			y: (variablesObj.canvas.width/6)*7,
-			turnSpeed: 5,
+			turnSpeed: 4,
 		},
 		star: {
 			height: variablesObj.canvas.height/15,
@@ -62,7 +62,7 @@ function levelInfo(variablesObj){
 			addWidth: 5,
 			addY: 20,
 		},
-		gameSpeed: 3,
+		gameSpeed: 4,
 		rules_splash: {
 			title: 'Rules',
 			content: '<p>You have to hit the words in the right order and in the end of the level answer on some question.</p><p>Control options:<br /> <--- Press Left Arrow - if you want turn left<br /> ---> Press Right Arrow - if you want turn right<br />Press ENTER - if you want Stop/Play the game <br />Press Ctrl - if you want to clear line with sentense<br /><br /> Press ENTER - if you understand all this things</p>',
@@ -81,7 +81,7 @@ function levelInfo(variablesObj){
 			{
 				sentenseString: "PC locikng",
 				splitAttr: ' ',
-				repeat: 4,
+				repeat: 1,
 				question: "What do You do when you step away from your workplace?",
 				answersVariant : ["1. Make some coffee!", "2. I lock my PC.", "3. I'm calling my mom."],
 				rightIndex : 1,
@@ -97,9 +97,9 @@ function levelInfo(variablesObj){
 				}
 			},
 			{
-				sentenseString: "PC locking is very important for security policy.",
+				sentenseString: "PC locikng",
 				splitAttr: ' ',
-				repeat: 3,
+				repeat: 10,
 				question: "What is so important for security policy?",
 				answersVariant : ["1. To lock my PC Locking.", "2. Security Guard", "3. None of the above"],
 				rightIndex : 0,
@@ -115,9 +115,9 @@ function levelInfo(variablesObj){
 				}
 			},
 			{
-				sentenseString: "After work day I have to check if I locked my PC before going home.",
+				sentenseString: "PC locikng",
 				splitAttr: ' ',
-				repeat: 5,
+				repeat: 10,
 				question: "What do You do when you work day is over?",
 				answersVariant : ["Dancing! We have a class.", "2. Listen to the music (Serj Tankain - Sky is over).", "3. First, I check is my PC locked."],
 				rightIndex : 2,

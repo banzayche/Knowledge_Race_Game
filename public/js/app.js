@@ -11,6 +11,8 @@
 				color_quantity: stars_counter
 			}
 		},
+		deffault_game_speed = variablesObj.gameRulesObject.gameSpeed,
+		deffault_car_speed = variablesObj.gameRulesObject.car.turnSpeed,
 		reading_of_rules = true,
 		game_station = "starting",
 		get_document_DOM = $(document),
@@ -76,6 +78,22 @@
 
 			if(e.keyCode === 17){
 				clearWords()
+			}
+
+			if(e.keyCode === 38){
+				if(variablesObj.gameRulesObject.gameSpeed > 10){
+					console.log('Max speed!')
+				} else{
+					variablesObj.gameRulesObject.gameSpeed += 1;
+					variablesObj.gameRulesObject.car.turnSpeed += 1;
+				}
+			} else if(e.keyCode === 40){
+				if(variablesObj.gameRulesObject.gameSpeed <= 2){
+					console.log('Min speed!')
+				} else{
+					variablesObj.gameRulesObject.gameSpeed -= 1;
+					variablesObj.gameRulesObject.car.turnSpeed -= 1;
+				}
 			}
 		});
 
@@ -196,7 +214,8 @@
 
 							   get_document_DOM.trigger("hitWordMusic:play");
 							}
-							if (distance <= drawArray[0].get_box_radius()+obj.get_box_radius() && obj.type === "bad"){
+							if (distance <= drawArray[0].get_box_radius()+obj.get_box_radius() && obj.type === "bad" && obj.can_hit === true){
+
 							    	getSecondChance(obj);
 
 							    	get_document_DOM.trigger("badHitMusic:play");
@@ -204,6 +223,8 @@
 						// --------------------------------
 
 						if(obj.y >= canvas.height){
+							obj.can_hit = true;
+
 							if(obj.hit === false) {
 								obj.hit = true;
 							}
@@ -318,6 +339,10 @@
 			function getBurst(obj){
 				get_document_DOM.trigger("BgMusic:stop");
 				get_document_DOM.trigger("gameOverMusic:play");
+
+				$('#frame').addClass('burst-animation');
+				setTimeout(function(){$('#frame').removeClass('burst-animation');}, 2000);
+
 				var step = [200, 400, 600];
 				setTimeout(function(){
 					context.beginPath();
@@ -418,12 +443,14 @@
 				}
 			};
 			function drawRulesModal(){
+				getFrame('stop');
 				var rules_object = {
 					title: variablesObj.gameRulesObject.rules_splash.title,
 					content: variablesObj.gameRulesObject.rules_splash.content,
 					show: variablesObj.gameRulesObject.rules_splash.show,
 					toDo: function(){
 						reading_of_rules = false;
+						getFrame('start');
 					},
 				}
 				getModalSplash(rules_object);
@@ -503,6 +530,8 @@
 		}
 
 		function getStartAttrs(){
+				variablesObj.gameRulesObject.gameSpeed = deffault_game_speed;
+				variablesObj.gameRulesObject.car.turnSpeed = deffault_car_speed;
 				game_station = "starting";
 			    points_counter = 0;
 			    stars_counter = 0;
@@ -526,10 +555,8 @@
 				}
 				createSentese.clearLine(lineObj);
 
-				drawArray=[car];
-				createDrawArray(drawArray, variablesObj.variantsPosition[0]);
-
 				getFrame('stop');
+				obj.can_hit = false;
 				getBurst(obj);
 
 				setTimeout(function(){getFrame('start');get_document_DOM.trigger("BgMusic:play");}, 2000);
@@ -550,7 +577,13 @@
 					quiz_answers_DOM.find("a[index="+index+"]").focus()
 					value_on_focus = index;
 				}
-				focusAnswer(0);
+
+				setTimeout(function(){focusAnswer(0);}, 1000);
+				quiz_answers_a_DOM.mouseover(function(e){
+					var index = $(e.target).attr('index');
+					focusAnswer(index);
+				});
+
 				quiz_answers_a_DOM.keydown(function(e){
 					if(e.keyCode === 38){
 			        	e.preventDefault();
