@@ -79,11 +79,11 @@ function levelInfo(variablesObj){
 	var themesObj = {
 		1: [
 			{
-				sentenseString: "PC locikng",
+				sentenseString: "Object oriented programming it right way!",
 				splitAttr: ' ',
-				repeat: 1,
-				question: "What do You do when you step away from your workplace?",
-				answersVariant : ["1. Make some coffee!", "2. I lock my PC.", "3. I'm calling my mom."],
+				repeat: 2,
+				question: "What is the right way for programmer?",
+				answersVariant : ["Always listen mom.", "Using of object oriented programming.", "Keep calm."],
 				rightIndex : 1,
 				start_splash: {
 					title: "Welcome to First Level!",
@@ -97,11 +97,11 @@ function levelInfo(variablesObj){
 				}
 			},
 			{
-				sentenseString: "PC locikng",
+				sentenseString: "Facade is one of javascript patterns.",
 				splitAttr: ' ',
-				repeat: 10,
-				question: "What is so important for security policy?",
-				answersVariant : ["1. To lock my PC Locking.", "2. Security Guard", "3. None of the above"],
+				repeat: 3,
+				question: "What is Facade in our work?",
+				answersVariant : ["Facade is one of programming patterns.", "Facade is part of building.", "I don't care!"],
 				rightIndex : 0,
 				start_splash: {
 					title: "Welcome to Second Level!",
@@ -115,11 +115,11 @@ function levelInfo(variablesObj){
 				}
 			},
 			{
-				sentenseString: "PC locikng",
+				sentenseString: "I like this game!",
 				splitAttr: ' ',
-				repeat: 10,
-				question: "What do You do when you work day is over?",
-				answersVariant : ["Dancing! We have a class.", "2. Listen to the music (Serj Tankain - Sky is over).", "3. First, I check is my PC locked."],
+				repeat: 2,
+				question: "What do you think about this game?",
+				answersVariant : ["Sucks!!!", "Very hard for me.", "Dude it's perfect game!"],
 				rightIndex : 2,
 				start_splash: {
 					title: "Welcome to Third Level!",
