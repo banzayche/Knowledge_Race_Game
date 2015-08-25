@@ -70,7 +70,7 @@ function levelInfo(variablesObj){
 		},
 		result_splash: {
 			title: 'You Won This Theme!',
-			content: 'You can close this game and choose another theme. Or click "OK" and try this Theme again.',
+			content: '<img src="images/yoda.png" class="yoda-img" /><p>Knowledge is a big power. Use them in right way! </p><p>You can close this game and choose another theme. Or click "OK" and try this Theme again.</p>',
 			show: true
 		}
 	};
@@ -79,7 +79,7 @@ function levelInfo(variablesObj){
 	var themesObj = {
 		1: [
 			{
-				sentenseString: "PC locikng",
+				sentenseString: "PC locikng you quiz",
 				splitAttr: ' ',
 				repeat: 1,
 				question: "What do You do when you step away from your workplace?",
@@ -99,7 +99,7 @@ function levelInfo(variablesObj){
 			{
 				sentenseString: "PC locikng",
 				splitAttr: ' ',
-				repeat: 10,
+				repeat: 5,
 				question: "What is so important for security policy?",
 				answersVariant : ["1. To lock my PC Locking.", "2. Security Guard", "3. None of the above"],
 				rightIndex : 0,
@@ -117,7 +117,7 @@ function levelInfo(variablesObj){
 			{
 				sentenseString: "PC locikng",
 				splitAttr: ' ',
-				repeat: 10,
+				repeat: 5,
 				question: "What do You do when you work day is over?",
 				answersVariant : ["Dancing! We have a class.", "2. Listen to the music (Serj Tankain - Sky is over).", "3. First, I check is my PC locked."],
 				rightIndex : 2,
