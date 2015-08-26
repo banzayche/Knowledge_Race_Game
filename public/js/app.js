@@ -1,3 +1,5 @@
+	'use strict';
+
 	function GameProcess(variablesObj){
 		var canvas = variablesObj.canvas,
 		context = canvas.getContext('2d'),
@@ -11,18 +13,25 @@
 				color_quantity: stars_counter
 			}
 		},
+		hitStarObj = {
+			width: 0,
+			height: 0,
+			x: 0,
+			y: 0,
+			can_draw: false
+		},
 		deffault_game_speed = variablesObj.gameRulesObject.gameSpeed,
 		deffault_car_speed = variablesObj.gameRulesObject.car.turnSpeed,
 		reading_of_rules = true,
 		game_station = "starting",
 		get_document_DOM = $(document),
-		pointsFlag = true,
 		position_variation = 1,
 		who_behid_line = 0,
 		starFrame,
 		plumeCounter = 0,
 		stars_counter = 0,
 		frame_counter = 0,
+		last_hit_word_index = 0,
 		// For animation frame
 		runAnimation,
 		stop_runing,
@@ -67,13 +76,9 @@
 
 		}
 		$("body").keyup(function(e){
-			if(e.keyCode === 13 && stop_runing === true && game_station === "running"){
-				getFrame("start");
-				get_document_DOM.trigger("BgMusic:play");
-			} else if(e.keyCode === 13 && stop_runing === false && game_station === "running"){
-				getFrame("stop");
-				get_document_DOM.trigger("BgMusic:stop");
-				get_document_DOM.trigger("startMusic:play");
+
+			if(e.keyCode === 13 && game_station === "running"){
+				playOnClick()
 			}
 
 			if(e.keyCode === 17){
@@ -101,11 +106,13 @@
 			clearWords()
 		});
 		function clearWords(){
+			last_hit_word_index = 0;
+
 			points_counter = 0;
 			var lineObj = {
-					line: $('#current-sentense'),
+					line: $('#current-sentence'),
 					info: $('#info-words'),
-					quantity: variablesObj.gameRulesObject.lengthSentense,
+					quantity: variablesObj.gameRulesObject.lengthSentence,
 					catch_quantity: 0,
 				}
 			createSentese.clearLine(lineObj);
@@ -137,6 +144,15 @@
 				get_document_DOM.trigger("BgMusic:play");
 			} else if(stop_runing === false && game_station === "running"){
 				getFrame("stop");
+
+				// Pause Drawing
+				context.font = 'bold 25pt Calibri';
+				context.fillStyle = '#008EFF';
+				context.fillText('PAUSE!', 155, 280);
+				context.shadowColor = 'black';
+				context.shadowColor = 'black';
+				// Pause Drawing //
+
 				get_document_DOM.trigger("BgMusic:stop");
 				get_document_DOM.trigger("startMusic:play");
 			}
@@ -172,37 +188,58 @@
 							var carCenter = drawArray[0].get_box_center(),
 							successBoxesCenter,
 							distance,
+							word_y,
+							word_x_begin,
+							word_x_end,
+							carRadius = drawArray[0].get_box_radius(),
 							variationPositionsQuantity = variablesObj.variantsPosition.length;
 
 							successBoxesCenter = obj.get_box_center(),
 							distance = obj.get_distance(successBoxesCenter, carCenter);
 
+							// distance to words
+							if(obj.type === "good"){
+			      				obj.width = Math.floor(context.measureText(obj.value).width);
+
+								word_y = obj.y+carRadius;
+								word_x_begin = Math.floor(obj.x-carRadius/2);
+								word_x_end = Math.floor(obj.x + obj.width + carRadius/2);
+							}
+
 							// GoodHit - столкновение с положительным обьектом
-							if (distance <= drawArray[0].get_box_radius()+obj.get_box_radius() && obj.type === "good" && obj.hit === true){
-							   points_counter++;
+							if (word_y >= carCenter.y && carCenter.x > word_x_begin && carCenter.x < word_x_end && obj.type === "good" && obj.hit === true){
 
-							   starDrawing(obj);
+							   // if right index of word
+							   if(obj.indexValue === last_hit_word_index){
+							   		points_counter++;
+							   		starDrawing(obj);
+							   		// add word to line
+								   var sentenceInfo = {
+									   	line: $('#current-sentence'),
+									   	new_word: obj.value,
+									   	quantity_word: variablesObj.gameRulesObject.arr.length,
 
-							   // add word to line
-							   var sentenseInfo = {
-								   	line: $('#current-sentense'),
-								   	new_word: obj.value,
-								   	quantity_word: variablesObj.gameRulesObject.arr.length,
+									   	info: $('#info-words'),
+										quantity: variablesObj.gameRulesObject.lengthSentence,
+										catch_quantity: points_counter,
+								   };
+								   createSentese.addWord(sentenceInfo);
 
-								   	info: $('#info-words'),
-									quantity: variablesObj.gameRulesObject.lengthSentense,
-									catch_quantity: points_counter,
-							   };
-							   createSentese.addWord(sentenseInfo);
+								   last_hit_word_index = obj.indexValue+1;
+
+								   get_document_DOM.trigger("hitWordMusic:play");
+							   } else{
+							   		get_document_DOM.trigger("quizBadResultMusic:play");
+							   }
 
 							   obj.hit = false;
 
 							   // when quiz run
 							   // если собранных слов столько же, сколько в начальном массиве - сравниваем предложения.
-							   var sentense_from_Dom = $('#current-sentense').html();
-							   if(points_counter >= variablesObj.gameRulesObject.lengthSentense){
+							   var sentence_from_Dom = $('#current-sentence').html();
+							   if(points_counter >= variablesObj.gameRulesObject.lengthSentence){
 							   		// строки верны - +звезда
-							   		if(sentense_from_Dom === ' '+variablesObj.gameRulesObject.sentenseString){
+							   		if(sentence_from_Dom === ' '+variablesObj.gameRulesObject.sentenceString){
 							   			stars_counter++;
 							   			createStar.addStars(info_star());
 							   		}
@@ -211,8 +248,6 @@
 							   if(stars_counter >= variablesObj.gameRulesObject.starsQuantity){
 							   		game_station = "quiz";
 							   }
-
-							   get_document_DOM.trigger("hitWordMusic:play");
 							}
 							if (distance <= drawArray[0].get_box_radius()+obj.get_box_radius() && obj.type === "bad" && obj.can_hit === true){
 
@@ -277,26 +312,29 @@
 			// CANVAS VIEW========================================================
 			function starDrawing(obj){
 				// Window wich show to us the star
-					var width = variablesObj.gameRulesObject.star.width,
-						height = variablesObj.gameRulesObject.star.height,
-                        y = obj.y-obj.height,
-                        x = obj.x;
+					hitStarObj.can_draw = true;
+					hitStarObj.width = variablesObj.gameRulesObject.star.width,
+					hitStarObj.height = variablesObj.gameRulesObject.star.height,
+                    hitStarObj.y = obj.y-obj.height,
+                    hitStarObj.x = obj.x;
 					function drawStar(){
-                        width += variablesObj.gameRulesObject.star.addWidth;
-                        height += variablesObj.gameRulesObject.star.addHeight;
-                        y -= variablesObj.gameRulesObject.star.addY;
-						context.drawImage(starImageObj, x, y, width, height);
+                        hitStarObj.width += variablesObj.gameRulesObject.star.addWidth;
+                        hitStarObj.height += variablesObj.gameRulesObject.star.addHeight;
+                       	hitStarObj. y -= variablesObj.gameRulesObject.star.addY;
 						starFrame = requestAnimationFrame(drawStar);
 					}
 					starFrame = requestAnimationFrame(drawStar);
-					setTimeout(function(){cancelAnimationFrame(starFrame); pointsFlag = true;}, 1000);
+					setTimeout(function(){cancelAnimationFrame(starFrame); hitStarObj.can_draw = false;}, 1000);
 			}
 			function drawBoxes(index){
 				if(drawArray[index].type === 'good'){
 					context.beginPath();
-					context.font = 'bold 25pt Calibri';
+					context.font = 'bold 25px Calibri';
 					context.fillStyle = 'white';
 					context.shadowColor = '#539FE2';
+
+					wordBlinking(drawArray[index]);
+
 					context.shadowBlur = 3;
 				    context.shadowOffsetX = 0;
 				    context.shadowOffsetY = 1;
@@ -304,13 +342,39 @@
 					context.closePath();
 				} else{
 				   	context.beginPath();
-				   	// context.shadowColor = '#F00';
+				   	context.shadowColor = '#539FE2';
+					context.shadowBlur = 3;
+				    context.shadowOffsetX = 0;
+				    context.shadowOffsetY = 1;
 				   	context.drawImage(badImageObj, drawArray[index].x, drawArray[index].y, drawArray[index].width, drawArray[index].height);
 				   	context.closePath();
 				}
 			};
 
 
+			// word lightning===================
+			function wordBlinking(obj){
+				if(last_hit_word_index >= variablesObj.gameRulesObject.lengthSentence){
+					last_hit_word_index = 0;
+				}
+
+				if(obj.indexValue === last_hit_word_index){
+					obj.lightning = true;
+				} else{
+					obj.lightning = false;
+				}
+
+				if(obj.lightning === true){
+					if(plumeCounter < 6){
+						return context.fillStyle = '#539FE2';
+					} else if(plumeCounter >= 6){
+						return context.fillStyle = 'white';
+					} else if(plumeCounter > 12){
+						plumeCounter = 0;
+					}
+					plumeCounter++;
+				}
+			}
 			// plumeOfEngine===================
 			function plumeOfEngine(){
 				if(plumeCounter < 6){
@@ -408,10 +472,11 @@
 
 				createStar.addStars(info_star());
 				// Clear line
+				last_hit_word_index = 0;
 				var lineObj = {
-					line: $('#current-sentense'),
+					line: $('#current-sentence'),
 					info: $('#info-words'),
-					quantity: variablesObj.gameRulesObject.lengthSentense,
+					quantity: variablesObj.gameRulesObject.lengthSentence,
 					catch_quantity: 0,
 				}
 				createSentese.clearLine(lineObj);
@@ -424,7 +489,7 @@
 			function drawStartModals(){
 				$(".game-over").hide(500);
 				if(reading_of_rules === true){
-					drawRulesModal()
+					drawRulesModal('onStart')
 				} else if(reading_of_rules === false){
 					// get music
 					get_document_DOM.trigger("startMusic:play");
@@ -442,18 +507,36 @@
 					getModalSplash(rules_object);
 				}
 			};
-			function drawRulesModal(){
+
+			$("#rules-button").click(function(){
 				getFrame('stop');
-				var rules_object = {
-					title: variablesObj.gameRulesObject.rules_splash.title,
-					content: variablesObj.gameRulesObject.rules_splash.content,
-					show: variablesObj.gameRulesObject.rules_splash.show,
-					toDo: function(){
-						reading_of_rules = false;
-						getFrame('start');
-					},
+				drawRulesModal();
+			});
+
+			function drawRulesModal(val){
+				if(val === 'onStart'){
+					getFrame('stop');
+					var rules_object = {
+						title: variablesObj.gameRulesObject.rules_splash.title,
+						content: variablesObj.gameRulesObject.rules_splash.content,
+						show: variablesObj.gameRulesObject.rules_splash.show,
+						toDo: function(){
+							reading_of_rules = false;
+							getFrame('start');
+						},
+					}
+					getModalSplash(rules_object);
+				} else{
+					var rules_object = {
+						title: variablesObj.gameRulesObject.rules_splash.title,
+						content: variablesObj.gameRulesObject.rules_splash.content,
+						show: variablesObj.gameRulesObject.rules_splash.show,
+						toDo: function(){
+							reading_of_rules = false;
+						},
+					}
+					getModalSplash(rules_object);
 				}
-				getModalSplash(rules_object);
 			}
 
 			// QUIZ====================================================================
@@ -547,10 +630,11 @@
 				points_counter = 0;
 
 				// Clear line
+				last_hit_word_index = 0;
 				var lineObj = {
-					line: $('#current-sentense'),
+					line: $('#current-sentence'),
 					info: $('#info-words'),
-					quantity: variablesObj.gameRulesObject.lengthSentense,
+					quantity: variablesObj.gameRulesObject.lengthSentence,
 					catch_quantity: 0,
 				}
 				createSentese.clearLine(lineObj);
@@ -578,7 +662,7 @@
 					value_on_focus = index;
 				}
 
-				setTimeout(function(){focusAnswer(0);}, 1000);
+				setTimeout(function(){focusAnswer(0);}, 500);
 				quiz_answers_a_DOM.mouseover(function(e){
 					var index = $(e.target).attr('index');
 					focusAnswer(index);
@@ -747,21 +831,10 @@
 			    	drawGameOver();
 		        }
 
-		  //       context.beginPath();
-		  //       context.font = 'bold 30pt Calibri';
-				// context.fillStyle = 'yellow';
-				// context.fillText("Total points: "+points, 80, 80);
-				// context.lineWidth = 1;
-			 //    // stroke color
-			 //    context.strokeStyle = 'orange';
-
-			 //    context.fillStyle = 'green';
-			 //    context.fillText("Level #: "+ (variablesObj.gameRulesObject.currentLevel+1), 80, 130);
-
-
-
-				// context.fill();
-				// context.closePath();
+		        // star drawing
+		        if(hitStarObj.can_draw === true){
+		        	context.drawImage(starImageObj, hitStarObj.x, hitStarObj.y, hitStarObj.width, hitStarObj.height);
+		        }
 			}
 		// ------------------------------------------------------------------------
 
@@ -769,10 +842,10 @@
 		//--------------------------------MOVING of CAR-----------------------------------------------------
 			// loop for redrawing of canvas when keydown or keyup happened
 			window.addEventListener('keydown',function(e){
-				if (e.keyCode == 37 || e.keyCode == 65){
+				if (e.keyCode == 37 || e.keyCode == 65 || e.keyCode == 38){
 			        e.preventDefault();
 			    }
-			    if (e.keyCode == 39 || e.keyCode == 68){
+			    if (e.keyCode == 39 || e.keyCode == 68 || e.keyCode == 40){
 			        e.preventDefault();
 			    }
 

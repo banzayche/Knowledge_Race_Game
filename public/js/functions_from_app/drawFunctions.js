@@ -48,7 +48,7 @@ var createSentese = {
 				those.line.html('');
 				those.counter = 0;
 				obj.info.html(0+'/'+obj.quantity);
-			}, 700);
+			}, 50);
 		}
 
 		obj.info.html(obj.catch_quantity+'/'+obj.quantity);

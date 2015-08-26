@@ -56,6 +56,7 @@ header h2{
   margin: 0;
   background-color: rgba(0, 106, 255, 0.24);
   padding: 15px;
+  z-index: 1060;
 }
 header h3{
   margin-top: 10px;
@@ -95,13 +96,18 @@ header .header-text-shadow{
 }
 header .small{
     font-size: 14px;
-    color: rgba(212, 231, 253, 0.75);;
+    color: rgba(212, 231, 253, 0.75);
+    padding-left: 150px;
 }
 header h3{
   margin:0;
 }
+#rules-button{
+  padding: 6px;
+}
 #volume{
   float: right;
+  margin-left: 10px;
 }
 /*header*/
 
@@ -121,7 +127,6 @@ header h3{
     display: block;
     width: 60px;
     height: 40px;
-    z-index: 9999;
     padding: 8px 20px;
     box-shadow: 0px 1px 5px 1px rgba(89, 105, 189, 0.73) inset;
     -moz-box-shadow: 0px 1px 5px 1px rgba(89, 105, 189, 0.73) inset;
@@ -136,7 +141,7 @@ header h3{
     cursor: pointer;
     color: rgba(182,214,255,.7);
     font-size: 25px;
-    margin: -30px 0;
+    margin-top: -30px;
     /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,d9f3f7+51,ffffff+100&amp;0+22,0.39+45,0.5+51,0+57,0+100 */
     background: -moz-linear-gradient(top,  rgba(255,255,255,0) 0%, rgba(239,250,252,0) 22%, rgba(222,244,248,0.39) 45%, rgba(217,243,247,0.5) 51%, rgba(222,244,248,0) 57%, rgba(255,255,255,0) 100%); /* FF3.6+ */
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0)), color-stop(22%,rgba(239,250,252,0)), color-stop(45%,rgba(222,244,248,0.39)), color-stop(51%,rgba(217,243,247,0.5)), color-stop(57%,rgba(222,244,248,0)), color-stop(100%,rgba(255,255,255,0))); /* Chrome,Safari4+ */
@@ -202,6 +207,7 @@ footer{
   padding: 10px 15px;
   min-height: 60px;
   overflow: auto;
+  z-index: 1060;
 }
 
 #play.btn-game:hover, #reset-words.btn-game:hover{
@@ -237,7 +243,7 @@ footer{
 .text-white{
   color: rgba(245,245,245,.5);
 }
-.current-sentense{
+.current-sentence{
   width: 100%;
   height: 40px;
   box-shadow: 0px 1px 5px 1px rgba(89, 105, 189, 0.73) inset;
@@ -327,6 +333,29 @@ footer{
 }
 
 /*Modals*/
+.rules-container{
+  overflow: auto;
+  height: 300px;
+  margin-bottom: -20px;
+}
+.rules-container .alert{
+  overflow: auto;
+  line-height: 35px;
+}
+.rules-container h3{
+  color: #77AAF9;
+}
+.instruction{
+  width: 100%;
+  padding: 0 0 20px 0;
+}
+.yoda-img{
+  height: 200px;
+  padding: 10px;
+  margin: 0 50px 0 20px;
+  display: block;
+  float: left;
+}
 .modal-backdrop{
       opacity: 0 !important;
 }
@@ -351,7 +380,9 @@ footer{
 .modal-header, .modal-footer{
   border: none;
 }
-
+.modal-dialog{
+  margin-bottom: 60px;
+}
 /*QUIZ modal*/
 @media (min-width: 768px){
     #quizModal .modal-sm {
@@ -419,7 +450,9 @@ footer{
 /*splash modal*/
 #splashModal .modal-content{
   display: none;
-  margin-top: 200px;
+}
+#splashModal .modal-dialog{
+  margin-top: 10%;
 }
 
 #splash-footer>button{

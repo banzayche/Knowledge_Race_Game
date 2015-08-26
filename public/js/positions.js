@@ -65,7 +65,7 @@ function levelInfo(variablesObj){
 		gameSpeed: 4,
 		rules_splash: {
 			title: 'Rules',
-			content: '<p>You have to hit the words in the right order and in the end of the level answer on some question.</p><p>Control options:<br /> <--- Press Left Arrow - if you want turn left<br /> ---> Press Right Arrow - if you want turn right<br />Press ENTER - if you want Stop/Play the game <br />Press Ctrl - if you want to clear line with sentense<br /><br /> Press ENTER - if you understand all this things</p>',
+			content: '<p>You have to hit the words in the right order and in the end of the level answer on some question.</p><p>Control options:<br /> <--- Press Left Arrow - if you want turn left<br /> ---> Press Right Arrow - if you want turn right<br />Press ENTER - if you want Stop/Play the game <br />Press Ctrl - if you want to clear line with sentence<br /><br /> Press ENTER - if you understand all this things</p>',
 			show: true
 		},
 		result_splash: {
@@ -79,7 +79,7 @@ function levelInfo(variablesObj){
 	var themesObj = {
 		1: [
 			{
-				sentenseString: "Object oriented programming it right way!",
+				sentenceString: "Object oriented programming it right way!",
 				splitAttr: ' ',
 				repeat: 2,
 				question: "What is the right way for programmer?",
@@ -97,7 +97,7 @@ function levelInfo(variablesObj){
 				}
 			},
 			{
-				sentenseString: "Facade is one of javascript patterns.",
+				sentenceString: "Facade is one of javascript patterns.",
 				splitAttr: ' ',
 				repeat: 3,
 				question: "What is Facade in our work?",
@@ -115,7 +115,7 @@ function levelInfo(variablesObj){
 				}
 			},
 			{
-				sentenseString: "I like this game!",
+				sentenceString: "I like this game!",
 				splitAttr: ' ',
 				repeat: 2,
 				question: "What do you think about this game?",
@@ -135,7 +135,7 @@ function levelInfo(variablesObj){
 		],
 		2: [
 			{
-				sentenseString: "TWO TWO",
+				sentenceString: "TWO TWO",
 				splitAttr: ' ',
 				repeat: 10,
 				question: "What do You do when you step away from your workplace?",
@@ -143,7 +143,7 @@ function levelInfo(variablesObj){
 				rightIndex : 1,
 			},
 			{
-				sentenseString: "PC locking is very important for security policy.",
+				sentenceString: "PC locking is very important for security policy.",
 				splitAttr: ' ',
 				repeat: 1,
 				question: "What is so important for security policy?",
@@ -151,7 +151,7 @@ function levelInfo(variablesObj){
 				rightIndex : 0,
 			},
 			{
-				sentenseString: "After work day I have to check if I locked my PC before going home.",
+				sentenceString: "After work day I have to check if I locked my PC before going home.",
 				splitAttr: ' ',
 				repeat: 1,
 				question: "What do You do when you work day is over?",
@@ -161,7 +161,7 @@ function levelInfo(variablesObj){
 		],
 		3: [
 			{
-				sentenseString: "THREE THREE",
+				sentenceString: "THREE THREE",
 				splitAttr: ' ',
 				repeat: 10,
 				question: "What do You do when you step away from your workplace?",
@@ -169,7 +169,7 @@ function levelInfo(variablesObj){
 				rightIndex : 1,
 			},
 			{
-				sentenseString: "PC locking is very important for security policy.",
+				sentenceString: "PC locking is very important for security policy.",
 				splitAttr: ' ',
 				repeat: 1,
 				question: "What is so important for security policy?",
@@ -177,7 +177,7 @@ function levelInfo(variablesObj){
 				rightIndex : 0,
 			},
 			{
-				sentenseString: "After work day I have to check if I locked my PC before going home.",
+				sentenceString: "After work day I have to check if I locked my PC before going home.",
 				splitAttr: ' ',
 				repeat: 1,
 				question: "What do You do when you work day is over?",
@@ -187,7 +187,7 @@ function levelInfo(variablesObj){
 		],
 		4: [
 			{
-				sentenseString: "FOUR FOUR",
+				sentenceString: "FOUR FOUR",
 				splitAttr: ' ',
 				repeat: 10,
 				question: "What do You do when you step away from your workplace?",
@@ -195,7 +195,7 @@ function levelInfo(variablesObj){
 				rightIndex : 1,
 			},
 			{
-				sentenseString: "PC locking is very important for security policy.",
+				sentenceString: "PC locking is very important for security policy.",
 				splitAttr: ' ',
 				repeat: 1,
 				question: "What is so important for security policy?",
@@ -203,7 +203,7 @@ function levelInfo(variablesObj){
 				rightIndex : 0,
 			},
 			{
-				sentenseString: "After work day I have to check if I locked my PC before going home.",
+				sentenceString: "After work day I have to check if I locked my PC before going home.",
 				splitAttr: ' ',
 				repeat: 1,
 				question: "What do You do when you work day is over?",
@@ -213,7 +213,7 @@ function levelInfo(variablesObj){
 		],
 		5: [
 			{
-				sentenseString: "FIFE FIFE",
+				sentenceString: "FIFE FIFE",
 				splitAttr: ' ',
 				repeat: 10,
 				question: "What do You do when you step away from your workplace?",
@@ -221,7 +221,7 @@ function levelInfo(variablesObj){
 				rightIndex : 1,
 			},
 			{
-				sentenseString: "PC locking is very important for security policy.",
+				sentenceString: "PC locking is very important for security policy.",
 				splitAttr: ' ',
 				repeat: 1,
 				question: "What is so important for security policy?",
@@ -229,7 +229,7 @@ function levelInfo(variablesObj){
 				rightIndex : 0,
 			},
 			{
-				sentenseString: "After work day I have to check if I locked my PC before going home.",
+				sentenceString: "After work day I have to check if I locked my PC before going home.",
 				splitAttr: ' ',
 				repeat: 1,
 				question: "What do You do when you work day is over?",
@@ -239,7 +239,7 @@ function levelInfo(variablesObj){
 		],
 		6: [
 			{
-				sentenseString: "SIX SIX",
+				sentenceString: "SIX SIX",
 				splitAttr: ' ',
 				repeat: 10,
 				question: "What do You do when you step away from your workplace?",
@@ -247,7 +247,7 @@ function levelInfo(variablesObj){
 				rightIndex : 1,
 			},
 			{
-				sentenseString: "PC locking is very important for security policy.",
+				sentenceString: "PC locking is very important for security policy.",
 				splitAttr: ' ',
 				repeat: 1,
 				question: "What is so important for security policy?",
@@ -255,7 +255,7 @@ function levelInfo(variablesObj){
 				rightIndex : 0,
 			},
 			{
-				sentenseString: "After work day I have to check if I locked my PC before going home.",
+				sentenceString: "After work day I have to check if I locked my PC before going home.",
 				splitAttr: ' ',
 				repeat: 1,
 				question: "What do You do when you work day is over?",
@@ -283,8 +283,8 @@ function addDataLevel(numberLevel, variablesObj){
 	variablesObj.gameRulesObject.currentLevel = numberLevel;
 
 	var gameRules = variablesObj.enteredDATA[numberLevel];
-	var sentenseString = gameRules.sentenseString,
-		wordsArr = sentenseString.split(gameRules.splitAttr);
+	var sentenceString = gameRules.sentenceString,
+		wordsArr = sentenceString.split(gameRules.splitAttr);
 	function detect_words(arr){
 	    var lengthArr = arr.length;
 	    if(lengthArr%2 === 0){
@@ -317,12 +317,12 @@ function addDataLevel(numberLevel, variablesObj){
 	}
 	variablesObj.gameRulesObject.arr = detect_words(wordsArr);
 
-	variablesObj.gameRulesObject.lengthSentense = variablesObj.gameRulesObject.arr.length;
+	variablesObj.gameRulesObject.lengthSentence = variablesObj.gameRulesObject.arr.length;
 	variablesObj.gameRulesObject.starsQuantity = gameRules.repeat;
 	variablesObj.gameRulesObject.question = gameRules.question;
 	variablesObj.gameRulesObject.answersVariant = gameRules.answersVariant;
 	variablesObj.gameRulesObject.rightIndex = gameRules.rightIndex;
-	variablesObj.gameRulesObject.sentenseString = gameRules.sentenseString;
+	variablesObj.gameRulesObject.sentenceString = gameRules.sentenceString;
 	// splashes
 	variablesObj.gameRulesObject.start_splash = gameRules.start_splash;
 	variablesObj.gameRulesObject.end_splash = gameRules.end_splash;
