@@ -63,6 +63,13 @@
 					frame_counter = 1;
 				}
 			} else{
+				if(game_station === 'running'){
+					context.font = 'bold 25pt Calibri';
+					context.fillStyle = '#008EFF';
+					context.fillText('PAUSE!', 155, 280);
+					context.shadowColor = 'black';
+					context.shadowColor = 'black';
+				}
 				cancelAnimationFrame(runAnimation);
 				stop_runing = true;
 				frame_counter --;
@@ -820,22 +827,6 @@
 			    if(game_station === "game_over"){
 			    	drawGameOver();
 		        }
-
-		  //       context.beginPath();
-		  //       context.font = 'bold 30pt Calibri';
-				// context.fillStyle = 'yellow';
-				// context.fillText("Total points: "+points, 80, 80);
-				// context.lineWidth = 1;
-			 //    // stroke color
-			 //    context.strokeStyle = 'orange';
-
-			 //    context.fillStyle = 'green';
-			 //    context.fillText("Level #: "+ (variablesObj.gameRulesObject.currentLevel+1), 80, 130);
-
-
-
-				// context.fill();
-				// context.closePath();
 			}
 		// ------------------------------------------------------------------------
 

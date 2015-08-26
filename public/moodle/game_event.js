@@ -11,7 +11,9 @@ doc.on( "game:show_1", function(){ ifarameObj.gameShow('show', 1) }).
 	on( "game:stop_3", function(){ ifarameObj.gameShow('stop', 3) }).
 	on( "game:stop_4", function(){ ifarameObj.gameShow('stop', 4) }).
 	on( "game:stop_5", function(){ ifarameObj.gameShow('stop', 5) }).
-	on( "game:stop_6", function(){ ifarameObj.gameShow('stop', 6) });
+	on( "game:stop_6", function(){ ifarameObj.gameShow('stop', 6) }).
+
+	on( "get-fullscreen", function(){ ifarameObj.getFullScreen() });
 
 var ifarameObj = {
 	links: {
@@ -22,7 +24,24 @@ var ifarameObj = {
 		theme_5: '.././index.html?game=5',
 		theme_6: '.././index.html?game=6'
 	},
+	fullscreen: false,
 	currentIframes: {},
+	getFullScreen: function() {
+		var parent = $(".fullscreen-button").parent();
+		if(this.fullscreen === false){
+			parent.css('z-index', '100');
+			parent.removeClass('no-fullscreen-container').addClass('fullscreen-container');
+			$("iframe.no-fullscreen").removeClass('no-fullscreen').addClass('fullscreen');
+
+			this.fullscreen = true;
+		} else if(this.fullscreen === true){
+			parent.removeClass('fullscreen-container').addClass('no-fullscreen-container');
+			$("iframe.fullscreen").removeClass('fullscreen').addClass('no-fullscreen');
+			parent.css('z-index', '1');
+
+			this.fullscreen = false;
+		}
+	},
 	gameShow: function(what, number) {
 		// --- Closing of active games ---
 		for(var i = 6; i > 0; i--){
@@ -67,25 +86,16 @@ var ifarameObj = {
 	},
 	createFrame: function(number) {
 		var iframe = document.createElement('iframe');
-		iframe.style.width = '100%';
-		iframe.style.height = '770px';
-		iframe.style.margin = '0 auto';
-		iframe.style.display = 'block';
-		iframe.style.border = 'none';
 		iframe.setAttribute('scrolling', 'yes');
+		iframe.setAttribute('class', 'no-fullscreen');
 		iframe.setAttribute('src', this.links['theme_'+number]);
 		iframe.setAttribute('id', 'game-theme-'+number);
 		return iframe;
 	},
 	createCloseButton: function(number, action) {
 		var button = document.createElement('button');
-			button.style.display = 'block';
-			button.style.backgroundColor = 'orange';
-			button.style.color = 'white';
-			button.style.position = 'absolute';
-			button.style.bottom = '0';
-			button.style.right = '0';
-			button.style.zIndex = '999999';
+			button.setAttribute('class', 'game-button');
+			button.setAttribute('title', 'Open/Close game');
 
 		if(action === 'stop_game'){
 			button.innerHTML = 'Close Game';
@@ -102,12 +112,20 @@ var ifarameObj = {
 	createGameContainer: function(number, station){
 		$('#container-game-'+number).remove();
 		var divContainer = document.createElement('div');
-				divContainer.setAttribute('id', 'container-game-'+number);
-				divContainer.style.position = 'relative';
+			divContainer.setAttribute('id', 'container-game-'+number);
+			divContainer.setAttribute('class', 'no-fullscreen-container');
+
+		var fullscreen_button = document.createElement('button');
+			fullscreen_button.setAttribute('class', 'fullscreen-button');
+			fullscreen_button.innerHTML = 'Open/Close Full Screen';
+			fullscreen_button.setAttribute('title', 'Open/Close full screen');
+			fullscreen_button.setAttribute('onClick', 'doc.trigger("get-fullscreen")');
 
 		if(station === 'game_start'){
-				divContainer.appendChild(this.currentIframes['Game_'+number]);
-				divContainer.appendChild(this.createCloseButton(number, 'stop_game'));
+			divContainer.appendChild(this.currentIframes['Game_'+number]);
+			divContainer.appendChild(this.createCloseButton(number, 'stop_game'));
+
+			divContainer.appendChild(fullscreen_button);
 			// append iframe to container
 			$('#section-'+number).append(divContainer);
 		} else if(station === 'game_stop'){
@@ -116,6 +134,7 @@ var ifarameObj = {
 		}
 	},
 	createAllButtons: function(){
+		$("head").append($("<link rel='stylesheet' href='./../css/moodle.css' type='text/css'/>"));
 		for(var i = 1; i<=6; i++){
 			this.createGameContainer(i, 'game_stop')
 		}
