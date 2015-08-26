@@ -69,13 +69,6 @@
 					frame_counter = 1;
 				}
 			} else{
-				if(game_station === 'running'){
-					context.font = 'bold 25pt Calibri';
-					context.fillStyle = '#008EFF';
-					context.fillText('PAUSE!', 155, 280);
-					context.shadowColor = 'black';
-					context.shadowColor = 'black';
-				}
 				cancelAnimationFrame(runAnimation);
 				stop_runing = true;
 				frame_counter --;
@@ -84,13 +77,8 @@
 		}
 		$("body").keyup(function(e){
 
-			if(e.keyCode === 13 && stop_runing === true && game_station === "running"){
-				getFrame("start");
-				get_document_DOM.trigger("BgMusic:play");
-			} else if(e.keyCode === 13 && stop_runing === false && game_station === "running"){
-				getFrame("stop");
-				get_document_DOM.trigger("BgMusic:stop");
-				get_document_DOM.trigger("startMusic:play");
+			if(e.keyCode === 13 && game_station === "running"){
+				playOnClick()
 			}
 
 			if(e.keyCode === 17){
@@ -122,9 +110,9 @@
 
 			points_counter = 0;
 			var lineObj = {
-					line: $('#current-sentense'),
+					line: $('#current-sentence'),
 					info: $('#info-words'),
-					quantity: variablesObj.gameRulesObject.lengthSentense,
+					quantity: variablesObj.gameRulesObject.lengthSentence,
 					catch_quantity: 0,
 				}
 			createSentese.clearLine(lineObj);
@@ -156,6 +144,15 @@
 				get_document_DOM.trigger("BgMusic:play");
 			} else if(stop_runing === false && game_station === "running"){
 				getFrame("stop");
+
+				// Pause Drawing
+				context.font = 'bold 25pt Calibri';
+				context.fillStyle = '#008EFF';
+				context.fillText('PAUSE!', 155, 280);
+				context.shadowColor = 'black';
+				context.shadowColor = 'black';
+				// Pause Drawing //
+
 				get_document_DOM.trigger("BgMusic:stop");
 				get_document_DOM.trigger("startMusic:play");
 			}
@@ -217,16 +214,16 @@
 							   		points_counter++;
 							   		starDrawing(obj);
 							   		// add word to line
-								   var sentenseInfo = {
-									   	line: $('#current-sentense'),
+								   var sentenceInfo = {
+									   	line: $('#current-sentence'),
 									   	new_word: obj.value,
 									   	quantity_word: variablesObj.gameRulesObject.arr.length,
 
 									   	info: $('#info-words'),
-										quantity: variablesObj.gameRulesObject.lengthSentense,
+										quantity: variablesObj.gameRulesObject.lengthSentence,
 										catch_quantity: points_counter,
 								   };
-								   createSentese.addWord(sentenseInfo);
+								   createSentese.addWord(sentenceInfo);
 
 								   last_hit_word_index = obj.indexValue+1;
 
@@ -239,10 +236,10 @@
 
 							   // when quiz run
 							   // если собранных слов столько же, сколько в начальном массиве - сравниваем предложения.
-							   var sentense_from_Dom = $('#current-sentense').html();
-							   if(points_counter >= variablesObj.gameRulesObject.lengthSentense){
+							   var sentence_from_Dom = $('#current-sentence').html();
+							   if(points_counter >= variablesObj.gameRulesObject.lengthSentence){
 							   		// строки верны - +звезда
-							   		if(sentense_from_Dom === ' '+variablesObj.gameRulesObject.sentenseString){
+							   		if(sentence_from_Dom === ' '+variablesObj.gameRulesObject.sentenceString){
 							   			stars_counter++;
 							   			createStar.addStars(info_star());
 							   		}
@@ -357,7 +354,7 @@
 
 			// word lightning===================
 			function wordBlinking(obj){
-				if(last_hit_word_index >= variablesObj.gameRulesObject.lengthSentense){
+				if(last_hit_word_index >= variablesObj.gameRulesObject.lengthSentence){
 					last_hit_word_index = 0;
 				}
 
@@ -477,9 +474,9 @@
 				// Clear line
 				last_hit_word_index = 0;
 				var lineObj = {
-					line: $('#current-sentense'),
+					line: $('#current-sentence'),
 					info: $('#info-words'),
-					quantity: variablesObj.gameRulesObject.lengthSentense,
+					quantity: variablesObj.gameRulesObject.lengthSentence,
 					catch_quantity: 0,
 				}
 				createSentese.clearLine(lineObj);
@@ -635,9 +632,9 @@
 				// Clear line
 				last_hit_word_index = 0;
 				var lineObj = {
-					line: $('#current-sentense'),
+					line: $('#current-sentence'),
 					info: $('#info-words'),
-					quantity: variablesObj.gameRulesObject.lengthSentense,
+					quantity: variablesObj.gameRulesObject.lengthSentence,
 					catch_quantity: 0,
 				}
 				createSentese.clearLine(lineObj);

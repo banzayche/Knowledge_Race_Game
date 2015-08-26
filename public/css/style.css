@@ -243,7 +243,7 @@ footer{
 .text-white{
   color: rgba(245,245,245,.5);
 }
-.current-sentense{
+.current-sentence{
   width: 100%;
   height: 40px;
   box-shadow: 0px 1px 5px 1px rgba(89, 105, 189, 0.73) inset;
@@ -333,6 +333,22 @@ footer{
 }
 
 /*Modals*/
+.rules-container{
+  overflow: auto;
+  height: 300px;
+  margin-bottom: -20px;
+}
+.rules-container .alert{
+  overflow: auto;
+  line-height: 35px;
+}
+.rules-container h3{
+  color: #77AAF9;
+}
+.instruction{
+  width: 100%;
+  padding: 0 0 20px 0;
+}
 .yoda-img{
   height: 200px;
   padding: 10px;
@@ -436,7 +452,7 @@ footer{
   display: none;
 }
 #splashModal .modal-dialog{
-  margin-top: 15%;
+  margin-top: 10%;
 }
 
 #splash-footer>button{
