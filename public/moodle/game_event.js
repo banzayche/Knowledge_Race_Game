@@ -24,8 +24,22 @@ var ifarameObj = {
 	},
 	currentIframes: {},
 	gameShow: function(what, number) {
-		if(what === "show" && this.currentIframes['Game_'+number] == undefined){
+		// --- Closing of active games ---
+		for(var i = 6; i > 0; i--){
+			if(this.currentIframes['Game_'+i] != undefined && i!= number){
+				// show standart content
+				$('#section-'+i+' ul.section').show();
+				// destroy current iframe from object and from DOM
+				delete this.currentIframes['Game_'+i];
 
+				// append default button
+				this.createGameContainer(i, 'game_stop');
+			}
+		}
+		// --- End closing of active games ---
+
+		if(what === "show" && this.currentIframes['Game_'+number] == undefined){
+			console.log('create')
 			// hide standart content
 			$('#section-'+number+' ul.section').hide();
 			// create current iframe
@@ -36,7 +50,6 @@ var ifarameObj = {
 
 
 		} else if(what === "stop" && this.currentIframes['Game_'+number] != undefined){
-
 			// show standart content
 			$('#section-'+number+' ul.section').show();
 			// destroy current iframe from object and from DOM
@@ -44,7 +57,6 @@ var ifarameObj = {
 
 			// append default button
 			this.createGameContainer(number, 'game_stop');
-
 		} else{
 			try {
 			  throw new Error('Whoops!');
@@ -114,4 +126,3 @@ var ifarameObj = {
 $(document).ready(function(){
 	ifarameObj.createAllButtons();
 });
-// doc.trigger("game:show_1");

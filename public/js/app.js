@@ -323,7 +323,7 @@
 					context.fillStyle = 'white';
 					context.shadowColor = '#539FE2';
 
-					wordLightning(drawArray[index]);
+					wordBlinking(drawArray[index]);
 
 					context.shadowBlur = 3;
 				    context.shadowOffsetX = 0;
@@ -343,7 +343,7 @@
 
 
 			// word lightning===================
-			function wordLightning(obj){
+			function wordBlinking(obj){
 				if(last_hit_word_index >= variablesObj.gameRulesObject.lengthSentense){
 					last_hit_word_index = 0;
 				}
