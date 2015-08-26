@@ -64,13 +64,13 @@ function levelInfo(variablesObj){
 		},
 		gameSpeed: 4,
 		rules_splash: {
-			title: 'Rules',
-			content: '<p>You have to hit the words in the right order and in the end of the level answer on some question.</p><p>Control options:<br /> <--- Press Left Arrow - if you want turn left<br /> ---> Press Right Arrow - if you want turn right<br />Press ENTER - if you want Stop/Play the game <br />Press Ctrl - if you want to clear line with sentence<br /><br /> Press ENTER - if you understand all this things</p>',
+			title: 'Instructions',
+			content: '<div class="rules-container"><p>You have to hit the words in the right order and in the end of the level answer on some question.<h3>Control:</h3><div class="alert"><img src="images/left-arrow.png" class="pull-left" />&nbsp;&nbsp;Press Left Arrow - if you want turn left</div> <div class="alert"><img src="images/right-arrow.png" class="pull-left" />&nbsp;&nbsp;Press Right Arrow - if you want turn right</div> <div class="alert"><img src="images/up-arrow.png" class="pull-left" />&nbsp;&nbsp;Press Up Arrow - if you want to go faster</div> <div class="alert"><img src="images/down-arrow.png" class="pull-left" />&nbsp;&nbsp;Press Down Arrow - if you want to go slowly</div> <div class="alert"><img src="images/enter.png" class="pull-left" />&nbsp;&nbsp;Press Enter - if you want Stop/Play the game</div> <div class="alert"><img src="images/ctrl.png" class="pull-left" />&nbsp;&nbsp;Press Ctrl - if you want to clear line with sentence</div><h3>Gameplay:</h3><img src="images/instruction.png" class="instruction" /></div>',
 			show: true
 		},
 		result_splash: {
 			title: 'You Won This Theme!',
-			content: 'You can close this game and choose another theme. Or click "OK" and try this Theme again.',
+			content: '<img src="images/yoda.png" class="yoda-img" /><p>Knowledge is a big power. Use them in right way! </p><p>You can close this game and choose another theme. Or click "OK" and try this Theme again.</p>',
 			show: true
 		}
 	};
