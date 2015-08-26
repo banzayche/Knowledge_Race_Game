@@ -13,12 +13,18 @@
 				color_quantity: stars_counter
 			}
 		},
+		hitStarObj = {
+			width: 0,
+			height: 0,
+			x: 0,
+			y: 0,
+			can_draw: false
+		},
 		deffault_game_speed = variablesObj.gameRulesObject.gameSpeed,
 		deffault_car_speed = variablesObj.gameRulesObject.car.turnSpeed,
 		reading_of_rules = true,
 		game_station = "starting",
 		get_document_DOM = $(document),
-		pointsFlag = true,
 		position_variation = 1,
 		who_behid_line = 0,
 		starFrame,
@@ -309,19 +315,19 @@
 			// CANVAS VIEW========================================================
 			function starDrawing(obj){
 				// Window wich show to us the star
-					var width = variablesObj.gameRulesObject.star.width,
-						height = variablesObj.gameRulesObject.star.height,
-                        y = obj.y-obj.height,
-                        x = obj.x;
+					hitStarObj.can_draw = true;
+					hitStarObj.width = variablesObj.gameRulesObject.star.width,
+					hitStarObj.height = variablesObj.gameRulesObject.star.height,
+                    hitStarObj.y = obj.y-obj.height,
+                    hitStarObj.x = obj.x;
 					function drawStar(){
-                        width += variablesObj.gameRulesObject.star.addWidth;
-                        height += variablesObj.gameRulesObject.star.addHeight;
-                        y -= variablesObj.gameRulesObject.star.addY;
-						context.drawImage(starImageObj, x, y, width, height);
+                        hitStarObj.width += variablesObj.gameRulesObject.star.addWidth;
+                        hitStarObj.height += variablesObj.gameRulesObject.star.addHeight;
+                       	hitStarObj. y -= variablesObj.gameRulesObject.star.addY;
 						starFrame = requestAnimationFrame(drawStar);
 					}
 					starFrame = requestAnimationFrame(drawStar);
-					setTimeout(function(){cancelAnimationFrame(starFrame); pointsFlag = true;}, 1000);
+					setTimeout(function(){cancelAnimationFrame(starFrame); hitStarObj.can_draw = false;}, 1000);
 			}
 			function drawBoxes(index){
 				if(drawArray[index].type === 'good'){
@@ -826,6 +832,11 @@
 			    // when you hit "Bad" box
 			    if(game_station === "game_over"){
 			    	drawGameOver();
+		        }
+
+		        // star drawing
+		        if(hitStarObj.can_draw === true){
+		        	context.drawImage(starImageObj, hitStarObj.x, hitStarObj.y, hitStarObj.width, hitStarObj.height);
 		        }
 			}
 		// ------------------------------------------------------------------------
