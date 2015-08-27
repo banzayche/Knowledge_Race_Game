@@ -832,7 +832,7 @@
 						intro_animation_timeout = setTimeout(function(){
 							drawStartModals();
 							intro_animation('stop');
-						}, 21500);
+						}, 25500);
 						return;
 			    	} else{
 			    		drawStartModals();
