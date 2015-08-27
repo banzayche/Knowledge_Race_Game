@@ -12,7 +12,8 @@ function soundConfigurator(engineMusic){
 				on( "quizStartMusic:play", playQuizStartMusic).
 				on( "quizClickingAnswerMusic:play", playQuizClickingAnswerMusic).
 				on( "quizGoodResultMusic:play", playQuizGoodResultMusic).
-				on( "quizBadResultMusic:play", playQuizBadResultMusic);
+				on( "quizBadResultMusic:play", playQuizBadResultMusic).
+				on( "introAnimation:play", introAnimation);
 
 	var standartVolume = 0.8,
 		currentVolume = 0.8,
@@ -35,6 +36,7 @@ function soundConfigurator(engineMusic){
 			bad_result_quiz.volume = currentVolume;
 			game_over.volume = currentVolume;
 			word_hit.volume  = currentVolume;
+			intro_animation.volume = currentVolume;
 		}
 
 		var start_music = new Audio(engineMusic.startMusic);
@@ -59,6 +61,9 @@ function soundConfigurator(engineMusic){
 		start_music.preload = "true";
 
 		var word_hit = new Audio(engineMusic.wordHit);
+		bg_car_engine.preload = "true";
+
+		var intro_animation = new Audio(engineMusic.intro);
 		bg_car_engine.preload = "true";
 
 		changeVolume();
@@ -108,6 +113,16 @@ function soundConfigurator(engineMusic){
 		console.log("playing start music");
 		backgroundMusic = start_music;
 		backgroundMusic.loop = true;
+		backgroundMusic.currentTime="0";
+		backgroundMusic.play();
+	}
+	// intro animation
+	// game over music
+	function introAnimation(){
+		backgroundMusic.pause();
+		console.log("playing game over music");
+		backgroundMusic = intro_animation;
+		backgroundMusic.loop = false;
 		backgroundMusic.currentTime="0";
 		backgroundMusic.play();
 	}

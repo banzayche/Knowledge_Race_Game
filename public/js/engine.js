@@ -83,5 +83,6 @@ var Game = {
 		clickingAnswer: './music/clicking_answer.mp3',
 		goodResultQuiz: './music/good_answer.mp3',
 		badResultQuiz: './music/something_bad.mp3',
+		intro: './music/The_Imperial_March.mp3'
 	}
 };
