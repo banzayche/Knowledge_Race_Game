@@ -32,6 +32,8 @@
 		stars_counter = 0,
 		frame_counter = 0,
 		last_hit_word_index = 0,
+		intro_animation_counter = true,
+		intro_animation_timeout,
 		// For animation frame
 		runAnimation,
 		stop_runing,
@@ -50,7 +52,7 @@
 		};
 
 		// For default starting game
-		get_document_DOM.trigger("startMusic:play");
+		// get_document_DOM.trigger("startMusic:play");
 		createDrawArray(drawArray, variablesObj.variantsPosition[0]);
 		getFrame("start");
 		// -----------------------------------------------------------------------------
@@ -324,7 +326,7 @@
 						starFrame = requestAnimationFrame(drawStar);
 					}
 					starFrame = requestAnimationFrame(drawStar);
-					setTimeout(function(){cancelAnimationFrame(starFrame); hitStarObj.can_draw = false;}, 1000);
+					setTimeout(function(){cancelAnimationFrame(starFrame); hitStarObj.can_draw = false;}, 500);
 			}
 			function drawBoxes(index){
 				if(drawArray[index].type === 'good'){
@@ -489,7 +491,7 @@
 			function drawStartModals(){
 				$(".game-over").hide(500);
 				if(reading_of_rules === true){
-					drawRulesModal('onStart')
+					drawRulesModal('onStart');
 				} else if(reading_of_rules === false){
 					// get music
 					get_document_DOM.trigger("startMusic:play");
@@ -521,6 +523,7 @@
 						content: variablesObj.gameRulesObject.rules_splash.content,
 						show: variablesObj.gameRulesObject.rules_splash.show,
 						toDo: function(){
+							intro_animation('stop')
 							reading_of_rules = false;
 							getFrame('start');
 						},
@@ -788,7 +791,31 @@
 
 
 
+		function intro_animation(value){
+			if(value === 'start'){
+				get_document_DOM.trigger("introAnimation:play");
+				getFrame('stop');
+				$("header").hide();
+			    $("footer").hide();
+			    setTimeout(function(){
+			    	$("#intro_animation").show();
+			    }, 2000);
 
+			    $("#intro_animation").click(function(){
+					intro_animation('stop')
+					drawStartModals();
+					clearTimeout(intro_animation_timeout);
+				});
+			} else if(value === 'stop'){
+				get_document_DOM.trigger("startMusic:play");
+				$("#intro_animation").hide();
+
+				$("header").show();
+			    $("footer").show();
+			}
+
+
+		}
 
 		// ----------------------DRAWING of CANVAS------------------------------------------------
 			function drawCanvas(){
@@ -801,10 +828,20 @@
 				context.clearRect(0, 0, canvas.width, canvas.height);
 				// when the game is starting
 			    if(game_station === "starting"){
-			    	drawStartModals();
-			    	// stopping running this function
-			    	// we don't need drawing of boxes or car
-			    	return;
+			    	if(intro_animation_counter === true){
+			    		intro_animation('start');
+			    		intro_animation_counter = false;
+						intro_animation_timeout = setTimeout(function(){
+							drawStartModals();
+							intro_animation('stop');
+						}, 21500);
+						return;
+			    	} else{
+			    		drawStartModals();
+				    	// stopping running this function
+				    	// we don't need drawing of boxes or car
+				    	return;
+			    	}
 		        }
 
 				// отрисовка игрового процесса сама гонка

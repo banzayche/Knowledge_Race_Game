@@ -177,7 +177,30 @@ header h3{
       -ms-transform: rotateX(7deg) rotateY(0deg) rotateZ(0deg);
       transform: rotateX(7deg) rotateY(0deg) rotateZ(0deg);
 }
-
+#intro_animation{
+      display: none;
+      position: absolute;
+      top: 100px;
+      left: 0;
+      margin-top: -100px;
+      /*border: 3px solid #dedede;*/
+      -webkit-perspective: 100px;
+      -moz-perspective: 100px;
+      -o-perspective: 100px;
+      -ms-perspective: 100px;
+      perspective: 100px;
+      -webkit-perspective-origin: 100%, 100%;
+      -moz-perspective-origin: 100%, 100%;
+      -o-perspective-origin: 100%, 100%;
+      -ms-perspective-origin: 100%, 100%;
+      perspective-origin: 100%, 100%;
+      -webkit-transform: rotateX(5deg) rotateY(0deg) rotateZ(0deg);
+      -moz-transform: rotateX(5deg) rotateY(0deg) rotateZ(0deg);
+      -o-transform: rotateX(5deg) rotateY(0deg) rotateZ(0deg);
+      -ms-transform: rotateX(5deg) rotateY(0deg) rotateZ(0deg);
+      transform: rotateX(5deg) rotateY(0deg) rotateZ(0deg);
+      z-index: 999999999;
+}
 #myCanvas {
       margin-top: -100px;
       /*border: 3px solid #dedede;*/

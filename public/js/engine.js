@@ -77,11 +77,12 @@ var Game = {
 	getMusic : {
 		bgMusic: './music/car_bg.mp3',
 		wordHit: './music/word_hit.mp3',
-		startMusic: './music/The_Imperial_March.mp3',
+		startMusic: './music/intro_game.mp3',
 		gameOver: './music/game_over.mp3',
 		quizStartMusic: './music/beginning_of_quiz.mp3',
 		clickingAnswer: './music/clicking_answer.mp3',
 		goodResultQuiz: './music/good_answer.mp3',
 		badResultQuiz: './music/something_bad.mp3',
+		intro: './music/The_Imperial_March.mp3'
 	}
 };
