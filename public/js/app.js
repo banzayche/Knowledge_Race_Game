@@ -838,16 +838,12 @@
 				// when the game is starting
 			    if(game_station === "starting"){
 			    	if(intro_animation_counter === true){
-
-				    	$('#intro_animation').load(function(){
-				    		intro_animation('start');
-			    			intro_animation_counter = false;
-
-			    			intro_animation_timeout = setTimeout(function(){
-								drawStartModals();
-								intro_animation('stop');
-							}, 30000);
-				    	});
+				    	intro_animation('start');
+			    		intro_animation_counter = false;
+		    			intro_animation_timeout = setTimeout(function(){
+						drawStartModals();
+									intro_animation('stop');
+						}, 30000);
 
 						return;
 			    	} else{
