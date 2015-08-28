@@ -1,5 +1,3 @@
-	'use strict';
-
 	function GameProcess(variablesObj){
 		var canvas = variablesObj.canvas,
 		context = canvas.getContext('2d'),
@@ -792,14 +790,25 @@
 
 
 		function intro_animation(value){
+			function intro_animationEvent(e){
+				if(e.keyCode === 13){
+					intro_animation('stop')
+					drawStartModals();
+					clearTimeout(intro_animation_timeout);
+
+					$("body").unbind('keyup', intro_animationEvent);
+				}
+			}
+
 			if(value === 'start'){
 				get_document_DOM.trigger("introAnimation:play");
 				getFrame('stop');
 				$("header").hide();
 			    $("footer").hide();
-			    setTimeout(function(){
-			    	$("#intro_animation").show();
-			    }, 2000);
+
+			    $("#intro_animation").show();
+
+			    $("body").bind('keyup', intro_animationEvent);
 
 			    $("#intro_animation").click(function(){
 					intro_animation('stop')
@@ -829,12 +838,17 @@
 				// when the game is starting
 			    if(game_station === "starting"){
 			    	if(intro_animation_counter === true){
-			    		intro_animation('start');
-			    		intro_animation_counter = false;
-						intro_animation_timeout = setTimeout(function(){
-							drawStartModals();
-							intro_animation('stop');
-						}, 21500);
+
+				    	// $('#intro_animation').load(function(){
+				    		intro_animation('start');
+			    			intro_animation_counter = false;
+
+			    			intro_animation_timeout = setTimeout(function(){
+								drawStartModals();
+								intro_animation('stop');
+							}, 30000);
+				    	// });
+
 						return;
 			    	} else{
 			    		drawStartModals();

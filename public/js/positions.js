@@ -79,14 +79,14 @@ function levelInfo(variablesObj){
 	var themesObj = {
 		1: [
 			{
-				sentenceString: "Hello world!",
+				sentenceString: "Google Calendar will help you in management your time and in creating rotating meeting requests for regular meetings.",
 				splitAttr: ' ',
-				repeat: 3,
-				question: "What do You do when you step away from your workplace?",
-				answersVariant : ["1. Make some coffee!", "2. I lock my PC.", "3. I'm calling my mom."],
-				rightIndex : 1,
+				repeat: 1,
+				question: "Which one of the following guidelines stands correct for Google Calendar?",
+				answersVariant : ["a. Check the free/busy status in Google Calendar to ensure all participants are available in the proposed time slot.", "b. Use the calendar to block the time you need to spend on critical tasks.", "c. Create rotating meeting requests for regular meetings.", "d. All of the above."],
+				rightIndex : 3,
 				start_splash: {
-					title: "Welcome to First Level!",
+					title: "Сommunication Guidelines. Welcome to First Level!",
 					content: 'You have to hit all words',
 					show: true
 				},
@@ -97,14 +97,14 @@ function levelInfo(variablesObj){
 				}
 			},
 			{
-				sentenceString: "PC locikng",
+				sentenceString: "Our company allows the usage of Email, Instant Messaging and Phone as mode of communication.",
 				splitAttr: ' ',
-				repeat: 5,
-				question: "What is so important for security policy?",
-				answersVariant : ["1. To lock my PC Locking.", "2. Security Guard", "3. None of the above"],
+				repeat: 2,
+				question: "Our company allows the usage of Email, Instant Messaging and Phone as mode of communication.",
+				answersVariant : ["True", "False"],
 				rightIndex : 0,
 				start_splash: {
-					title: "Welcome to Second Level!",
+					title: "Сommunication Guidelines. Welcome to Second Level!",
 					content: 'You have to hit all words',
 					show: true
 				},
@@ -115,14 +115,14 @@ function levelInfo(variablesObj){
 				}
 			},
 			{
-				sentenceString: "PC locikng",
+				sentenceString: "Don't send a TO email even when action is not required.",
 				splitAttr: ' ',
-				repeat: 5,
-				question: "What do You do when you work day is over?",
-				answersVariant : ["Dancing! We have a class.", "2. Listen to the music (Serj Tankain - Sky is over).", "3. First, I check is my PC locked."],
-				rightIndex : 2,
+				repeat: 3,
+				question: "Which of the following is not a good practice for sending an email?",
+				answersVariant : ["a. Send a TO email even when action is not required.", "b. Never use REPLY ALL, except in group discussions.", "c. Do not use email for potentially emotional content.", "d. Include CONFIDENTIAL in an email’s subject line when appropriate."],
+				rightIndex : 0,
 				start_splash: {
-					title: "Welcome to Third Level!",
+					title: "Сommunication Guidelines. Welcome to Third Level!",
 					content: 'You have to hit all words',
 					show: true,
 				},
@@ -131,137 +131,377 @@ function levelInfo(variablesObj){
 					content: 'Good job!',
 					show: true
 				}
+			},
+			{
+				sentenceString: "Gtalk - is our choise!",
+				splitAttr: ' ',
+				repeat: 3,
+				question: "Our company yses ____ as its official messenger.",
+				answersVariant : ["a. Yahoo!", "b. Facebook", "c. Gtalk", "d. MSN"],
+				rightIndex : 2,
+				start_splash: {
+					title: "Сommunication Guidelines. Welcome to Fourth Level!",
+					content: 'You have to hit all words',
+					show: true,
+				},
+				end_splash: {
+					title: "This is the end of the Fourth Level!",
+					content: 'Good job!',
+					show: true
+				}
 			}
 		],
 		2: [
 			{
-				sentenceString: "TWO TWO",
-				splitAttr: ' ',
-				repeat: 10,
-				question: "What do You do when you step away from your workplace?",
-				answersVariant : ["1. Make some coffee!", "2. I lock my PC.", "3. I'm calling my mom."],
-				rightIndex : 1,
-			},
-			{
-				sentenceString: "PC locking is very important for security policy.",
+				sentenceString: "The standart time zone of Argentina Time (ART) - 0300 UTC",
 				splitAttr: ' ',
 				repeat: 1,
-				question: "What is so important for security policy?",
-				answersVariant : ["1. To lock my PC Locking.", "2. Security Guard", "3. None of the above"],
+				question: "What standart time zone of Argentina?",
+				answersVariant : ["a. Time zone of Argentina Time (ART) - 0500 UTC", "b. Time zone of Argentina Time (ART) - 0100 UTC", "c. Time zone of Argentina Time (ART) - 0300 UTC"],
+				rightIndex : 2,
+				start_splash: {
+					title: "Cross-cultural Communication - Argentina. Welcome to First Level!",
+					content: 'You have to hit all words',
+					show: true
+				},
+				end_splash: {
+					title: "This is the end of the First Level!",
+					content: 'Good job!',
+					show: true
+				}
+			},
+			{
+				sentenceString: "The majority of the population of Argentina speaks Spanish (Castilian).",
+				splitAttr: ' ',
+				repeat: 2,
+				question: "What is the most popular language in Argentina?",
+				answersVariant : ["a. Spanish (Castilian)", "b. French", "c. English"],
 				rightIndex : 0,
+				start_splash: {
+					title: "Cross-cultural Communication - Argentina. Welcome to Second Level!",
+					content: 'You have to hit all words',
+					show: true
+				},
+				end_splash: {
+					title: "This is the end of the Second Level!",
+					content: 'Good job!',
+					show: true
+				}
 			},
 			{
-				sentenceString: "After work day I have to check if I locked my PC before going home.",
+				sentenceString: "Both men and women greet each other by kissing on the cheek.",
 				splitAttr: ' ',
 				repeat: 1,
-				question: "What do You do when you work day is over?",
-				answersVariant : ["Dancing! We have a class.", "2. Listen to the music (Serj Tankain - Sky is over).", "3. First, I check is my PC locked."],
-				rightIndex : 3,
-			}
+				question: "Argentines can greet by kissing on the cheek?",
+				answersVariant : ["a.False", "b. True"],
+				rightIndex : 1,
+				start_splash: {
+					title: "Cross-cultural Communication - Argentina. Welcome to Third Level!",
+					content: 'You have to hit all words',
+					show: true,
+				},
+				end_splash: {
+					title: "This is the end of the Third Level!",
+					content: 'Good job!',
+					show: true
+				}
+			},
 		],
 		3: [
 			{
-				sentenceString: "THREE THREE",
-				splitAttr: ' ',
-				repeat: 10,
-				question: "What do You do when you step away from your workplace?",
-				answersVariant : ["1. Make some coffee!", "2. I lock my PC.", "3. I'm calling my mom."],
-				rightIndex : 1,
-			},
-			{
-				sentenceString: "PC locking is very important for security policy.",
+				sentenceString: "The standart time zone is Indian Standart Time (IST) - UTC+5:30.",
 				splitAttr: ' ',
 				repeat: 1,
-				question: "What is so important for security policy?",
-				answersVariant : ["1. To lock my PC Locking.", "2. Security Guard", "3. None of the above"],
+				question: "The standart time zone of India is ____ ?",
+				answersVariant : ["a. (ASM) - 0500 UTC", "b. (ART) - 0100 UTC", "c. (IST) - UTC+5:30"],
+				rightIndex : 2,
+				start_splash: {
+					title: "Cross-cultural Communication - India. Welcome to First Level!",
+					content: 'You have to hit all words',
+					show: true
+				},
+				end_splash: {
+					title: "This is the end of the First Level!",
+					content: 'Good job!',
+					show: true
+				}
+			},
+			{
+				sentenceString: "India is the world's second populous country.",
+				splitAttr: ' ',
+				repeat: 2,
+				question: "India is among the densely populated countries of the world??",
+				answersVariant : ["a. Yes", "b. No"],
 				rightIndex : 0,
+				start_splash: {
+					title: "Cross-cultural Communication - India. Welcome to Second Level!",
+					content: 'You have to hit all words',
+					show: true
+				},
+				end_splash: {
+					title: "This is the end of the Second Level!",
+					content: 'Good job!',
+					show: true
+				}
 			},
 			{
-				sentenceString: "After work day I have to check if I locked my PC before going home.",
+				sentenceString: "In most indian cities, drivers don't use specified road lines and may cut in front of you without warnings.",
 				splitAttr: ' ',
 				repeat: 1,
-				question: "What do You do when you work day is over?",
-				answersVariant : ["Dancing! We have a class.", "2. Listen to the music (Serj Tankain - Sky is over).", "3. First, I check is my PC locked."],
-				rightIndex : 3,
-			}
+				question: "Drivers can appear aggressive in India?",
+				answersVariant : ["a. No they adhere to all the rules.", "b. Very rarely", "c. Yes. In most indian cities, drivers don't use specified road lines and may cut in front of you without warnings."],
+				rightIndex : 2,
+				start_splash: {
+					title: "Cross-cultural Communication - India. Welcome to Third Level!",
+					content: 'You have to hit all words',
+					show: true,
+				},
+				end_splash: {
+					title: "This is the end of the Third Level!",
+					content: 'Good job!',
+					show: true
+				}
+			},
+			{
+				sentenceString: "Conversations or jokes about sex are not acceptable!",
+				splitAttr: ' ',
+				repeat: 3,
+				question: "Conversations or jokes about sex are acceptable in India?",
+				answersVariant : ["a. Yes, it's not a problem.", "b. As the rule, conversations or jokes about sex are not acceptable and may be treated as abuse.", "c. Maybe."],
+				rightIndex : 1,
+				start_splash: {
+					title: "Cross-cultural Communication - India. Welcome to Fourth Level!",
+					content: 'You have to hit all words',
+					show: true,
+				},
+				end_splash: {
+					title: "This is the end of the Fourth Level!",
+					content: 'Good job!',
+					show: true
+				}
+			},
 		],
 		4: [
 			{
-				sentenceString: "FOUR FOUR",
-				splitAttr: ' ',
-				repeat: 10,
-				question: "What do You do when you step away from your workplace?",
-				answersVariant : ["1. Make some coffee!", "2. I lock my PC.", "3. I'm calling my mom."],
-				rightIndex : 1,
-			},
-			{
-				sentenceString: "PC locking is very important for security policy.",
+				sentenceString: "The standart time zone is UTS/GMT +2 hours, IST - Israel Standart Time.",
 				splitAttr: ' ',
 				repeat: 1,
-				question: "What is so important for security policy?",
-				answersVariant : ["1. To lock my PC Locking.", "2. Security Guard", "3. None of the above"],
+				question: "The standart time zone of Israel is ____ ?",
+				answersVariant : ["a. UTS/GMT +2 hours, IST - Israel Standart Time", "b. (ART) - 0100 UTC", "c. (IST) - UTC+5:30"],
 				rightIndex : 0,
+				start_splash: {
+					title: "Cross-cultural Communication - Israel. Welcome to First Level!",
+					content: 'You have to hit all words',
+					show: true
+				},
+				end_splash: {
+					title: "This is the end of the First Level!",
+					content: 'Good job!',
+					show: true
+				}
 			},
 			{
-				sentenceString: "After work day I have to check if I locked my PC before going home.",
+				sentenceString: "Israelis tend to dress informally.",
+				splitAttr: ' ',
+				repeat: 2,
+				question: "Are Israelis tend to dress informally?",
+				answersVariant : ["a. No.", "b. Yes, but you should wear a suit if that is how you are using to dressing."],
+				rightIndex : 1,
+				start_splash: {
+					title: "Cross-cultural Communication - Israel. Welcome to Second Level!",
+					content: 'You have to hit all words',
+					show: true
+				},
+				end_splash: {
+					title: "This is the end of the Second Level!",
+					content: 'Good job!',
+					show: true
+				}
+			},
+			{
+				sentenceString: "It is considered impolite for ladies to wear defiant clothes and make-up.",
 				splitAttr: ' ',
 				repeat: 1,
-				question: "What do You do when you work day is over?",
-				answersVariant : ["Dancing! We have a class.", "2. Listen to the music (Serj Tankain - Sky is over).", "3. First, I check is my PC locked."],
-				rightIndex : 3,
-			}
+				question: "Are ladies can wear defiant clothtes and make-up in Israel?",
+				answersVariant : ["a. No, never.", "b. Usually - yes.", "c. Yes the are, but it's considered impolite for ladies to wear defiant clothes and make-up."],
+				rightIndex : 2,
+				start_splash: {
+					title: "Cross-cultural Communication - Israel. Welcome to Third Level!",
+					content: 'You have to hit all words',
+					show: true,
+				},
+				end_splash: {
+					title: "This is the end of the Third Level!",
+					content: 'Good job!',
+					show: true
+				}
+			},
+			{
+				sentenceString: "Jokes about ladies, police or religion are not acceptable!",
+				splitAttr: ' ',
+				repeat: 3,
+				question: "Can you joke about religion or ladies in Israel?",
+				answersVariant : ["a. Yes, it's not a problem.", "b. No", "c. Sometimes, it's depends on situation."],
+				rightIndex : 1,
+				start_splash: {
+					title: "Cross-cultural Communication - Israel. Welcome to Fourth Level!",
+					content: 'You have to hit all words',
+					show: true,
+				},
+				end_splash: {
+					title: "This is the end of the Fourth Level!",
+					content: 'Good job!',
+					show: true
+				}
+			},
 		],
 		5: [
 			{
-				sentenceString: "FIFE FIFE",
+				sentenceString: "The Ukrainian standart time zone is Eastern European Time (EET) +0200 UTC.",
 				splitAttr: ' ',
-				repeat: 10,
-				question: "What do You do when you step away from your workplace?",
-				answersVariant : ["1. Make some coffee!", "2. I lock my PC.", "3. I'm calling my mom."],
+				repeat: 1,
+				question: "The standart time zone of India is ____ ?",
+				answersVariant : ["a. (ASM) - 0500 UTC", "b. (EET) +0200 UTC", "c. (IST) - UTC+5:30"],
 				rightIndex : 1,
+				start_splash: {
+					title: "Cross-cultural Communication - Ukraine. Welcome to First Level!",
+					content: 'You have to hit all words',
+					show: true
+				},
+				end_splash: {
+					title: "This is the end of the First Level!",
+					content: 'Good job!',
+					show: true
+				}
 			},
 			{
-				sentenceString: "PC locking is very important for security policy.",
+				sentenceString: "Ukraine and Russia are the different countries.",
+				splitAttr: ' ',
+				repeat: 2,
+				question: "Are Ukraine and Russia the same countries?",
+				answersVariant : ["a. Yes", "b. Of course not."],
+				rightIndex : 1,
+				start_splash: {
+					title: "Cross-cultural Communication - Ukraine. Welcome to Second Level!",
+					content: 'You have to hit all words',
+					show: true
+				},
+				end_splash: {
+					title: "This is the end of the Second Level!",
+					content: 'Good job!',
+					show: true
+				}
+			},
+			{
+				sentenceString: "Dress formally during your first meeting.",
 				splitAttr: ' ',
 				repeat: 1,
-				question: "What is so important for security policy?",
-				answersVariant : ["1. To lock my PC Locking.", "2. Security Guard", "3. None of the above"],
+				question: "How you have to wear during your first meeting in Ukraine?",
+				answersVariant : ["a. It's doesn't matter.", "b. It is necessary to wear bright clothes.", "c. Dress formally during your first meeting."],
+				rightIndex : 2,
+				start_splash: {
+					title: "Cross-cultural Communication - Ukraine. Welcome to Third Level!",
+					content: 'You have to hit all words',
+					show: true,
+				},
+				end_splash: {
+					title: "This is the end of the Third Level!",
+					content: 'Good job!',
+					show: true
+				}
+			},
+			{
+				sentenceString: 'For Ukrainians, "now" means one business day; "urgent" means 3-4 hours; and "critical" means one hour.',
+				splitAttr: ' ',
+				repeat: 3,
+				question: 'For Ukrainians, "now" means one business day; "urgent" means 3-4 hours; and "critical" means one hour?',
+				answersVariant : ["a. True", "b. False"],
 				rightIndex : 0,
+				start_splash: {
+					title: "Cross-cultural Communication - Ukraine. Welcome to Fourth Level!",
+					content: 'You have to hit all words',
+					show: true,
+				},
+				end_splash: {
+					title: "This is the end of the Fourth Level!",
+					content: 'Good job!',
+					show: true
+				}
 			},
-			{
-				sentenceString: "After work day I have to check if I locked my PC before going home.",
-				splitAttr: ' ',
-				repeat: 1,
-				question: "What do You do when you work day is over?",
-				answersVariant : ["Dancing! We have a class.", "2. Listen to the music (Serj Tankain - Sky is over).", "3. First, I check is my PC locked."],
-				rightIndex : 3,
-			}
 		],
 		6: [
 			{
-				sentenceString: "SIX SIX",
+				sentenceString: "Americans inspect individual views and allow everyone to voice their own ideas on a subject.",
 				splitAttr: ' ',
-				repeat: 10,
-				question: "What do You do when you step away from your workplace?",
-				answersVariant : ["1. Make some coffee!", "2. I lock my PC.", "3. I'm calling my mom."],
+				repeat: 1,
+				question: "Are Americans will not respect your opinions?",
+				answersVariant : ["a. Yes they are.", "b. Usually - yes.", "c. No. Americans inspect individual views and allow everyone to voice their own ideas on a subject."],
+				rightIndex : 2,
+				start_splash: {
+					title: "Cross-cultural Communication - USA. Welcome to First Level!",
+					content: 'You have to hit all words',
+					show: true
+				},
+				end_splash: {
+					title: "This is the end of the First Level!",
+					content: 'Good job!',
+					show: true
+				}
+			},
+			{
+				sentenceString: "Americans are very friendly and helpful.",
+				splitAttr: ' ',
+				repeat: 3,
+				question: "Are Americans are unfriendly and rude?",
+				answersVariant : ["a. True", "b. False"],
 				rightIndex : 1,
+				start_splash: {
+					title: "Cross-cultural Communication - USA. Welcome to Second Level!",
+					content: 'You have to hit all words',
+					show: true
+				},
+				end_splash: {
+					title: "This is the end of the Second Level!",
+					content: 'Good job!',
+					show: true
+				}
 			},
 			{
-				sentenceString: "PC locking is very important for security policy.",
+				sentenceString: "Americans expect you to smile and shake hands when you meet someone.",
 				splitAttr: ' ',
-				repeat: 1,
-				question: "What is so important for security policy?",
-				answersVariant : ["1. To lock my PC Locking.", "2. Security Guard", "3. None of the above"],
+				repeat: 2,
+				question: "Smile and shaking of hands when you meet someone it's not important in USA?",
+				answersVariant : ["a. Yes.", "b. Americans expect you to smile and shake hands when you meet someone.", "c. No, only shakin of hans very important when you meet someone."],
+				rightIndex : 1,
+				start_splash: {
+					title: "Cross-cultural Communication - USA. Welcome to Third Level!",
+					content: 'You have to hit all words',
+					show: true,
+				},
+				end_splash: {
+					title: "This is the end of the Third Level!",
+					content: 'Good job!',
+					show: true
+				}
+			},
+			{
+				sentenceString: "Time is money!",
+				splitAttr: ' ',
+				repeat: 4,
+				question: "Punctuality is very important for business occasions.",
+				answersVariant : ["a. True", "b. False"],
 				rightIndex : 0,
+				start_splash: {
+					title: "Cross-cultural Communication - USA. Welcome to Fourth Level!",
+					content: 'You have to hit all words',
+					show: true,
+				},
+				end_splash: {
+					title: "This is the end of the Fourth Level!",
+					content: 'Good job!',
+					show: true
+				}
 			},
-			{
-				sentenceString: "After work day I have to check if I locked my PC before going home.",
-				splitAttr: ' ',
-				repeat: 1,
-				question: "What do You do when you work day is over?",
-				answersVariant : ["Dancing! We have a class.", "2. Listen to the music (Serj Tankain - Sky is over).", "3. First, I check is my PC locked."],
-				rightIndex : 3,
-			}
 		],
 	}
 	// read url
