@@ -202,6 +202,25 @@ header h3{
       transform: rotateX(5deg) rotateY(0deg) rotateZ(0deg);
       z-index: 999999999;
 }
+#intro_animation:after{
+  content: 'Skip';
+  position: absolute;
+  bottom: -50px;
+  left: 0px;
+  width: 100%;
+  text-align: center;
+  color: white;
+  cursor: pointer;
+}
+#intro_animation:hover:after{
+  color: #77AAF9;
+  -webkit-transition: color .5s;
+  -moz-transition: color .5s;
+  -o-transition: color .5s;
+  -ms-transition: color .5s;
+  transition: color .5s;
+}
+
 #myCanvas {
       margin-top: -100px;
       /*border: 3px solid #dedede;*/
@@ -336,20 +355,20 @@ footer{
 }
 
 @keyframes bodyGood {
-    25%  {background-color: white;}
-    50% {background-color: #8BE093;}
-    75% {background-color: white;}
-    100% {background-color: #8BE093;}
+    25%  {background-color: transparent;}
+    50% {background-color: rgba(0,116,255,.53);}
+    75% {background-color: transparent;}
+    100% {background-color: rgba(0,116,255,.53);}
 }
 .bodyGood{
     animation-name: bodyGood;
     animation-duration: 1s;
 }
 @keyframes bodyBad {
-    25%  {background-color: white;}
-    50% {background-color: #F56464;}
-    75% {background-color: white;}
-    100% {background-color: #F56464;}
+    25%  {background-color: transparent;}
+    50% {background-color: rgba(255,0,0,.53);}
+    75% {background-color: transparent;}
+    100% {background-color: rgba(255,0,0,.53);}
 }
 .bodyBad{
     animation-name: bodyBad;
@@ -392,7 +411,7 @@ footer{
     background-position: 0;
 }
 .modal-content{
-  background-color: rgba(0, 60, 224, 0.53);
+  background-color: rgba(0, 60, 224, 0.8);
   border-radius: 0px;
   color: white;
   font-size: 16px;
@@ -406,6 +425,8 @@ footer{
 }
 .modal-dialog{
   margin-bottom: 60px;
+
+  z-index: 9999999999999999;
 }
 /*QUIZ modal*/
 @media (min-width: 768px){
@@ -418,7 +439,7 @@ footer{
   background-color: transparent;
   border: none;
   color: white;
-  text-align: center;
+  /*text-align: center;*/
   font-size: 16px;
 }
 .blue-block{
@@ -443,6 +464,8 @@ footer{
 
 #quizModal a:focus {
   outline:none;
+}
+#quizModal a{
   position: relative;
 }
 
@@ -462,11 +485,11 @@ footer{
     -ms-box-shadow: 0px 0px 40px 20px rgba(135,163,232,.9);
     -webkit-box-shadow: 0px 0px 40px 20px rgba(135,163,232,.9);
     background-color: rgba(135,163,232,.9);
-    width: 80%;
+    width: 100%;
     height: 90%;
     top: -5px;
     border-radius: 4px;
-    left: 0;
+    left: 0px;
     right: 0;
     margin: 11px auto;
     z-index: -1;

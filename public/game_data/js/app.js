@@ -84,22 +84,6 @@
 			if(e.keyCode === 17){
 				clearWords()
 			}
-
-			if(e.keyCode === 38){
-				if(variablesObj.gameRulesObject.gameSpeed > 10){
-					console.log('Max speed!')
-				} else{
-					variablesObj.gameRulesObject.gameSpeed += 1;
-					variablesObj.gameRulesObject.car.turnSpeed += 1;
-				}
-			} else if(e.keyCode === 40){
-				if(variablesObj.gameRulesObject.gameSpeed <= 2){
-					console.log('Min speed!')
-				} else{
-					variablesObj.gameRulesObject.gameSpeed -= 1;
-					variablesObj.gameRulesObject.car.turnSpeed -= 1;
-				}
-			}
 		});
 
 		$("#reset-words").click(function(){
@@ -467,9 +451,6 @@
 
 				context.closePath();
 
-				// Level and stars
-				$('#current-level').html("Level "+(variablesObj.gameRulesObject.currentLevel+1));
-
 				createStar.addStars(info_star());
 				// Clear line
 				last_hit_word_index = 0;
@@ -541,7 +522,7 @@
 			}
 
 			// QUIZ====================================================================
-			function showTheQuiz(quizObj){
+			function showTheQuiz(){
 				get_document_DOM.trigger("BgMusic:stop");
 				get_document_DOM.trigger("quizStartMusic:play");
 
@@ -614,6 +595,9 @@
 		}
 
 		function getStartAttrs(){
+				// Level and stars
+				$('#current-level').html("Level "+(variablesObj.gameRulesObject.currentLevel+1));
+
 				variablesObj.gameRulesObject.gameSpeed = deffault_game_speed;
 				variablesObj.gameRulesObject.car.turnSpeed = deffault_car_speed;
 				game_station = "starting";
@@ -656,11 +640,11 @@
 					my_modal_DOM = $('#quizModal'),
 					quiz_answers_DOM = $('#quizAnswers'),
 					quiz_answers_a_DOM = $("#quizAnswers>a"),
-					body_DOM = $('body');
+					bg_quiz_DOM = $('#quizModal');
 
 				function focusAnswer(index){
 					quiz_answers_DOM.find("a[index="+index+"]").focus()
-					value_on_focus = index;
+					value_on_focus = +index;
 				}
 
 				setTimeout(function(){focusAnswer(0);}, 500);
@@ -671,7 +655,6 @@
 
 				quiz_answers_a_DOM.keydown(function(e){
 					if(e.keyCode === 38){
-			        	e.preventDefault();
 						if(value_on_focus > 0){
 							focusAnswer(value_on_focus-1);
 						} else{
@@ -679,7 +662,6 @@
 						}
 					}
 					if(e.keyCode === 40){
-						e.preventDefault();
 						if(value_on_focus < variablesObj.gameRulesObject.answersVariant.length-1){
 							focusAnswer(value_on_focus+1);
 						} else{
@@ -715,13 +697,14 @@
 						},1000);
 							// if answer right
 						if(result === variablesObj.gameRulesObject.answersVariant[variablesObj.gameRulesObject.rightIndex]){
+							bg_quiz_DOM.addClass("bodyGood");
+
 							setTimeout(function(){
-								body_DOM.addClass("bodyGood");
 								get_document_DOM.trigger("quizGoodResultMusic:play");
 							},1000);
 							can_answer = false;
 							setTimeout(function(){
-								body_DOM.removeClass("bodyGood").removeClass("bodyBad")
+								bg_quiz_DOM.removeClass("bodyGood").removeClass("bodyBad")
 
 
 								my_modal_DOM.modal('hide');
@@ -764,18 +747,18 @@
 								//--------------------------------------------------------------------
 								getModalSplash(rules_object);
 
-							}, 2400)
+							}, 1800)
 
 
 						// if answer false
 						} else{
+							bg_quiz_DOM.addClass("bodyBad");
 							setTimeout(function(){
-								body_DOM.addClass("bodyBad");
 								get_document_DOM.trigger("quizBadResultMusic:play");
 							},1000);
 							can_answer = false;
 							setTimeout(function(){
-								body_DOM.removeClass("bodyGood").removeClass("bodyBad")
+								bg_quiz_DOM.removeClass("bodyGood").removeClass("bodyBad")
 								game_station = "starting";
 								getStartAttrs();
 								my_modal_DOM.modal('hide')
@@ -870,7 +853,17 @@
 			    Correction();
 
 			    if(game_station === "quiz"){
-			    	showTheQuiz();
+			    	getFrame('stop');
+			    	var rules_object = {
+						title: "Yo dude. You done this deal!",
+						content: "<p>Let's paly the quiz!!!</p>",
+						show: true,
+						toDo: function(){
+							showTheQuiz();
+						},
+					};
+					getModalSplash(rules_object);
+
 			    	return;
 		        }
 			    // when you hit "Bad" box
@@ -915,8 +908,6 @@
 			    		} else{
 			    			keyState[0] = 'middle';
 			    		}
-
-			    		console.log("Listen")
 			    	});
 			    }
 			} gammaControlling();
@@ -941,7 +932,25 @@
 					car.x = car.x;
 				}
 
-			    if(car.x >= canvas.width){
+			    // sliding of car
+				if(keyState[38]){
+					if(variablesObj.gameRulesObject.gameSpeed > 10){
+						// do nothing
+					} else{
+						variablesObj.gameRulesObject.gameSpeed += .2;
+						variablesObj.gameRulesObject.car.turnSpeed += .2;
+					}
+				} else if(keyState[40]){
+					if(variablesObj.gameRulesObject.gameSpeed <= 2){
+						// do nothing
+					} else{
+						variablesObj.gameRulesObject.gameSpeed -= .2;
+						variablesObj.gameRulesObject.car.turnSpeed -= .2;
+					}
+				}
+
+				// Monitors the car. It have to be on road only.
+				if(car.x >= canvas.width){
 					car.x = canvas.width-car.width;
 				} else if(car.x <= 0){
 					car.x = 0;

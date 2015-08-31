@@ -70,7 +70,7 @@ function levelInfo(variablesObj){
 		},
 		result_splash: {
 			title: 'You Won This Topic!',
-			content: '<img src="images/yoda.png" class="yoda-img" /><p>Knowledge is a big power. Use them in right way! </p><p>You can close this game and choose another theme. Or click "OK" and try this Theme again.</p>',
+			content: '<img src="images/yoda.png" class="yoda-img" /><p>Knowledge is a big power. Use them in right way! </p><p>You can close this game and choose another topic. Or click "OK" and try this topic again.</p>',
 			show: true
 		}
 	};
