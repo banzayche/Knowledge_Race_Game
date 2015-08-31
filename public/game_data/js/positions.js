@@ -69,7 +69,7 @@ function levelInfo(variablesObj){
 			show: true
 		},
 		result_splash: {
-			title: 'You Won This Theme!',
+			title: 'You Won This Topic!',
 			content: '<img src="images/yoda.png" class="yoda-img" /><p>Knowledge is a big power. Use them in right way! </p><p>You can close this game and choose another theme. Or click "OK" and try this Theme again.</p>',
 			show: true
 		}
@@ -86,7 +86,7 @@ function levelInfo(variablesObj){
 				answersVariant : ["a. Check the free/busy status in Google Calendar to ensure all participants are available in the proposed time slot.", "b. Use the calendar to block the time you need to spend on critical tasks.", "c. Create rotating meeting requests for regular meetings.", "d. All of the above."],
 				rightIndex : 3,
 				start_splash: {
-					title: "Сommunication Guidelines. Welcome to First Level!",
+					title: "Сommunication Guidelines. <br />Welcome to First Level!",
 					content: 'You have to hit all words',
 					show: true
 				},
@@ -104,7 +104,7 @@ function levelInfo(variablesObj){
 				answersVariant : ["True", "False"],
 				rightIndex : 0,
 				start_splash: {
-					title: "Сommunication Guidelines. Welcome to Second Level!",
+					title: "Сommunication Guidelines. <br />Welcome to Second Level!",
 					content: 'You have to hit all words',
 					show: true
 				},
@@ -122,7 +122,7 @@ function levelInfo(variablesObj){
 				answersVariant : ["a. Send a TO email even when action is not required.", "b. Never use REPLY ALL, except in group discussions.", "c. Do not use email for potentially emotional content.", "d. Include CONFIDENTIAL in an email’s subject line when appropriate."],
 				rightIndex : 0,
 				start_splash: {
-					title: "Сommunication Guidelines. Welcome to Third Level!",
+					title: "Сommunication Guidelines. <br />Welcome to Third Level!",
 					content: 'You have to hit all words',
 					show: true,
 				},
@@ -140,7 +140,7 @@ function levelInfo(variablesObj){
 				answersVariant : ["a. Yahoo!", "b. Facebook", "c. Gtalk", "d. MSN"],
 				rightIndex : 2,
 				start_splash: {
-					title: "Сommunication Guidelines. Welcome to Fourth Level!",
+					title: "Сommunication Guidelines. <br />Welcome to Fourth Level!",
 					content: 'You have to hit all words',
 					show: true,
 				},
@@ -160,7 +160,7 @@ function levelInfo(variablesObj){
 				answersVariant : ["a. Time zone of Argentina Time (ART) - 0500 UTC", "b. Time zone of Argentina Time (ART) - 0100 UTC", "c. Time zone of Argentina Time (ART) - 0300 UTC"],
 				rightIndex : 2,
 				start_splash: {
-					title: "Cross-cultural Communication - Argentina. Welcome to First Level!",
+					title: "Cross-cultural Communication - Argentina. <br />Welcome to First Level!",
 					content: 'You have to hit all words',
 					show: true
 				},
@@ -178,7 +178,7 @@ function levelInfo(variablesObj){
 				answersVariant : ["a. Spanish (Castilian)", "b. French", "c. English"],
 				rightIndex : 0,
 				start_splash: {
-					title: "Cross-cultural Communication - Argentina. Welcome to Second Level!",
+					title: "Cross-cultural Communication - Argentina. <br />Welcome to Second Level!",
 					content: 'You have to hit all words',
 					show: true
 				},
@@ -196,7 +196,7 @@ function levelInfo(variablesObj){
 				answersVariant : ["a.False", "b. True"],
 				rightIndex : 1,
 				start_splash: {
-					title: "Cross-cultural Communication - Argentina. Welcome to Third Level!",
+					title: "Cross-cultural Communication - Argentina. <br />Welcome to Third Level!",
 					content: 'You have to hit all words',
 					show: true,
 				},
@@ -216,7 +216,7 @@ function levelInfo(variablesObj){
 				answersVariant : ["a. (ASM) - 0500 UTC", "b. (ART) - 0100 UTC", "c. (IST) - UTC+5:30"],
 				rightIndex : 2,
 				start_splash: {
-					title: "Cross-cultural Communication - India. Welcome to First Level!",
+					title: "Cross-cultural Communication - India. <br />Welcome to First Level!",
 					content: 'You have to hit all words',
 					show: true
 				},
@@ -234,7 +234,7 @@ function levelInfo(variablesObj){
 				answersVariant : ["a. Yes", "b. No"],
 				rightIndex : 0,
 				start_splash: {
-					title: "Cross-cultural Communication - India. Welcome to Second Level!",
+					title: "Cross-cultural Communication - India. <br />Welcome to Second Level!",
 					content: 'You have to hit all words',
 					show: true
 				},
@@ -252,7 +252,7 @@ function levelInfo(variablesObj){
 				answersVariant : ["a. No they adhere to all the rules.", "b. Very rarely", "c. Yes. In most indian cities, drivers don't use specified road lines and may cut in front of you without warnings."],
 				rightIndex : 2,
 				start_splash: {
-					title: "Cross-cultural Communication - India. Welcome to Third Level!",
+					title: "Cross-cultural Communication - India. <br />Welcome to Third Level!",
 					content: 'You have to hit all words',
 					show: true,
 				},
@@ -270,7 +270,7 @@ function levelInfo(variablesObj){
 				answersVariant : ["a. Yes, it's not a problem.", "b. As the rule, conversations or jokes about sex are not acceptable and may be treated as abuse.", "c. Maybe."],
 				rightIndex : 1,
 				start_splash: {
-					title: "Cross-cultural Communication - India. Welcome to Fourth Level!",
+					title: "Cross-cultural Communication - India. <br />Welcome to Fourth Level!",
 					content: 'You have to hit all words',
 					show: true,
 				},
@@ -290,7 +290,7 @@ function levelInfo(variablesObj){
 				answersVariant : ["a. UTS/GMT +2 hours, IST - Israel Standart Time", "b. (ART) - 0100 UTC", "c. (IST) - UTC+5:30"],
 				rightIndex : 0,
 				start_splash: {
-					title: "Cross-cultural Communication - Israel. Welcome to First Level!",
+					title: "Cross-cultural Communication - Israel. <br />Welcome to First Level!",
 					content: 'You have to hit all words',
 					show: true
 				},
@@ -308,7 +308,7 @@ function levelInfo(variablesObj){
 				answersVariant : ["a. No.", "b. Yes, but you should wear a suit if that is how you are using to dressing."],
 				rightIndex : 1,
 				start_splash: {
-					title: "Cross-cultural Communication - Israel. Welcome to Second Level!",
+					title: "Cross-cultural Communication - Israel. <br />Welcome to Second Level!",
 					content: 'You have to hit all words',
 					show: true
 				},
@@ -326,7 +326,7 @@ function levelInfo(variablesObj){
 				answersVariant : ["a. No, never.", "b. Usually - yes.", "c. Yes the are, but it's considered impolite for ladies to wear defiant clothes and make-up."],
 				rightIndex : 2,
 				start_splash: {
-					title: "Cross-cultural Communication - Israel. Welcome to Third Level!",
+					title: "Cross-cultural Communication - Israel. <br />Welcome to Third Level!",
 					content: 'You have to hit all words',
 					show: true,
 				},
@@ -344,7 +344,7 @@ function levelInfo(variablesObj){
 				answersVariant : ["a. Yes, it's not a problem.", "b. No", "c. Sometimes, it's depends on situation."],
 				rightIndex : 1,
 				start_splash: {
-					title: "Cross-cultural Communication - Israel. Welcome to Fourth Level!",
+					title: "Cross-cultural Communication - Israel. <br />Welcome to Fourth Level!",
 					content: 'You have to hit all words',
 					show: true,
 				},
@@ -364,7 +364,7 @@ function levelInfo(variablesObj){
 				answersVariant : ["a. (ASM) - 0500 UTC", "b. (EET) +0200 UTC", "c. (IST) - UTC+5:30"],
 				rightIndex : 1,
 				start_splash: {
-					title: "Cross-cultural Communication - Ukraine. Welcome to First Level!",
+					title: "Cross-cultural Communication - Ukraine. <br />Welcome to First Level!",
 					content: 'You have to hit all words',
 					show: true
 				},
@@ -382,7 +382,7 @@ function levelInfo(variablesObj){
 				answersVariant : ["a. Yes", "b. Of course not."],
 				rightIndex : 1,
 				start_splash: {
-					title: "Cross-cultural Communication - Ukraine. Welcome to Second Level!",
+					title: "Cross-cultural Communication - Ukraine. <br />Welcome to Second Level!",
 					content: 'You have to hit all words',
 					show: true
 				},
@@ -400,7 +400,7 @@ function levelInfo(variablesObj){
 				answersVariant : ["a. It's doesn't matter.", "b. It is necessary to wear bright clothes.", "c. Dress formally during your first meeting."],
 				rightIndex : 2,
 				start_splash: {
-					title: "Cross-cultural Communication - Ukraine. Welcome to Third Level!",
+					title: "Cross-cultural Communication - Ukraine. <br />Welcome to Third Level!",
 					content: 'You have to hit all words',
 					show: true,
 				},
@@ -418,7 +418,7 @@ function levelInfo(variablesObj){
 				answersVariant : ["a. True", "b. False"],
 				rightIndex : 0,
 				start_splash: {
-					title: "Cross-cultural Communication - Ukraine. Welcome to Fourth Level!",
+					title: "Cross-cultural Communication - Ukraine. <br />Welcome to Fourth Level!",
 					content: 'You have to hit all words',
 					show: true,
 				},
@@ -438,7 +438,7 @@ function levelInfo(variablesObj){
 				answersVariant : ["a. Yes they are.", "b. Usually - yes.", "c. No. Americans inspect individual views and allow everyone to voice their own ideas on a subject."],
 				rightIndex : 2,
 				start_splash: {
-					title: "Cross-cultural Communication - USA. Welcome to First Level!",
+					title: "Cross-cultural Communication - USA. <br />Welcome to First Level!",
 					content: 'You have to hit all words',
 					show: true
 				},
@@ -456,7 +456,7 @@ function levelInfo(variablesObj){
 				answersVariant : ["a. True", "b. False"],
 				rightIndex : 1,
 				start_splash: {
-					title: "Cross-cultural Communication - USA. Welcome to Second Level!",
+					title: "Cross-cultural Communication - USA. <br />Welcome to Second Level!",
 					content: 'You have to hit all words',
 					show: true
 				},
@@ -474,7 +474,7 @@ function levelInfo(variablesObj){
 				answersVariant : ["a. Yes.", "b. Americans expect you to smile and shake hands when you meet someone.", "c. No, only shakin of hans very important when you meet someone."],
 				rightIndex : 1,
 				start_splash: {
-					title: "Cross-cultural Communication - USA. Welcome to Third Level!",
+					title: "Cross-cultural Communication - USA. <br />Welcome to Third Level!",
 					content: 'You have to hit all words',
 					show: true,
 				},
@@ -492,7 +492,7 @@ function levelInfo(variablesObj){
 				answersVariant : ["a. True", "b. False"],
 				rightIndex : 0,
 				start_splash: {
-					title: "Cross-cultural Communication - USA. Welcome to Fourth Level!",
+					title: "Cross-cultural Communication - USA. <br />Welcome to Fourth Level!",
 					content: 'You have to hit all words',
 					show: true,
 				},

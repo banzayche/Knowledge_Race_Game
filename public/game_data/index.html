@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width">
+		<meta charset="utf-8">
+		<title>Knowledge Race Game</title>
+
+		<link rel="stylesheet" type="text/css" href="css/vendor/bootstrap.min.css">
+		<link rel="stylesheet" href="css/style.css">
+
+		<script type="text/javascript" src="js/vendor/jquery.min.js"></script>
+		<script type="text/javascript" src="js/vendor/bootstrap.min.js"></script>
+
+		<script type="text/javascript" src="js/engine.js"></script>
+		<script type="text/javascript" src="js/positions.js"></script>
+		<script type="text/javascript" src="js/eventFunctions.js"></script>
+		<script type="text/javascript" src="js/functions_from_app/helperFunctions.js"></script>
+		<script type="text/javascript" src="js/functions_from_app/drawFunctions.js"></script>
+		<script type="text/javascript" src="js/app.js"></script>
+	</head>
+	<body>
+		<h1 class="game-over text-center"><span class="text-danger">GAME OVER</span><br /><span class="small text-primary">Try level again!</span></h1>
+		<!-- quiz modal -->
+		<div class="modal fade" id="quizModal" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+		  <div class="modal-dialog modal-sm">
+		    <div class="modal-content">
+		      <div class="blue-block"></div>
+		      <div class="modal-header">
+		        <h3 class="modal-title text-center" id="quizQuestion"></h3>
+		      </div>
+		      <div class="modal-body">
+		        <div class="list-group" id="quizAnswers">
+				</div>
+		      </div>
+		      <div class="modal-footer" id="quizResultWrite">
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		<!-- // quiz modal -->
+		<!-- rules modal -->
+		<div class="modal" id="splashModal" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="blue-block"></div>
+		      <div class="modal-header">
+		        <h3 class="modal-title text-center" id="splash-header"></h3>
+		      </div>
+		      <div class="modal-body">
+		        <div class="list-group" id="splash-content">
+				</div>
+		      </div>
+		      <div class="modal-footer" id="splash-footer">
+		      	<button class="btn btn-primary hide-splash">OK</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		<!-- // rules modal -->
+		<header>
+			<h2 class="text-center">
+				<span class="header-text-shadow">Knowledge Race</span><br />
+				<span class="small">The force will be with you...</span>
+				<div id="volume" class="volume-on btn-game"><span class="glyphicon glyphicon-volume-up"></span></div>
+				<div id="rules-button" class="volume-on btn-game pull-right"><span class="glyphicon glyphicon-question-sign"></span></div>
+			</h2>
+			<h3 id="current-level" class="text-center current-level">Level 1</h3>
+		</header>
+		<div id="frame">
+			<img id="intro_animation" src="./images/intro_animation.gif">
+			<canvas id="myCanvas" width="420px" height="560px"></canvas>
+		</div>
+		<footer>
+			<div class="col-sm-1 col-md-1 col-xs-1">
+				<div id="play" class="play-on btn-game"><span class="glyphicon glyphicon-play"></span></div>
+			</div>
+			<div class="col-sm-1 col-md-1 col-xs-1">
+				<div id="reset-words" class="reset-words btn-game"><span class="glyphicon glyphicon-trash"></span></div>
+			</div>
+			<div class="col-sm-6 col-md-6 col-xs-6">
+				<div class="current-sentence pull-left"><span id="current-sentence"></span> <span id="info-words" class="pull-right"></span></div>
+			</div>
+			<div class="col-sm-1 col-md-1 col-xs-1">
+				<h4 class="text-white"> Progress: </h4>
+			</div>
+			<div class="col-sm-3 col-md-3 col-xs-3" id="stars-container">
+			</div>
+		</footer>
+	</body>
+</html>
