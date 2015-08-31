@@ -179,7 +179,7 @@ header h3{
       transform: rotateX(7deg) rotateY(0deg) rotateZ(0deg);
 }
 #intro_animation{
-      display: none;
+      display: block;
       position: absolute;
       top: 100px;
       left: 0;

@@ -841,7 +841,7 @@
 			    	if(intro_animation_counter === true){
 			    		getFrame('stop');
 
-			    		$('#intro_animation').load(function(){
+			    		document.getElementById("intro_animation").onload = function(){
 				    		intro_animation('start');
 			    			intro_animation_counter = false;
 
@@ -849,7 +849,7 @@
 								drawStartModals();
 								intro_animation('stop');
 							}, 30000);
-				    	});
+				    	};
 
 
 				  //   	intro_animation('start');
