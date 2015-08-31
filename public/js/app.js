@@ -802,7 +802,7 @@
 
 			if(value === 'start'){
 				get_document_DOM.trigger("introAnimation:play");
-				getFrame('stop');
+
 				$("header").hide();
 			    $("footer").hide();
 
@@ -837,13 +837,27 @@
 				context.clearRect(0, 0, canvas.width, canvas.height);
 				// when the game is starting
 			    if(game_station === "starting"){
+
 			    	if(intro_animation_counter === true){
-				    	intro_animation('start');
-			    		intro_animation_counter = false;
-		    			intro_animation_timeout = setTimeout(function(){
-						drawStartModals();
-									intro_animation('stop');
-						}, 30000);
+			    		getFrame('stop');
+
+			    		$('#intro_animation').load(function(){
+				    		intro_animation('start');
+			    			intro_animation_counter = false;
+
+			    			intro_animation_timeout = setTimeout(function(){
+								drawStartModals();
+								intro_animation('stop');
+							}, 30000);
+				    	});
+
+
+				  //   	intro_animation('start');
+			   //  		intro_animation_counter = false;
+		    //			intro_animation_timeout = setTimeout(function(){
+						// drawStartModals();
+						// 			intro_animation('stop');
+						// }, 30000);
 
 						return;
 			    	} else{
