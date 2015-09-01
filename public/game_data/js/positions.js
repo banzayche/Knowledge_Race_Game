@@ -65,7 +65,7 @@ function levelInfo(variablesObj){
 		gameSpeed: 4,
 		rules_splash: {
 			title: 'Instructions',
-			content: '<div class="rules-container"><p>You have to hit the words in the right order and in the end of the level answer on some question.<h3>Control:</h3><div class="alert"><img src="images/left-arrow.png" class="pull-left" />&nbsp;&nbsp;Press Left Arrow - if you want turn left</div> <div class="alert"><img src="images/right-arrow.png" class="pull-left" />&nbsp;&nbsp;Press Right Arrow - if you want turn right</div> <div class="alert"><img src="images/up-arrow.png" class="pull-left" />&nbsp;&nbsp;Press Up Arrow - if you want to go faster</div> <div class="alert"><img src="images/down-arrow.png" class="pull-left" />&nbsp;&nbsp;Press Down Arrow - if you want to go slowly</div> <div class="alert"><img src="images/enter.png" class="pull-left" />&nbsp;&nbsp;Press Enter - if you want Stop/Play the game</div> <div class="alert"><img src="images/ctrl.png" class="pull-left" />&nbsp;&nbsp;Press Ctrl - if you want to clear line with sentence</div><h3>Gameplay:</h3><img src="images/instruction.png" class="instruction" /></div>',
+			content: '<div class="rules-container"><p>You have to hit the words in the right order and in the end of the level answer on some question.<h3>Controls:</h3><div class="alert"><img src="images/left-arrow.png" class="pull-left" />&nbsp;&nbsp;Left arrow - to slide left</div> <div class="alert"><img src="images/right-arrow.png" class="pull-left" />&nbsp;&nbsp;Right arrow - to slide right</div> <div class="alert"><img src="images/up-arrow.png" class="pull-left" />&nbsp;&nbsp;Up arrow - to speed up</div> <div class="alert"><img src="images/down-arrow.png" class="pull-left" />&nbsp;&nbsp;Down arrow - to speed down</div> <div class="alert"><img src="images/enter.png" class="pull-left" />&nbsp;&nbsp;Enter - to Pause/Play the game</div> <div class="alert"><img src="images/ctrl.png" class="pull-left" />&nbsp;&nbsp;Ctrl - to clear line with sentence</div><h3>Gameplay:</h3><img src="images/instruction.png" class="instruction" /> <button id="go-quiz" class="btn-game">Go to quiz, right now!</button> </div>',
 			show: true
 		},
 		result_splash: {
@@ -79,11 +79,12 @@ function levelInfo(variablesObj){
 	var themesObj = {
 		1: [
 			{
-				sentenceString: "Google Calendar will help you in management your time and in creating rotating meeting requests for regular meetings.",
+				// sentenceString: "Google Calendar will help you in management your time and in creating rotating meeting requests for regular meetings.",
+				sentenceString: "Google as",
 				splitAttr: ' ',
 				repeat: 1,
 				question: "Which one of the following guidelines stands correct for Google Calendar?",
-				answersVariant : ["a. Check the free/busy status in Google Calendar to ensure all participants are available in the proposed time slot.", "b. Use the calendar to block the time you need to spend on critical tasks.", "c. Create rotating meeting requests for regular meetings.", "d. All of the above."],
+				answersVariant : ["Check the free/busy status in Google Calendar to ensure all participants are available in the proposed time slot.", "Use the calendar to block the time you need to spend on critical tasks.", "Create rotating meeting requests for regular meetings.", "All of the above."],
 				rightIndex : 3,
 				start_splash: {
 					title: "Сommunication Guidelines. <br />Welcome to First Level!",
@@ -119,7 +120,7 @@ function levelInfo(variablesObj){
 				splitAttr: ' ',
 				repeat: 3,
 				question: "Which of the following is not a good practice for sending an email?",
-				answersVariant : ["a. Send a TO email even when action is not required.", "b. Never use REPLY ALL, except in group discussions.", "c. Do not use email for potentially emotional content.", "d. Include CONFIDENTIAL in an email’s subject line when appropriate."],
+				answersVariant : ["Send a TO email even when action is not required.", "Never use REPLY ALL, except in group discussions.", "Do not use email for potentially emotional content.", "Include CONFIDENTIAL in an email’s subject line when appropriate."],
 				rightIndex : 0,
 				start_splash: {
 					title: "Сommunication Guidelines. <br />Welcome to Third Level!",
@@ -137,7 +138,7 @@ function levelInfo(variablesObj){
 				splitAttr: ' ',
 				repeat: 3,
 				question: "Our company yses ____ as its official messenger.",
-				answersVariant : ["a. Yahoo!", "b. Facebook", "c. Gtalk", "d. MSN"],
+				answersVariant : ["Yahoo!", "Facebook", "Gtalk", "MSN"],
 				rightIndex : 2,
 				start_splash: {
 					title: "Сommunication Guidelines. <br />Welcome to Fourth Level!",
@@ -157,7 +158,7 @@ function levelInfo(variablesObj){
 				splitAttr: ' ',
 				repeat: 1,
 				question: "What standart time zone of Argentina?",
-				answersVariant : ["a. Time zone of Argentina Time (ART) - 0500 UTC", "b. Time zone of Argentina Time (ART) - 0100 UTC", "c. Time zone of Argentina Time (ART) - 0300 UTC"],
+				answersVariant : ["Time zone of Argentina Time (ART) - 0500 UTC", "Time zone of Argentina Time (ART) - 0100 UTC", "Time zone of Argentina Time (ART) - 0300 UTC"],
 				rightIndex : 2,
 				start_splash: {
 					title: "Cross-cultural Communication - Argentina. <br />Welcome to First Level!",
@@ -175,7 +176,7 @@ function levelInfo(variablesObj){
 				splitAttr: ' ',
 				repeat: 2,
 				question: "What is the most popular language in Argentina?",
-				answersVariant : ["a. Spanish (Castilian)", "b. French", "c. English"],
+				answersVariant : ["Spanish (Castilian)", "French", "English"],
 				rightIndex : 0,
 				start_splash: {
 					title: "Cross-cultural Communication - Argentina. <br />Welcome to Second Level!",
@@ -193,7 +194,7 @@ function levelInfo(variablesObj){
 				splitAttr: ' ',
 				repeat: 1,
 				question: "Argentines can greet by kissing on the cheek?",
-				answersVariant : ["a.False", "b. True"],
+				answersVariant : ["a.False", "True"],
 				rightIndex : 1,
 				start_splash: {
 					title: "Cross-cultural Communication - Argentina. <br />Welcome to Third Level!",
@@ -213,7 +214,7 @@ function levelInfo(variablesObj){
 				splitAttr: ' ',
 				repeat: 1,
 				question: "The standart time zone of India is ____ ?",
-				answersVariant : ["a. (ASM) - 0500 UTC", "b. (ART) - 0100 UTC", "c. (IST) - UTC+5:30"],
+				answersVariant : ["(ASM) - 0500 UTC", "(ART) - 0100 UTC", "(IST) - UTC+5:30"],
 				rightIndex : 2,
 				start_splash: {
 					title: "Cross-cultural Communication - India. <br />Welcome to First Level!",
@@ -231,7 +232,7 @@ function levelInfo(variablesObj){
 				splitAttr: ' ',
 				repeat: 2,
 				question: "India is among the densely populated countries of the world??",
-				answersVariant : ["a. Yes", "b. No"],
+				answersVariant : ["Yes", "No"],
 				rightIndex : 0,
 				start_splash: {
 					title: "Cross-cultural Communication - India. <br />Welcome to Second Level!",
@@ -249,7 +250,7 @@ function levelInfo(variablesObj){
 				splitAttr: ' ',
 				repeat: 1,
 				question: "Drivers can appear aggressive in India?",
-				answersVariant : ["a. No they adhere to all the rules.", "b. Very rarely", "c. Yes. In most indian cities, drivers don't use specified road lines and may cut in front of you without warnings."],
+				answersVariant : ["No they adhere to all the rules.", "Very rarely", "Yes. In most indian cities, drivers don't use specified road lines and may cut in front of you without warnings."],
 				rightIndex : 2,
 				start_splash: {
 					title: "Cross-cultural Communication - India. <br />Welcome to Third Level!",
@@ -267,7 +268,7 @@ function levelInfo(variablesObj){
 				splitAttr: ' ',
 				repeat: 3,
 				question: "Conversations or jokes about sex are acceptable in India?",
-				answersVariant : ["a. Yes, it's not a problem.", "b. As the rule, conversations or jokes about sex are not acceptable and may be treated as abuse.", "c. Maybe."],
+				answersVariant : ["Yes, it's not a problem.", "As the rule, conversations or jokes about sex are not acceptable and may be treated as abuse.", "Maybe."],
 				rightIndex : 1,
 				start_splash: {
 					title: "Cross-cultural Communication - India. <br />Welcome to Fourth Level!",
@@ -287,7 +288,7 @@ function levelInfo(variablesObj){
 				splitAttr: ' ',
 				repeat: 1,
 				question: "The standart time zone of Israel is ____ ?",
-				answersVariant : ["a. UTS/GMT +2 hours, IST - Israel Standart Time", "b. (ART) - 0100 UTC", "c. (IST) - UTC+5:30"],
+				answersVariant : ["UTS/GMT +2 hours, IST - Israel Standart Time", "(ART) - 0100 UTC", "(IST) - UTC+5:30"],
 				rightIndex : 0,
 				start_splash: {
 					title: "Cross-cultural Communication - Israel. <br />Welcome to First Level!",
@@ -305,7 +306,7 @@ function levelInfo(variablesObj){
 				splitAttr: ' ',
 				repeat: 2,
 				question: "Are Israelis tend to dress informally?",
-				answersVariant : ["a. No.", "b. Yes, but you should wear a suit if that is how you are using to dressing."],
+				answersVariant : ["No.", "Yes, but you should wear a suit if that is how you are using to dressing."],
 				rightIndex : 1,
 				start_splash: {
 					title: "Cross-cultural Communication - Israel. <br />Welcome to Second Level!",
@@ -323,7 +324,7 @@ function levelInfo(variablesObj){
 				splitAttr: ' ',
 				repeat: 1,
 				question: "Are ladies can wear defiant clothtes and make-up in Israel?",
-				answersVariant : ["a. No, never.", "b. Usually - yes.", "c. Yes the are, but it's considered impolite for ladies to wear defiant clothes and make-up."],
+				answersVariant : ["No, never.", "Usually - yes.", "Yes the are, but it's considered impolite for ladies to wear defiant clothes and make-up."],
 				rightIndex : 2,
 				start_splash: {
 					title: "Cross-cultural Communication - Israel. <br />Welcome to Third Level!",
@@ -341,7 +342,7 @@ function levelInfo(variablesObj){
 				splitAttr: ' ',
 				repeat: 3,
 				question: "Can you joke about religion or ladies in Israel?",
-				answersVariant : ["a. Yes, it's not a problem.", "b. No", "c. Sometimes, it's depends on situation."],
+				answersVariant : ["Yes, it's not a problem.", "No", "Sometimes, it's depends on situation."],
 				rightIndex : 1,
 				start_splash: {
 					title: "Cross-cultural Communication - Israel. <br />Welcome to Fourth Level!",
@@ -361,7 +362,7 @@ function levelInfo(variablesObj){
 				splitAttr: ' ',
 				repeat: 1,
 				question: "The standart time zone of India is ____ ?",
-				answersVariant : ["a. (ASM) - 0500 UTC", "b. (EET) +0200 UTC", "c. (IST) - UTC+5:30"],
+				answersVariant : ["(ASM) - 0500 UTC", "(EET) +0200 UTC", "(IST) - UTC+5:30"],
 				rightIndex : 1,
 				start_splash: {
 					title: "Cross-cultural Communication - Ukraine. <br />Welcome to First Level!",
@@ -379,7 +380,7 @@ function levelInfo(variablesObj){
 				splitAttr: ' ',
 				repeat: 2,
 				question: "Are Ukraine and Russia the same countries?",
-				answersVariant : ["a. Yes", "b. Of course not."],
+				answersVariant : ["Yes", "Of course not."],
 				rightIndex : 1,
 				start_splash: {
 					title: "Cross-cultural Communication - Ukraine. <br />Welcome to Second Level!",
@@ -397,7 +398,7 @@ function levelInfo(variablesObj){
 				splitAttr: ' ',
 				repeat: 1,
 				question: "How you have to wear during your first meeting in Ukraine?",
-				answersVariant : ["a. It's doesn't matter.", "b. It is necessary to wear bright clothes.", "c. Dress formally during your first meeting."],
+				answersVariant : ["It's doesn't matter.", "It is necessary to wear bright clothes.", "Dress formally during your first meeting."],
 				rightIndex : 2,
 				start_splash: {
 					title: "Cross-cultural Communication - Ukraine. <br />Welcome to Third Level!",
@@ -415,7 +416,7 @@ function levelInfo(variablesObj){
 				splitAttr: ' ',
 				repeat: 3,
 				question: 'For Ukrainians, "now" means one business day; "urgent" means 3-4 hours; and "critical" means one hour?',
-				answersVariant : ["a. True", "b. False"],
+				answersVariant : ["True", "False"],
 				rightIndex : 0,
 				start_splash: {
 					title: "Cross-cultural Communication - Ukraine. <br />Welcome to Fourth Level!",
@@ -435,7 +436,7 @@ function levelInfo(variablesObj){
 				splitAttr: ' ',
 				repeat: 1,
 				question: "Are Americans will not respect your opinions?",
-				answersVariant : ["a. Yes they are.", "b. Usually - yes.", "c. No. Americans inspect individual views and allow everyone to voice their own ideas on a subject."],
+				answersVariant : ["Yes they are.", "Usually - yes.", "No. Americans inspect individual views and allow everyone to voice their own ideas on a subject."],
 				rightIndex : 2,
 				start_splash: {
 					title: "Cross-cultural Communication - USA. <br />Welcome to First Level!",
@@ -453,7 +454,7 @@ function levelInfo(variablesObj){
 				splitAttr: ' ',
 				repeat: 3,
 				question: "Are Americans are unfriendly and rude?",
-				answersVariant : ["a. True", "b. False"],
+				answersVariant : ["True", "False"],
 				rightIndex : 1,
 				start_splash: {
 					title: "Cross-cultural Communication - USA. <br />Welcome to Second Level!",
@@ -471,7 +472,7 @@ function levelInfo(variablesObj){
 				splitAttr: ' ',
 				repeat: 2,
 				question: "Smile and shaking of hands when you meet someone it's not important in USA?",
-				answersVariant : ["a. Yes.", "b. Americans expect you to smile and shake hands when you meet someone.", "c. No, only shakin of hans very important when you meet someone."],
+				answersVariant : ["Yes.", "Americans expect you to smile and shake hands when you meet someone.", "No, only shakin of hans very important when you meet someone."],
 				rightIndex : 1,
 				start_splash: {
 					title: "Cross-cultural Communication - USA. <br />Welcome to Third Level!",
@@ -489,7 +490,7 @@ function levelInfo(variablesObj){
 				splitAttr: ' ',
 				repeat: 4,
 				question: "Punctuality is very important for business occasions.",
-				answersVariant : ["a. True", "b. False"],
+				answersVariant : ["True", "False"],
 				rightIndex : 0,
 				start_splash: {
 					title: "Cross-cultural Communication - USA. <br />Welcome to Fourth Level!",

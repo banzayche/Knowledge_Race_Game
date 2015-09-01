@@ -8,8 +8,14 @@ html{
   padding: 0;
   margin: 0;
 }
+h1,h2,h3,h4,h5,h6{
+  text-transform: uppercase;
+}
+header h2{
+  text-transform: none;
+}
 body{
-  font-family: arial;
+  font-family: 'Abel', sans-serif;
   padding: 0;
   margin: 0;
   min-width: 660px;
@@ -19,7 +25,17 @@ body{
   background-size: 100% 100%;
   background-attachment: fixed;
 }
+header, footer{
+  -webkit-transition: opacity .3s;
+  -moz-transition: opacity .3s;
+  -o-transition: opacity .3s;
+  -ms-transition: opacity .3s;
+  transition: opacity .3s;
+}
 
+.before-quiz-dart-vader{
+  width: 200px;
+}
 .burst-animation{
     animation-name: burstAnimation;
     animation-duration: 0.5s;
@@ -98,7 +114,7 @@ header .header-text-shadow{
 header .small{
     font-size: 14px;
     color: rgba(212, 231, 253, 0.75);
-    padding-left: 150px;
+    padding-left: 140px;
 }
 header h3{
   margin:0;
@@ -379,14 +395,23 @@ footer{
 .rules-container{
   overflow: auto;
   height: 300px;
-  margin-bottom: -20px;
 }
 .rules-container .alert{
   overflow: auto;
   line-height: 35px;
+  padding: 10px;
+  padding-top: 0px;
+  margin: 0px;
 }
 .rules-container h3{
   color: #77AAF9;
+    display: block;
+    border-bottom: 1px solid;
+}
+#go-quiz{
+  width: auto;
+  padding: 0 20px;
+  margin: 0 auto;
 }
 .instruction{
   width: 100%;
@@ -399,6 +424,7 @@ footer{
   display: block;
   float: left;
 }
+
 .modal-backdrop{
       opacity: 0 !important;
 }
@@ -411,7 +437,7 @@ footer{
     background-position: 0;
 }
 .modal-content{
-  background-color: rgba(0, 60, 224, 0.8);
+  background-color: rgba(0, 60, 224, 0.9);
   border-radius: 0px;
   color: white;
   font-size: 16px;
@@ -464,12 +490,25 @@ footer{
 
 #quizModal a:focus {
   outline:none;
+  background-color: rgba(4,4,4,.3)
 }
 #quizModal a{
   position: relative;
+  padding-left: 40px;
 }
-
-#quizModal a:focus:before{
+#quizModal a .answers-icon{
+  position: absolute;
+  display: block;
+  top: 10px;
+  font-size: 20px;
+  left: 10px;
+}
+#quizModal a:focus .answers-icon{
+/*  color: #00FF27;*/
+  font-size: 23px !important;
+}
+/*#quizModal a:focus:before*/
+{
     content: '';
     display: block;
     position: absolute;
@@ -503,7 +542,9 @@ footer{
 #splashModal .modal-dialog{
   margin-top: 10%;
 }
-
+#splashModal .list-group{
+  overflow: auto;
+}
 #splash-footer>button{
   width: 40%;
   display: block;

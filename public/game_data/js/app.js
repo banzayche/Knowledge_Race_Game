@@ -130,9 +130,9 @@
 				getFrame("stop");
 
 				// Pause Drawing
-				context.font = 'bold 25pt Calibri';
+				context.font = 'bold 35pt Arial';
 				context.fillStyle = '#008EFF';
-				context.fillText('PAUSE!', 155, 280);
+				context.fillText('PAUSE', 130, 280);
 				context.shadowColor = 'black';
 				context.shadowColor = 'black';
 				// Pause Drawing //
@@ -313,7 +313,7 @@
 			function drawBoxes(index){
 				if(drawArray[index].type === 'good'){
 					context.beginPath();
-					context.font = 'bold 25px Calibri';
+					context.font = 'bold 25px Arial';
 					context.fillStyle = 'white';
 					context.shadowColor = '#539FE2';
 
@@ -443,7 +443,7 @@
 			    context.shadowOffsetX = 10;
 			    context.shadowOffsetY = 10;
 
-				context.font = 'bold 25pt Calibri';
+				context.font = 'bold 25pt Abel';
 				context.fillStyle = '#008EFF';
 				context.fillText('Click to start!', 120, 280);
 				context.shadowColor = 'black';
@@ -523,6 +523,8 @@
 
 			// QUIZ====================================================================
 			function showTheQuiz(){
+				showHideHeaderFuter('hide');
+
 				get_document_DOM.trigger("BgMusic:stop");
 				get_document_DOM.trigger("quizStartMusic:play");
 
@@ -536,10 +538,15 @@
 				quiz_question_DOM.html(variablesObj.gameRulesObject.question);
 				variablesObj.gameRulesObject.answersVariant.map(function(ans, index){
 					var answer = document.createElement('a');
-					answer.setAttribute("class", "list-group-item answers");
-					answer.setAttribute("index", index);
-					answer.setAttribute("href", "#");
-					answer.innerHTML = ans;
+						answer.setAttribute("class", "list-group-item answers");
+						answer.setAttribute("index", index);
+						answer.setAttribute("href", "#");
+						answer.innerHTML = ans;
+
+					var icon = document.createElement('span');
+						icon.setAttribute("class", "glyphicon glyphicon-pushpin answers-icon");
+						answer.appendChild(icon);
+
 					quiz_answers_DOM.append(answer);
 				});
 				my_modal_DOM.modal('show');
@@ -548,8 +555,21 @@
 			}
 		// -------------------------------------------------------------------------------------------
 		// Help Functions---------------------------------------------------------------------------------
+		function showHideHeaderFuter(value){
+			if(value === "show"){
+				$('header').css("opacity", "1");
+				$('footer').css("opacity", "1");
+			} else if(value === "hide"){
+				$('header').css("opacity", "0");
+				$('footer').css("opacity", "0");
+			}
+		}
+
 		function getModalSplash(obj){
 			if(obj.show == true){
+				// hide header and footer
+				showHideHeaderFuter('hide');
+				// \\hide
 				var splash_modal = true;
 				var rules_modal_DOM = $('#splashModal'),
 						rules_header_DOM = $('#splash-header'),
@@ -563,18 +583,17 @@
 
 				$('#splashModal .modal-content').slideDown();
 
-
 				function onKeupEvent(e){
 					if(e.keyCode === 13 && splash_modal === true){
-						$('#splashModal .modal-content').hide(500);
-						splash_modal = false;
-						unbinEvents();
-						rules_modal_DOM.modal('hide');
-
-						obj.toDo();
+						onclickEvent();
 					}
 				}
+
 				function onclickEvent(){
+					// show header and footer
+					showHideHeaderFuter('show');
+					// ===
+
 					$('#splashModal .modal-content').hide(500);
 					splash_modal = false;
 					unbinEvents();
@@ -582,13 +601,24 @@
 
 					obj.toDo();
 				}
+
+				function onclickGoQuiz(){
+					onclickEvent();
+					// Go to quiz
+					getFrame('stop');
+					game_station = "quiz";
+					getFrame('start');
+				}
+
 				function unbinEvents(){
 					$("#splash-footer>.hide-splash").unbind( "click", onclickEvent );
 					$("body").unbind( "keyup", onKeupEvent );
+					$("#go-quiz").unbind( "click", onclickGoQuiz);
 				}
 
 				$("body").bind( "keyup", onKeupEvent );
 				$("#splash-footer>.hide-splash").bind( "click", onclickEvent );
+				$("#go-quiz").bind( "click", onclickGoQuiz);
 			} else{
 				obj.toDo();
 			}
@@ -686,8 +716,8 @@
 						get_document_DOM.trigger("quizClickingAnswerMusic:play");
 
 						// result of clicked answer
-						var result = $(e.target).html();
-							// animation of pressed answer
+						var result = +$(e.target).attr('index');
+						// animation of pressed answer
 						$(e.target).addClass("pressedAnswer");
 						// marking of answers
 						setTimeout(function(){
@@ -696,9 +726,9 @@
 							quiz_answers_DOM.find("a[index="+variablesObj.gameRulesObject.rightIndex+"]").removeClass("wrongAnswers").addClass("trueAnswers");
 						},1000);
 							// if answer right
-						if(result === variablesObj.gameRulesObject.answersVariant[variablesObj.gameRulesObject.rightIndex]){
+						if(result === variablesObj.gameRulesObject.rightIndex){
 							bg_quiz_DOM.addClass("bodyGood");
-
+							showHideHeaderFuter('hide');
 							setTimeout(function(){
 								get_document_DOM.trigger("quizGoodResultMusic:play");
 							},1000);
@@ -753,6 +783,7 @@
 						// if answer false
 						} else{
 							bg_quiz_DOM.addClass("bodyBad");
+							showHideHeaderFuter('hide');
 							setTimeout(function(){
 								get_document_DOM.trigger("quizBadResultMusic:play");
 							},1000);
@@ -763,7 +794,7 @@
 								getStartAttrs();
 								my_modal_DOM.modal('hide')
 								quiz_answers_DOM.html('')
-							}, 2400)
+							}, 1800)
 						}
 					}
 			}
@@ -855,8 +886,8 @@
 			    if(game_station === "quiz"){
 			    	getFrame('stop');
 			    	var rules_object = {
-						title: "Yo dude. You done this deal!",
-						content: "<p>Let's paly the quiz!!!</p>",
+						title: "Hmm.. you have some words of power",
+						content: "<img src='images/dart_veyder.png' class='pull-left before-quiz-dart-vader'><p>I know that your power is weak. Prove your knowledge or follow me to DARK SIDE!</p>",
 						show: true,
 						toDo: function(){
 							showTheQuiz();
