@@ -58,9 +58,10 @@ function levelInfo(variablesObj){
 		star: {
 			height: variablesObj.canvas.height/15,
 			width: variablesObj.canvas.width/15,
-			addHeight: 5,
-			addWidth: 5,
-			addY: 20,
+			// addHeight: 1,
+			// addWidth: 1,
+			// addY: 5,
+			// addX: 20,
 		},
 		gameSpeed: 4,
 		rules_splash: {

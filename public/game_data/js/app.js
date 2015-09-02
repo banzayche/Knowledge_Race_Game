@@ -297,21 +297,52 @@
 		// -------------------VIEWS-------------------------------------------------------------------
 			// CANVAS VIEW========================================================
 			function starDrawing(obj){
+				$("#fly-star").hide();
+				hitStarObj.can_draw = true;
 				// Window wich show to us the star
-					hitStarObj.can_draw = true;
-					hitStarObj.width = variablesObj.gameRulesObject.star.width,
-					hitStarObj.height = variablesObj.gameRulesObject.star.height,
-                    hitStarObj.y = obj.y-obj.height,
-                    hitStarObj.x = obj.x;
-					function drawStar(){
-                        hitStarObj.width += variablesObj.gameRulesObject.star.addWidth;
-                        hitStarObj.height += variablesObj.gameRulesObject.star.addHeight;
-                       	hitStarObj. y -= variablesObj.gameRulesObject.star.addY;
-						starFrame = requestAnimationFrame(drawStar);
+				var x_begin = Math.round(+$("#myCanvas").offset().left+obj.x+obj.width);
+				var y_begin = Math.round(+$("#myCanvas").offset().top+obj.y-obj.height);
+				var x_end = Math.round(+$("#stars-container").offset().left);
+				var y_end = Math.round(+$("#stars-container").offset().top);
+
+				var name_id = "star-"+obj.indexValue;
+				var body_dom = document.getElementsByTagName('body')[0];
+
+				var star = document.createElement('div');
+					star.setAttribute("id", name_id);
+					star.setAttribute("class", "fly-star");
+					star.style.left = x_begin+"px";
+					star.style.top = y_begin+"px";
+					star.style.display = "block";
+
+				body_dom.appendChild(star);
+
+				var current_elem_jquery = $("#"+name_id);
+
+				function anim_part(part){
+					if(part === 2){
+						current_elem_jquery.animate({
+							top: y_end+"px",
+							left: x_end+35+"px",
+							width: 40+"px",
+							height: 40+"px"
+						}, 500, function(){
+							body_dom.removeChild(star);
+						});
+					} else{
+						current_elem_jquery.animate({
+							top: Math.round(y_begin-70)+"px",
+							left: Math.round(x_begin+120)+"px",
+							width: 80+"px",
+							height: 80+"px"
+						}, 500, function(){
+							anim_part(2);
+						});
 					}
-					starFrame = requestAnimationFrame(drawStar);
-					setTimeout(function(){cancelAnimationFrame(starFrame); hitStarObj.can_draw = false;}, 500);
-			}
+				};
+				anim_part();
+			};
+
 			function drawBoxes(index){
 				if(drawArray[index].type === 'good'){
 					context.beginPath();
@@ -891,6 +922,7 @@
 
 			    if(game_station === "quiz"){
 			    	getFrame('stop');
+			    	get_document_DOM.trigger("BgMusic:stop");
 			    	var rules_object = {
 						title: "Hmm.. you have some words of power",
 						content: "<img src='images/dart_veyder.png' class='pull-left before-quiz-dart-vader'><p>I know that your power is weak. Prove your knowledge or follow me to DARK SIDE!</p>",
