@@ -683,21 +683,21 @@
 				setTimeout(function(){focusAnswer(0);}, 500);
 				quiz_answers_a_DOM.mouseover(function(e){
 					e.preventDefault();
-					if(can_answer == true){
+					if(can_answer === true){
 						var index = $(e.target).attr('index');
 						focusAnswer(index);
 					}
 				});
 
 				quiz_answers_a_DOM.keydown(function(e){
-					if(e.keyCode === 38){
+					if(e.keyCode === 38 && can_answer === true){
 						if(value_on_focus > 0){
 							focusAnswer(value_on_focus-1);
 						} else{
 							focusAnswer(variablesObj.gameRulesObject.answersVariant.length-1);
 						}
 					}
-					if(e.keyCode === 40){
+					if(e.keyCode === 40 && can_answer === true){
 						if(value_on_focus < variablesObj.gameRulesObject.answersVariant.length-1){
 							focusAnswer(value_on_focus+1);
 						} else{
