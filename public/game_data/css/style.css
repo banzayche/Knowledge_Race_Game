@@ -5,8 +5,6 @@
 }*/
 html{
   height: 100%;
-  width: 100%;
-  min-width: 668px;
   padding: 0;
   margin: 0;
 }
@@ -20,7 +18,7 @@ body{
   font-family: 'Abel', sans-serif;
   padding: 0;
   margin: 0;
-  width: 100%;
+  min-width: 660px;
   height: 100%;
   position: relative;
   background-image: url('./../images/back_stars.jpg');
@@ -62,7 +60,7 @@ header, footer{
   width: 100%;
   background-color: rgba(4,4,4,.8);
   padding: 60px 0;
-  margin-top: 10%;
+  margin-top: 200px;
   z-index: 9999999999999999999999999999;
   display: none;
 }
@@ -173,7 +171,6 @@ header h3{
 
 
 #frame {
-      position: absolute;
       width: 425px;
       height: 560px;
       left: 0;
@@ -200,7 +197,7 @@ header h3{
 #intro_animation{
       display: none;
       position: absolute;
-      top: 0;
+      top: 100px;
       left: 0;
       margin-top: -100px;
       /*border: 3px solid #dedede;*/
@@ -224,7 +221,7 @@ header h3{
 #intro_animation:after{
   content: 'Skip';
   position: absolute;
-  bottom: -5%;
+  bottom: -50px;
   left: 0px;
   width: 100%;
   text-align: center;
@@ -458,6 +455,12 @@ footer{
   z-index: 9999999999999999;
 }
 /*QUIZ modal*/
+@media (min-width: 768px){
+    #quizModal .modal-sm {
+          width: 480px;
+          margin: 170px auto;
+      }
+}
 #quizModal .list-group-item{
   background-color: transparent;
   border: none;
@@ -509,9 +512,9 @@ footer{
 #splashModal .modal-content{
   display: none;
 }
-/*#splashModal .modal-dialog{
+#splashModal .modal-dialog{
   margin-top: 10%;
-}*/
+}
 #splashModal .list-group{
   overflow: auto;
 }
@@ -519,41 +522,4 @@ footer{
   width: 40%;
   display: block;
   margin: 0 auto;
-}
-
-/*Media queries*/
-@media screen and (min-width: 768px){
-    #quizModal .modal-sm {
-      width: 480px;
-      margin: 5% auto;
-    }
-}
-@media screen and (max-width: 768px){
-  #myCanvas{
-    -webkit-transform: rotateX(7deg) rotateY(0deg) rotateZ(0deg) scale(0.8, 0.8);
-    -moz-transform: rotateX(7deg) rotateY(0deg) rotateZ(0deg) scale(0.8, 0.8);
-    -o-transform: rotateX(7deg) rotateY(0deg) rotateZ(0deg) scale(0.8, 0.8);
-    -ms-transform: rotateX(7deg) rotateY(0deg) rotateZ(0deg) scale(0.8, 0.8);
-    transform: rotateX(7deg) rotateY(0deg) rotateZ(0deg) scale(0.8, 0.8);
-  }
-}
-@media screen and (max-height: 600px){
-  #myCanvas{
-    -webkit-transform: rotateX(7deg) rotateY(0deg) rotateZ(0deg) scale(0.8, 0.8);
-    -moz-transform: rotateX(7deg) rotateY(0deg) rotateZ(0deg) scale(0.8, 0.8);
-    -o-transform: rotateX(7deg) rotateY(0deg) rotateZ(0deg) scale(0.8, 0.8);
-    -ms-transform: rotateX(7deg) rotateY(0deg) rotateZ(0deg) scale(0.8, 0.8);
-    transform: rotateX(7deg) rotateY(0deg) rotateZ(0deg) scale(0.8, 0.8);
-  }
-}
-/*mobile*/
-@media handheld and (min-width: 100px){
-  #myCanvas{
-    border: 1px solid red;
-    -webkit-transform: rotateX(2deg) rotateY(0deg) rotateZ(0deg) scale(1.8,2.5);
-    -moz-transform: rotateX(2deg) rotateY(0deg) rotateZ(0deg) scale(1.8,2.5);
-    -o-transform: rotateX(2deg) rotateY(0deg) rotateZ(0deg) scale(1.8,2.5);
-    -ms-transform: rotateX(2deg) rotateY(0deg) rotateZ(0deg) scale(1.8,2.5);
-    transform: rotateX(2deg) rotateY(0deg) rotateZ(0deg) scale(1.8,2.5);
-  }
 }

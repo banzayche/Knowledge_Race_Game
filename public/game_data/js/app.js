@@ -24,6 +24,7 @@
 		game_station = "starting",
 		get_document_DOM = $(document),
 		position_variation = 1,
+		get_position = variablesObj.variantsPosition[1].levels[variablesObj.gameRulesObject.currentLevel+1],
 		who_behid_line = 0,
 		starFrame,
 		plumeCounter = 0,
@@ -176,7 +177,7 @@
 							word_x_begin,
 							word_x_end,
 							carRadius = drawArray[0].get_box_radius(),
-							variationPositionsQuantity = variablesObj.variantsPosition.length;
+							variationPositionsQuantity = get_position.length;
 
 							successBoxesCenter = obj.get_box_center(),
 							distance = obj.get_distance(successBoxesCenter, carCenter);
@@ -264,17 +265,18 @@
 
 							// variationPositionsQuantity - quantity of changing positions
 							who_behid_line++;
+
 							for(var j = 1; j <= variationPositionsQuantity; j++){
 								if(j < variationPositionsQuantity && position_variation === j){
 						    		obj.y = 0-obj.height;
-									obj.x = variablesObj.variantsPosition[(j-1)][i-1].x;
+									obj.x = get_position[(j-1)][i-1].x;
 									if(who_behid_line >= drawArray.length){
 							    		who_behid_line = 0;
 							    		position_variation++;
 							    	}
 						    	} else if(j === variationPositionsQuantity && position_variation === j){
 						    		obj.y = 0-obj.height;
-									obj.x = variablesObj.variantsPosition[(j-1)][i-1].x;
+									obj.x = get_position[(j-1)][i-1].x;
 									if(who_behid_line >= drawArray.length){
 							    		who_behid_line = 0;
 							    		position_variation = 1;
@@ -627,6 +629,7 @@
 		function getStartAttrs(){
 				// Level and stars
 				$('#current-level').html("Level "+(variablesObj.gameRulesObject.currentLevel+1));
+				get_position = variablesObj.variantsPosition[1].levels[variablesObj.gameRulesObject.currentLevel+1];
 
 				variablesObj.gameRulesObject.gameSpeed = deffault_game_speed;
 				variablesObj.gameRulesObject.car.turnSpeed = deffault_car_speed;
