@@ -1,15 +1,21 @@
 /*#myCanvas{
-	border: 2px solid grey;
-	display: block;
-	margin: 0 auto;
+  border: 2px solid grey;
+  display: block;
+  margin: 0 auto;
 }*/
 html{
   height: 100%;
   padding: 0;
   margin: 0;
 }
+h1,h2,h3,h4,h5,h6{
+  text-transform: uppercase;
+}
+header h2{
+  text-transform: none;
+}
 body{
-  font-family: arial;
+  font-family: 'Abel', sans-serif;
   padding: 0;
   margin: 0;
   min-width: 660px;
@@ -19,7 +25,17 @@ body{
   background-size: 100% 100%;
   background-attachment: fixed;
 }
+header, footer{
+  -webkit-transition: opacity .3s;
+  -moz-transition: opacity .3s;
+  -o-transition: opacity .3s;
+  -ms-transition: opacity .3s;
+  transition: opacity .3s;
+}
 
+.before-quiz-dart-vader{
+  width: 200px;
+}
 .burst-animation{
     animation-name: burstAnimation;
     animation-duration: 0.5s;
@@ -98,7 +114,7 @@ header .header-text-shadow{
 header .small{
     font-size: 14px;
     color: rgba(212, 231, 253, 0.75);
-    padding-left: 150px;
+    padding-left: 140px;
 }
 header h3{
   margin:0;
@@ -202,6 +218,25 @@ header h3{
       transform: rotateX(5deg) rotateY(0deg) rotateZ(0deg);
       z-index: 999999999;
 }
+#intro_animation:after{
+  content: 'Skip';
+  position: absolute;
+  bottom: -50px;
+  left: 0px;
+  width: 100%;
+  text-align: center;
+  color: white;
+  cursor: pointer;
+}
+#intro_animation:hover:after{
+  color: #77AAF9;
+  -webkit-transition: color .5s;
+  -moz-transition: color .5s;
+  -o-transition: color .5s;
+  -ms-transition: color .5s;
+  transition: color .5s;
+}
+
 #myCanvas {
       margin-top: -100px;
       /*border: 3px solid #dedede;*/
@@ -336,20 +371,20 @@ footer{
 }
 
 @keyframes bodyGood {
-    25%  {background-color: white;}
-    50% {background-color: #8BE093;}
-    75% {background-color: white;}
-    100% {background-color: #8BE093;}
+    25%  {background-color: transparent;}
+    50% {background-color: rgba(0,116,255,.53);}
+    75% {background-color: transparent;}
+    100% {background-color: rgba(0,116,255,.53);}
 }
 .bodyGood{
     animation-name: bodyGood;
     animation-duration: 1s;
 }
 @keyframes bodyBad {
-    25%  {background-color: white;}
-    50% {background-color: #F56464;}
-    75% {background-color: white;}
-    100% {background-color: #F56464;}
+    25%  {background-color: transparent;}
+    50% {background-color: rgba(255,0,0,.53);}
+    75% {background-color: transparent;}
+    100% {background-color: rgba(255,0,0,.53);}
 }
 .bodyBad{
     animation-name: bodyBad;
@@ -360,14 +395,23 @@ footer{
 .rules-container{
   overflow: auto;
   height: 300px;
-  margin-bottom: -20px;
 }
 .rules-container .alert{
   overflow: auto;
   line-height: 35px;
+  padding: 10px;
+  padding-top: 0px;
+  margin: 0px;
 }
 .rules-container h3{
   color: #77AAF9;
+    display: block;
+    border-bottom: 1px solid;
+}
+#go-quiz{
+  width: auto;
+  padding: 0 20px;
+  margin: 0 auto;
 }
 .instruction{
   width: 100%;
@@ -380,6 +424,7 @@ footer{
   display: block;
   float: left;
 }
+
 .modal-backdrop{
       opacity: 0 !important;
 }
@@ -392,7 +437,7 @@ footer{
     background-position: 0;
 }
 .modal-content{
-  background-color: rgba(0, 60, 224, 0.53);
+  background-color: rgba(0, 60, 224, 0.9);
   border-radius: 0px;
   color: white;
   font-size: 16px;
@@ -406,6 +451,8 @@ footer{
 }
 .modal-dialog{
   margin-bottom: 60px;
+
+  z-index: 9999999999999999;
 }
 /*QUIZ modal*/
 @media (min-width: 768px){
@@ -418,7 +465,7 @@ footer{
   background-color: transparent;
   border: none;
   color: white;
-  text-align: center;
+  /*text-align: center;*/
   font-size: 16px;
 }
 .blue-block{
@@ -443,34 +490,22 @@ footer{
 
 #quizModal a:focus {
   outline:none;
-  position: relative;
+  background-color: rgba(4,4,4,.3)
 }
-
-#quizModal a:focus:before{
-    content: '';
-    display: block;
-    position: absolute;
-/*    background: -moz-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(217,247,252,0.77) 20%, rgba(164,237,249,1) 48%, rgba(217,247,252,0.77) 78%, rgba(255,255,255,0) 100%);
-    background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(255,255,255,0)), color-stop(20%,rgba(217,247,252,0.77)), color-stop(48%,rgba(164,237,249,1)), color-stop(78%,rgba(217,247,252,0.77)), color-stop(100%,rgba(255,255,255,0)));
-    background: -webkit-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(217,247,252,0.77) 20%,rgba(164,237,249,1) 48%,rgba(217,247,252,0.77) 78%,rgba(255,255,255,0) 100%);
-    background: -o-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(217,247,252,0.77) 20%,rgba(164,237,249,1) 48%,rgba(217,247,252,0.77) 78%,rgba(255,255,255,0) 100%);
-    background: -ms-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(217,247,252,0.77) 20%,rgba(164,237,249,1) 48%,rgba(217,247,252,0.77) 78%,rgba(255,255,255,0) 100%);
-    background: linear-gradient(to right, rgba(255,255,255,0) 0%,rgba(217,247,252,0.77) 20%,rgba(164,237,249,1) 48%,rgba(217,247,252,0.77) 78%,rgba(255,255,255,0) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#00ffffff',GradientType=1 );*/
-    box-shadow: 0px 0px 40px 20px rgba(135,163,232,.9);
-    -moz-box-shadow: 0px 0px 40px 20px rgba(135,163,232,.9);
-    -ms-box-shadow: 0px 0px 40px 20px rgba(135,163,232,.9);
-    -webkit-box-shadow: 0px 0px 40px 20px rgba(135,163,232,.9);
-    background-color: rgba(135,163,232,.9);
-    width: 80%;
-    height: 90%;
-    top: -5px;
-    border-radius: 4px;
-    left: 0;
-    right: 0;
-    margin: 11px auto;
-    z-index: -1;
-    opacity: .7;
+#quizModal a{
+  position: relative;
+  padding-left: 40px;
+}
+#quizModal a .answers-icon{
+  position: absolute;
+  display: block;
+  top: 10px;
+  font-size: 20px;
+  left: 10px;
+}
+#quizModal a:focus .answers-icon{
+/*  color: #00FF27;*/
+  font-size: 23px !important;
 }
 
 /*splash modal*/
@@ -480,7 +515,9 @@ footer{
 #splashModal .modal-dialog{
   margin-top: 10%;
 }
-
+#splashModal .list-group{
+  overflow: auto;
+}
 #splash-footer>button{
   width: 40%;
   display: block;
