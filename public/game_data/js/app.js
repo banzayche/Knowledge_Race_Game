@@ -723,7 +723,7 @@
 						setTimeout(function(){
 							quiz_answers_a_DOM.removeClass("pressedAnswer");
 							quiz_answers_a_DOM.addClass("wrongAnswers");
-							quiz_answers_DOM.find("a[index="+variablesObj.gameRulesObject.rightIndex+"]").removeClass("wrongAnswers").addClass("trueAnswers");
+							quiz_answers_DOM.find("a[index="+variablesObj.gameRulesObject.rightIndex+"]").removeClass("wrongAnswers").addClass("trueAnswers").focus();
 						},1000);
 							// if answer right
 						if(result === variablesObj.gameRulesObject.rightIndex){
