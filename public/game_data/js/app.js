@@ -682,8 +682,11 @@
 
 				setTimeout(function(){focusAnswer(0);}, 500);
 				quiz_answers_a_DOM.mouseover(function(e){
-					var index = $(e.target).attr('index');
-					focusAnswer(index);
+					e.preventDefault();
+					if(can_answer == true){
+						var index = $(e.target).attr('index');
+						focusAnswer(index);
+					}
 				});
 
 				quiz_answers_a_DOM.keydown(function(e){
