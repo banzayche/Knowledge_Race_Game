@@ -260,7 +260,6 @@ header h3{
 /*Footer*/
 footer{
   position: absolute;
-  margin-top: 70%;
   bottom: 0;
   width: 100%;
   background-color: rgba(4,4,4,.6);
@@ -538,6 +537,26 @@ footer{
           margin: 170px auto;
       }
 }
+@media screen and (max-height: 730px){
+    #myCanvas{
+        margin-top: -10px;
+        -webkit-transform: rotateX(5deg) rotateY(0deg) rotateZ(0deg) scale(0.8,0.8);
+        -moz-transform: rotateX(5deg) rotateY(0deg) rotateZ(0deg) scale(0.8,0.8);
+        -o-transform: rotateX(5deg) rotateY(0deg) rotateZ(0deg) scale(0.8,0.8);
+        -ms-transform: rotateX(5deg) rotateY(0deg) rotateZ(0deg) scale(0.8,0.8);
+        transform: rotateX(5deg) rotateY(0deg) rotateZ(0deg) scale(0.8,0.8);
+    }
+    #intro_animation{
+      margin-top: -150px;
+    }
+    .modal-dialog {
+      margin-top: 50px !important;
+      margin-bottom: 100px !important;
+    }
+    #frame{
+      margin: -100px auto !important;
+    }
+}
 @media screen and (min-width: 980px) and (max-width: 985px) and (min-height: 1400px){
   #myCanvas{
       margin-top: 200px;
@@ -552,5 +571,8 @@ footer{
   }
   #intro_animation{
     top: 300px;
+  }
+  footer{
+    margin-top: 70%;
   }
 }
