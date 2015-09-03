@@ -260,6 +260,7 @@ header h3{
 /*Footer*/
 footer{
   position: absolute;
+  margin-top: 70%;
   bottom: 0;
   width: 100%;
   background-color: rgba(4,4,4,.6);
@@ -455,12 +456,6 @@ footer{
   z-index: 9999999999999999;
 }
 /*QUIZ modal*/
-@media (min-width: 768px){
-    #quizModal .modal-sm {
-          width: 480px;
-          margin: 170px auto;
-      }
-}
 #quizModal .list-group-item{
   background-color: transparent;
   border: none;
@@ -534,4 +529,28 @@ footer{
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100% 100%;
+}
+
+/*MEDIA*/
+@media screen and (min-width: 768px){
+    #quizModal .modal-sm {
+          width: 480px;
+          margin: 170px auto;
+      }
+}
+@media screen and (min-width: 980px) and (max-width: 985px) and (min-height: 1400px){
+  #myCanvas{
+      margin-top: 200px;
+      -webkit-transform: rotateX(5deg) rotateY(0deg) rotateZ(0deg) scale(1.4,1.5);
+      -moz-transform: rotateX(5deg) rotateY(0deg) rotateZ(0deg) scale(1.4,1.5);
+      -o-transform: rotateX(5deg) rotateY(0deg) rotateZ(0deg) scale(1.4,1.5);
+      -ms-transform: rotateX(5deg) rotateY(0deg) rotateZ(0deg) scale(1.4,1.5);
+      transform: rotateX(5deg) rotateY(0deg) rotateZ(0deg) scale(1.4,1.5);
+  }
+  .modal-dialog {
+    margin-top: 50% !important;
+  }
+  #intro_animation{
+    top: 300px;
+  }
 }
