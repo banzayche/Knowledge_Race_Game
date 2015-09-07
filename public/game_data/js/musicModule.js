@@ -1,72 +1,75 @@
-function soundConfigurator(engineMusic){
-	$(document).on( "volume:off", volumeOff).
-				on( "volume:on", volumeOn).
-				on( "BgMusic:play", playBgMusic).
-				on( "BgMusic:stop", stopBgMusic).
-				on( "hitWordMusic:play", playHitWordMusic).
-				// for future functional=================
-				on( "badHitMusic:play", playBadHitMusic).
-				// ======================================
-				on( "startMusic:play", playStartMusic).
-				on( "gameOverMusic:play", playGameOverMusic).
-				on( "quizStartMusic:play", playQuizStartMusic).
-				on( "quizClickingAnswerMusic:play", playQuizClickingAnswerMusic).
-				on( "quizGoodResultMusic:play", playQuizGoodResultMusic).
-				on( "quizBadResultMusic:play", playQuizBadResultMusic).
-				on( "introAnimation:play", introAnimation);
+var soundConfigurator = (function(engineMusic){
+	// подписываем эвенты модуля
+	var musicSubscribe = function(){
+		mediator.subscribe( "volume:off", volumeOff).
+				 subscribe( "volume:on", volumeOn).
+				 subscribe( "BgMusic:play", playBgMusic).
+				 subscribe( "BgMusic:stop", stopBgMusic).
+				 subscribe( "hitWordMusic:play", playHitWordMusic).
+				 // for future functional=================
+			 	 subscribe( "badHitMusic:play", playBadHitMusic).
+				 // ======================================
+				 subscribe( "startMusic:play", playStartMusic).
+				 subscribe( "gameOverMusic:play", playGameOverMusic).
+				 subscribe( "quizStartMusic:play", playQuizStartMusic).
+				 subscribe( "quizClickingAnswerMusic:play", playQuizClickingAnswerMusic).
+				 subscribe( "quizGoodResultMusic:play", playQuizGoodResultMusic).
+				 subscribe( "quizBadResultMusic:play", playQuizBadResultMusic).
+				 subscribe( "introAnimation:play", introAnimation);
+	};
 
 	var standartVolume = 0.8,
 		currentVolume = 0.8,
 		backgroundMusic = new Audio(),
 		secondPlanMusic = new Audio();
 
-		function changeVolume(value){
-			if(value === "off"){
-				currentVolume = 0;
-			} else{
-				currentVolume = standartVolume;
-			}
-			backgroundMusic.volume = currentVolume;
-			secondPlanMusic.volume = currentVolume;
-			start_music.volume = currentVolume;
-			bg_car_engine.volume = currentVolume;
-			quiz_start_music.volume = currentVolume;
-			clicking_answer.volume = currentVolume;
-			good_result_quiz.volume = currentVolume;
-			bad_result_quiz.volume = currentVolume;
-			game_over.volume = currentVolume;
-			word_hit.volume  = currentVolume;
-			intro_animation.volume = currentVolume;
+	var changeVolume = function(value){
+		if(value === "off"){
+			currentVolume = 0;
+		} else{
+			currentVolume = standartVolume;
 		}
+		backgroundMusic.volume = currentVolume;
+		secondPlanMusic.volume = currentVolume;
+		start_music.volume = currentVolume;
+		bg_car_engine.volume = currentVolume;
+		quiz_start_music.volume = currentVolume;
+		clicking_answer.volume = currentVolume;
+		good_result_quiz.volume = currentVolume;
+		bad_result_quiz.volume = currentVolume;
+		game_over.volume = currentVolume;
+		word_hit.volume  = currentVolume;
+		intro_animation.volume = currentVolume;
+	};
 
-		var start_music = new Audio(engineMusic.startMusic);
-		start_music.preload = "true";
+	var start_music = new Audio(engineMusic.startMusic);
+	start_music.preload = "true";
 
-		var bg_car_engine = new Audio(engineMusic.bgMusic);
-		bg_car_engine.preload = "true";
+	var bg_car_engine = new Audio(engineMusic.bgMusic);
+	bg_car_engine.preload = "true";
 
-		var quiz_start_music = new Audio(engineMusic.quizStartMusic);
-		quiz_start_music.preload = "true";
+	var quiz_start_music = new Audio(engineMusic.quizStartMusic);
+	quiz_start_music.preload = "true";
 
-		var clicking_answer = new Audio(engineMusic.clickingAnswer);
-		bg_car_engine.preload = "true";
+	var clicking_answer = new Audio(engineMusic.clickingAnswer);
+	bg_car_engine.preload = "true";
 
-		var good_result_quiz = new Audio(engineMusic.goodResultQuiz);
-		good_result_quiz.preload = "true";
+	var good_result_quiz = new Audio(engineMusic.goodResultQuiz);
+	good_result_quiz.preload = "true";
 
-		var bad_result_quiz = new Audio(engineMusic.badResultQuiz);
-		bg_car_engine.preload = "true";
+	var bad_result_quiz = new Audio(engineMusic.badResultQuiz);
+	bg_car_engine.preload = "true";
 
-		var game_over = new Audio(engineMusic.gameOver);
-		start_music.preload = "true";
+	var game_over = new Audio(engineMusic.gameOver);
+	start_music.preload = "true";
 
-		var word_hit = new Audio(engineMusic.wordHit);
-		bg_car_engine.preload = "true";
+	var word_hit = new Audio(engineMusic.wordHit);
+	bg_car_engine.preload = "true";
 
-		var intro_animation = new Audio(engineMusic.intro);
-		bg_car_engine.preload = "true";
+	var intro_animation = new Audio(engineMusic.intro);
+	bg_car_engine.preload = "true";
 
-		changeVolume();
+
 	// function for event
 	// Operations with volume
 	function volumeOn(){
@@ -158,6 +161,13 @@ function soundConfigurator(engineMusic){
 		secondPlanMusic.currentTime="0";
 		secondPlanMusic.play();
 	}
-};
 
-soundConfigurator(Game.getMusic);
+	var initialize = function(){
+		changeVolume();
+		musicSubscribe();
+
+		return "Music module has been started successfully!";
+	}
+
+	return initialize();
+} (Game.getMusic));

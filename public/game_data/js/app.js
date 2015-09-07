@@ -22,7 +22,7 @@
 		deffault_car_speed = variablesObj.gameRulesObject.car.turnSpeed,
 		reading_of_rules = true,
 		game_station = "starting",
-		get_document_DOM = $(document),
+		// get_document_DOM = $(document),
 		position_variation = 1,
 		get_position = variablesObj.variantsPosition[1].levels[variablesObj.gameRulesObject.currentLevel+1],
 		who_behid_line = 0,
@@ -51,7 +51,7 @@
 		};
 
 		// For default starting game
-		// get_document_DOM.trigger("startMusic:play");
+		// mediator.publish("startMusic:play");
 		createDrawArray(drawArray, variablesObj.variantsPosition[0]);
 		getFrame("start");
 		// -----------------------------------------------------------------------------
@@ -126,7 +126,7 @@
 		function playOnClick(){
 			if(stop_runing === true && game_station === "running"){
 				getFrame("start");
-				get_document_DOM.trigger("BgMusic:play");
+				mediator.publish("BgMusic:play");
 			} else if(stop_runing === false && game_station === "running"){
 				getFrame("stop");
 
@@ -138,8 +138,8 @@
 				context.shadowColor = 'black';
 				// Pause Drawing //
 
-				get_document_DOM.trigger("BgMusic:stop");
-				get_document_DOM.trigger("startMusic:play");
+				mediator.publish("BgMusic:stop");
+				mediator.publish("startMusic:play");
 			}
 		};
 
@@ -212,9 +212,9 @@
 
 								   last_hit_word_index = obj.indexValue+1;
 
-								   get_document_DOM.trigger("hitWordMusic:play");
+								   mediator.publish("hitWordMusic:play");
 							   } else{
-							   		get_document_DOM.trigger("quizBadResultMusic:play");
+							   		mediator.publish("quizBadResultMusic:play");
 							   }
 
 							   obj.hit = false;
@@ -238,7 +238,7 @@
 
 							    	getSecondChance(obj);
 
-							    	get_document_DOM.trigger("badHitMusic:play");
+							    	mediator.publish("badHitMusic:play");
 							}
 						// --------------------------------
 
@@ -363,7 +363,7 @@
 					context.shadowBlur = 3;
 				    context.shadowOffsetX = 0;
 				    context.shadowOffsetY = 1;
-				   	context.drawImage(badImageObj, drawArray[index].x, drawArray[index].y, drawArray[index].width, drawArray[index].height);
+				   	context.drawImage(variablesObj.badImageObj, drawArray[index].x, drawArray[index].y, drawArray[index].width, drawArray[index].height);
 				   	context.closePath();
 				}
 			};
@@ -418,8 +418,8 @@
 			}
 			// / plumeOfEngine=============
 			function getBurst(obj){
-				get_document_DOM.trigger("BgMusic:stop");
-				get_document_DOM.trigger("gameOverMusic:play");
+				mediator.publish("BgMusic:stop");
+				mediator.publish("gameOverMusic:play");
 
 				$('#frame').addClass('burst-animation');
 				setTimeout(function(){$('#frame').removeClass('burst-animation');}, 2000);
@@ -428,19 +428,19 @@
 				setTimeout(function(){
 					context.beginPath();
 					context.shadowColor = 'transparent';
-					context.drawImage(burst1ImageObj, obj.x, obj.y, obj.width, obj.height);
+					context.drawImage(variablesObj.burst1ImageObj, obj.x, obj.y, obj.width, obj.height);
 					context.closePath();
 				}, step[0])
 				setTimeout(function(){
 					context.beginPath();
 					context.shadowColor = 'transparent';
-					context.drawImage(burst2ImageObj, obj.x, obj.y, obj.width+20, obj.height+20);
+					context.drawImage(variablesObj.burst2ImageObj, obj.x, obj.y, obj.width+20, obj.height+20);
 					context.closePath();
 				}, step[1])
 				setTimeout(function(){
 					context.beginPath();
 					context.shadowColor = 'transparent';
-					context.drawImage(burst3ImageObj, obj.x, obj.y, obj.width+30, obj.height+30);
+					context.drawImage(variablesObj.burst3ImageObj, obj.x, obj.y, obj.width+30, obj.height+30);
 					context.closePath();
 				}, step[2])
 
@@ -452,7 +452,7 @@
 				context.beginPath();
 				context.shadowColor = 'transparent';
 				context.rect(0, 0, canvas.width, canvas.height);
-				context.drawImage(carImageObj, drawArray[0].x, drawArray[0].y, drawArray[0].width, drawArray[0].height);
+				context.drawImage(variablesObj.carImageObj, drawArray[0].x, drawArray[0].y, drawArray[0].width, drawArray[0].height);
 				context.closePath();
 			};
 			function drawGameOver(){
@@ -506,7 +506,7 @@
 					drawRulesModal('onStart');
 				} else if(reading_of_rules === false){
 					// get music
-					get_document_DOM.trigger("startMusic:play");
+					mediator.publish("startMusic:play");
 					// stopping of AnimationFrame
 					getFrame("stop");
 
@@ -558,8 +558,8 @@
 			function showTheQuiz(){
 				showHideHeaderFuter('hide');
 
-				get_document_DOM.trigger("BgMusic:stop");
-				get_document_DOM.trigger("quizStartMusic:play");
+				mediator.publish("BgMusic:stop");
+				mediator.publish("quizStartMusic:play");
 
 				var my_modal_DOM = $('#quizModal'),
 					quiz_question_DOM = $('#quizQuestion'),
@@ -692,7 +692,7 @@
 				obj.can_hit = false;
 				getBurst(obj);
 
-				setTimeout(function(){getFrame('start');get_document_DOM.trigger("BgMusic:play");}, 2000);
+				setTimeout(function(){getFrame('start');mediator.publish("BgMusic:play");}, 2000);
 			} else{
 				game_station = "game_over";
 			}
@@ -750,7 +750,7 @@
 					});
 					// =======================================CLICK=====================================
 					function checkingAncwer(e){
-						get_document_DOM.trigger("quizClickingAnswerMusic:play");
+						mediator.publish("quizClickingAnswerMusic:play");
 
 						// result of clicked answer
 						var result = +$(e.target).attr('index');
@@ -767,7 +767,7 @@
 							bg_quiz_DOM.addClass("bodyGood");
 							showHideHeaderFuter('hide');
 							setTimeout(function(){
-								get_document_DOM.trigger("quizGoodResultMusic:play");
+								mediator.publish("quizGoodResultMusic:play");
 							},1000);
 							can_answer = false;
 							setTimeout(function(){
@@ -789,13 +789,11 @@
 								}
 								// Creatin of new Level----------------------------------------------------
 								if(variablesObj.gameRulesObject.currentLevel < variablesObj.enteredDATA.length-1){
-									console.log("Current level -  "+(variablesObj.gameRulesObject.currentLevel+1));
-									addDataLevel(variablesObj.gameRulesObject.currentLevel+1, variablesObj);
-									console.log("Next level -  "+(variablesObj.gameRulesObject.currentLevel+1));
-									creatingVarianPosition(variablesObj);
+									mediator.publish('add_new_data_level', variablesObj.gameRulesObject.currentLevel+1);
+									mediator.publish('create_new_variant_position');
 								} else{
-									addDataLevel(0, variablesObj);
-									creatingVarianPosition(variablesObj);
+									mediator.publish('add_new_data_level', 0);
+									mediator.publish('create_new_variant_position');
 									console.log("The End of Game")
 
 									rules_object.toDo = function(){
@@ -822,7 +820,7 @@
 							bg_quiz_DOM.addClass("bodyBad");
 							showHideHeaderFuter('hide');
 							setTimeout(function(){
-								get_document_DOM.trigger("quizBadResultMusic:play");
+								mediator.publish("quizBadResultMusic:play");
 							},1000);
 							can_answer = false;
 							setTimeout(function(){
@@ -852,7 +850,7 @@
 			}
 
 			if(value === 'start'){
-				get_document_DOM.trigger("introAnimation:play");
+				mediator.publish("introAnimation:play");
 				getFrame('stop');
 				$("header").hide();
 			    $("footer").hide();
@@ -867,7 +865,7 @@
 					clearTimeout(intro_animation_timeout);
 				});
 			} else if(value === 'stop'){
-				get_document_DOM.trigger("startMusic:play");
+				mediator.publish("startMusic:play");
 				$("#intro_animation").hide();
 
 				$("header").show();
@@ -922,7 +920,7 @@
 
 			    if(game_station === "quiz"){
 			    	getFrame('stop');
-			    	get_document_DOM.trigger("BgMusic:stop");
+			    	mediator.publish("BgMusic:stop");
 			    	var rules_object = {
 						title: "Hmm.. you have some words of power",
 						content: "<img src='images/dart_veyder.png' class='pull-left before-quiz-dart-vader'><p>I know that your power is weak. Prove your knowledge or follow me to DARK SIDE!</p>",
@@ -942,7 +940,7 @@
 
 		        // star drawing
 		        if(hitStarObj.can_draw === true){
-		        	context.drawImage(starImageObj, hitStarObj.x, hitStarObj.y, hitStarObj.width, hitStarObj.height);
+		        	context.drawImage(variablesObj.starImageObj, hitStarObj.x, hitStarObj.y, hitStarObj.width, hitStarObj.height);
 		        }
 			}
 		// ------------------------------------------------------------------------
